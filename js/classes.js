@@ -69,7 +69,7 @@ var asMovable = function() {
 		
 		if (this.x < 0) {
 			returnArray[0] =  0;
-		} else if (this.x > Game.canvas.width - this.width) {
+		} else if (this.x > (Game.canvas.width - this.width)) {
 			returnArray[0] = (Game.canvas.width - this.width);
 		} else {
 			returnArray[0] = -1;
@@ -86,7 +86,7 @@ var asMovable = function() {
 	}
 }; 
 
-var Player = function(x, y, width, height, name,src) {
+var Player = function(x, y, width, height, name, img) {
     this.x = x;
     this.y = y;
 	this.width = width;
@@ -98,17 +98,20 @@ var Player = function(x, y, width, height, name,src) {
 	this.maxYSpeed = 12;
 	this.friction = .8;
 	this.acceleration = 3;
-	this.img = new Image();
-	this.img.src = src;
+	this.img = img;
+	
+	this.reset = function() {
+		this.x = x;
+		this.y = y;
+		this.velX = 0;
+		this.velY = 0;
+	}
 	
 	this.update = function() {
 		this.checkKeys();
 		this.move();
 		this.bounds();		
 		Game.draw(this);
-		document.getElementById("position").innerHTML = "Position - " + this.position();
-		document.getElementById("projCooldown").innerHTML = "Projectile Cooldown - " + Game.projectileCooldown;
-		document.getElementById("enemyCooldown").innerHTML = "Enemy Cooldown - " + Game.enemyCooldown;
 	}
 	
 	this.bounds = function () {
@@ -149,25 +152,24 @@ var Player = function(x, y, width, height, name,src) {
 		}
 		//check for space bar to shoot
 		if (Game.keys[32] && Game.projectileCooldown <= 0) {
-			Game.spawnProjectile();
+			Game.spawnProjectile(this);
 		}
 	}
 };
 
-var Projectile = function(obj,width,height,src,velX,velY) {
-	this.x = obj.x + obj.width;
+var GoodProjectile = function(obj,width,height,img,velX,velY) {
+	this.x = obj.x;
 	this.y = obj.y + obj.height / 2;
 	this.width = width;
 	this.height = height;
-	this.img = new Image();
-	this.img.src = src;
+	this.img = img
 	this.velX = velX;
 	this.velY = velY;
 	this.maxXSpeed = -1;
 	this.maxYSpeed = 1;
 	
 	this.update = function() {
-		if (this.x > Game.canvas.width) {
+		if (this.x > Game.canvas.width || this.x < 0) {
 			Game.projectiles.shift();
 			delete(this);
 		} else {
@@ -175,13 +177,44 @@ var Projectile = function(obj,width,height,src,velX,velY) {
 			Game.draw(this);
 		}
 	}
+	
+	this.getDestroyed = function(index) {
+		Game.projectiles.splice(index,1);
+		delete(this);
+	}
 };
 
-var Enemy = function(width,height,src) {
+var BadProjectile = function(obj,width,height,img,velX,velY) {
+	this.x = obj.x;
+	this.y = obj.y + obj.height / 2;
 	this.width = width;
 	this.height = height;
-	this.img = new Image();
-	this.img.src = src;
+	this.img = img
+	this.velX = velX;
+	this.velY = velY;
+	this.maxXSpeed = -1;
+	this.maxYSpeed = 1;
+	
+	this.update = function() {
+		if (this.x > Game.canvas.width || this.x < 0) {
+			Game.badProjectiles.shift();
+			delete(this);
+		} else {
+			this.move();
+			Game.draw(this);
+		}
+	}
+	
+	this.getDestroyed = function(index) {
+		Game.badProjectiles.splice(index,1);
+		delete(this);
+	}
+};
+
+var Enemy = function(width,height,img) {
+	this.width = width;
+	this.height = height;
+	this.img = img;
 	this.x = Game.canvas.width - this.width;
 	this.y = Math.random() * (Game.canvas.height - this.height);
 	this.velX = 0;
@@ -199,28 +232,55 @@ var Enemy = function(width,height,src) {
 		this.accelerate(-this.acceleration,0);
 		this.move();
 		this.bounds();
+		
+		if (Math.random() < .005) {
+			Game.spawnBadProjectile(this);
+		}
 		Game.draw(this);
 	}
 	
 	this.bounds = function() {
 		var check = this.checkBounds();
 		if (check[0] != -1) {
-			Game.enemies.push();
+			Game.enemies.shift();
 			delete(this);
 		}
+		
 		if (check[1] != -1) {
 			this.y = check[1];
 		}
 	}
 	
-	this.getDestroyed = function(item) {
-		Game.enemies.splice(item,1);
+	this.getDestroyed = function(index) {
+		Game.enemies.splice(index,1);
 		delete(this);
 		Game.score++;
-		document.getElementById("score").innerHTML = "Score - " + Game.score;
+	}
+}
+
+//Scrolling background. Gets a starting x and scroll speed. The resetAtX is the point where it is moved back to it's original starting position for infinate scrolling
+//The resetXTo is where it resets. This allows for multiple backgrounds for continuity. 
+var scrollingBackGround = function(img, width, height, speed, originalX, resetXAt, resetXTo) {
+	this.img = img;
+	this.width = width;
+	this.height = height;
+	this.velX = speed;
+	this.velY = 0;
+	this.x = originalX;
+	this.y = 1;
+	this.resetXAt = resetXAt;
+	this.resetXTo = resetXTo;
+	this.update = function() {
+		this.move();
+		if (this.x <= this.resetXAt) {
+			this.x = this.resetXTo;
+		}
+		Game.draw(this);
 	}
 }
 //Inherit the methods from the asMovable function, creating our mixins
 asMovable.call(Player.prototype);
-asMovable.call(Projectile.prototype);
+asMovable.call(GoodProjectile.prototype);
+asMovable.call(BadProjectile.prototype);
 asMovable.call(Enemy.prototype);
+asMovable.call(scrollingBackGround.prototype);
