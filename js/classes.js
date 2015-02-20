@@ -152,7 +152,7 @@ var Player = function(x, y, width, height, name, img) {
 		}
 		//check for space bar to shoot
 		if (Game.keys[32] && Game.projectileCooldown <= 0) {
-			Game.spawnProjectile(this);
+			Game.spawnProjectile(this,Game.mousePosition,15);
 		}
 	}
 };
@@ -223,7 +223,7 @@ var Enemy = function(width,height,img,audio) {
 		this.bounds();
 		
 		if (Math.random() < .005) {
-			Game.spawnBadProjectile(this);
+			Game.spawnBadProjectile(this,Game.player1,15);
 		}
 		Game.draw(this);
 	}

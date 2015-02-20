@@ -17,7 +17,7 @@ Game = {
 	ctx : document.getElementById("myCanvas").getContext("2d"),
 	projectiles : [],
 	badProjectiles : [],
-	maxProjectiles : 10,
+	maxProjectiles : 5,
 	projectileCooldown : 0,
 	enemies: [],
 	maxEnemies : 10,
@@ -121,28 +121,20 @@ Game = {
 	},
 	
 	//******************** 	Code for spawning game objects	**********************
-	spawnProjectile : function(obj) {
-		var projectileSpeed = 15;
+	spawnProjectile : function(obj, target, speed) {
+		var speed = Game.getRiseRun(obj, target, speed);
 		
-		var changeY = Game.mousePosition.y - obj.y - obj.height;
-		var changeX = Game.mousePosition.x - obj.x;
-		
-		var hyp = Math.sqrt(Math.pow(changeX,2) + Math.pow(changeY,2));
-		
-		var rise = changeY * (projectileSpeed/hyp);
-		var run = changeX * (projectileSpeed/hyp);
-		
-
-		document.getElementById("slope").innerHTML = "rise === " + rise + ", run === " + run;
+		document.getElementById("slope").innerHTML = "rise === " + speed.y + ", run === " + speed.x;
 
 		if (Game.projectiles.length <= Game.maxProjectiles) {
-			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],run,rise,Game.sounds[0]);
+			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],speed.x,speed.y,Game.sounds[0]);
 			Game.projectileCooldown = 5;
 		}
 	},
 	
-	spawnBadProjectile : function(obj) {
-		Game.badProjectiles[Game.badProjectiles.length] = new Projectile(obj,50,25,Game.imageObj[5],-15,0,Game.sounds[1]);
+	spawnBadProjectile : function(obj, target, speed) {
+		var speed = Game.getRiseRun(obj, target, speed);
+		Game.badProjectiles[Game.badProjectiles.length] = new Projectile(obj,50,25,Game.imageObj[5],speed.x,speed.y,Game.sounds[1]);
 	},
 	
 	spawnEnemy : function () {
@@ -166,6 +158,24 @@ Game = {
 		}
 		
 		return (xRange && yRange);
+	},
+	
+	//calculates the speed of x and y according to the speed and how far to the side and up/down a target is
+	getRiseRun : function(obj,target,speed) {
+		var projectileSpeed = speed;
+		
+		var rise = target.y - obj.y - obj.height;
+		var run = target.x - obj.x;
+		
+		var hyp = Math.sqrt(Math.pow(run,2) + Math.pow(rise,2));
+		
+		rise *= (projectileSpeed/hyp);
+		run *= (projectileSpeed/hyp);
+		
+		return {
+			x : run,
+			y : rise
+		};
 	},
 	
 	draw : function (obj) {
