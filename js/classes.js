@@ -3,8 +3,6 @@
 //Movement isn't just static, it uses velocity which is gained from acceleration, along with friction to slow it down.
 //This makes movement more fluid. 
 var asMovable = function() {
-	this.boundX = [];
-	this.boundY = [];
 
 	this.move = function() {
 		this.x += this.velX;
@@ -86,6 +84,7 @@ var asMovable = function() {
 	}
 }; 
 
+//Player object. Gets combined with movable and also contains it's own functionality. check keys might be moved in the future. 
 var Player = function(x, y, width, height, name, img) {
     this.x = x;
     this.y = y;
@@ -157,13 +156,15 @@ var Player = function(x, y, width, height, name, img) {
 		}
 	}
 };
+asMovable.call(Player.prototype);
 
-var GoodProjectile = function(obj,width,height,img,velX,velY,audio) {
+//Definiting my projectile items. 
+var Projectile = function(obj,width,height,img,velX,velY,audio) {
 	this.x = obj.x;
 	this.y = obj.y + obj.height / 2;
 	this.width = width;
 	this.height = height;
-	this.img = img
+	this.img = img;
 	this.velX = velX;
 	this.velY = velY;
 	this.maxXSpeed = -1;
@@ -171,51 +172,33 @@ var GoodProjectile = function(obj,width,height,img,velX,velY,audio) {
 	this.audio = new Audio(audio.src);
 	this.audio.play();
 	
-	this.update = function() {
-		if (this.x > Game.canvas.width || this.x < 0) {
-			Game.projectiles.shift();
-			delete(this);
+	this.update = function(gameArray,index) {
+		if (this.bounds(gameArray,index)) {
+			return;
 		} else {
 			this.move();
 			Game.draw(this);
 		}
 	}
 	
-	this.getDestroyed = function(index) {
-		Game.projectiles.splice(index,1);
+	this.getDestroyed = function(gameArray,index) {
+		gameArray.splice(index,1);
 		delete(this);
 	}
-};
-
-var BadProjectile = function(obj,width,height,img,velX,velY,audio) {
-	this.x = obj.x;
-	this.y = obj.y + obj.height / 2;
-	this.width = width;
-	this.height = height;
-	this.img = img
-	this.velX = velX;
-	this.velY = velY;
-	this.maxXSpeed = -1;
-	this.maxYSpeed = 1;
-	this.audio = new Audio(audio.src);
-	this.audio.play();
 	
-	this.update = function() {
-		if (this.x > Game.canvas.width || this.x < 0) {
-			Game.badProjectiles.shift();
-			delete(this);
+	this.bounds = function(gameArray,index) {
+		var check = this.checkBounds();
+		if (check[0] != -1) {
+			this.getDestroyed(gameArray,index);
+			return true;
 		} else {
-			this.move();
-			Game.draw(this);
+			return false;
 		}
 	}
-	
-	this.getDestroyed = function(index) {
-		Game.badProjectiles.splice(index,1);
-		delete(this);
-	}
 };
+asMovable.call(Projectile.prototype);
 
+//Enemy logic. Will probably be seperated out when more enemy types come into play. Soon to add health and other projectile spawning.
 var Enemy = function(width,height,img,audio) {
 	this.width = width;
 	this.height = height;
@@ -264,6 +247,7 @@ var Enemy = function(width,height,img,audio) {
 		Game.score++;
 	}
 }
+asMovable.call(Enemy.prototype);
 
 //Scrolling background. Gets a starting x and scroll speed. The resetAtX is the point where it is moved back to it's original starting position for infinate scrolling
 //The resetXTo is where it resets. This allows for multiple backgrounds for continuity. 
@@ -285,9 +269,4 @@ var scrollingBackGround = function(img, width, height, speed, originalX, resetXA
 		Game.draw(this);
 	}
 }
-//Inherit the methods from the asMovable function, creating our mixins
-asMovable.call(Player.prototype);
-asMovable.call(GoodProjectile.prototype);
-asMovable.call(BadProjectile.prototype);
-asMovable.call(Enemy.prototype);
 asMovable.call(scrollingBackGround.prototype);
