@@ -153,6 +153,9 @@ var Player = function(x, y, width, height, name, img) {
 		//check for space bar to shoot
 		if (Game.keys[32] && Game.projectileCooldown <= 0) {
 			Game.spawnProjectile(this,Game.mousePosition,15);
+		}		
+		if (Game.keys[81] && Game.specialCooldown <= 0) { 
+			Game.spawnSpecial(this,Game.mousePosition,15);
 		}
 	}
 };

@@ -17,7 +17,7 @@ Game = {
 	ctx : document.getElementById("myCanvas").getContext("2d"),
 	projectiles : [],
 	badProjectiles : [],
-	maxProjectiles : 5,
+	maxProjectiles : 30,
 	projectileCooldown : 0,
 	enemies: [],
 	maxEnemies : 10,
@@ -34,90 +34,85 @@ Game = {
 	isGameOver : false,
 	itemsToLoad : 0,
 	mousePosition : {x:0,y:0},
+	specialCooldown : 0,
+	highscore: 0,
 	
 	//********************	Main Game Loop	**********************
 	gameLoop : function() {
-		setTimeout//(function() {	
-			if (!Game.paused) {
+		if (!Game.paused) {
 
-				if (Game.enemyTimer <= 0) {
-					Game.spawnEnemy();
-				}
-
-				Game.ctx.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
-				
-				//********************	Update items on canvas	**********************			
-				Game.background1.update();
-				Game.background2.update()
-				Game.player1.update();		
-				
-				if (Game.projectiles.length > 0) {
-					for (var i=0; i < Game.projectiles.length; i++ ) {
-						Game.projectiles[i].update(Game.projectiles, i);
-					}
-				}
-				
-				if (Game.badProjectiles.length > 0) {
-					for (var i=0; i < Game.badProjectiles.length; i++ ) {
-						Game.badProjectiles[i].update(Game.badProjectiles, i);
-					}
-				}
-				
-				if (Game.enemies.length > 0) {
-					for (var i=0; i < Game.enemies.length; i++ ) {
-						Game.enemies[i].update();
-					}
-				}
-				
-				//******************** Check for collisions **************************	
-				
-				//Player collision with enemy
-				
-				if (Game.enemies.length) {
-					for (var i=0; i < Game.enemies.length; i++ ) {
-						if (Game.checkCollision(Game.player1, Game.enemies[i])) {
-							Game.gameOver();
-						}
-					}
-				}
-				
-				//Enemy projectiles collision with player1
-				if (Game.badProjectiles.length > 0) {
-					for (var i=0; i < Game.badProjectiles.length; i++ ) {
-						if (Game.checkCollision(Game.badProjectiles[i],Game.player1)) {	
-							Game.gameOver();
-						}
-					}
-				}
-				
-				//Player projectiles collision with enemies
-				if (Game.projectiles.length > 0 && Game.enemies.length > 0) {
-					for (var i=0; i < Game.projectiles.length; i++ ) {
-						for (var n=0; n < Game.enemies.length; n++) {
-							if (Game.checkCollision(Game.projectiles[i],Game.enemies[n])) {	
-								Game.enemies[n].getDestroyed(n);
-								Game.projectiles[i].getDestroyed(Game.projectiles,i);
-								break;
-							}
-						}
-					}
-				}
-				
-				//********************	Set any cooldowns before restarting loop.	**********************					
-				if (Game.projectileCooldown > 0) {
-					Game.projectileCooldown --;
-				}
-				
-				if (Game.enemyTimer > 0) {
-					Game.enemyTimer--;
-				}
-				
-				if (Game.pauseCooldown > 0) {
-					Game.pauseCooldown--;
-				}
-				requestAnimationFrame(Game.gameLoop);
+			if (Game.enemyTimer <= 0) {
+				Game.spawnEnemy();
 			}
-		//},1000/Game.fps);
+
+			Game.ctx.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
+			
+			//********************	Update items on canvas	**********************			
+			Game.background1.update();
+			Game.background2.update()
+			Game.player1.update();		
+			
+			if (Game.projectiles.length > 0) {
+				for (var i=0; i < Game.projectiles.length; i++ ) {
+					Game.projectiles[i].update(Game.projectiles, i);
+				}
+			}
+			
+			if (Game.badProjectiles.length > 0) {
+				for (var i=0; i < Game.badProjectiles.length; i++ ) {
+					Game.badProjectiles[i].update(Game.badProjectiles, i);
+				}
+			}
+			
+			if (Game.enemies.length > 0) {
+				for (var i=0; i < Game.enemies.length; i++ ) {
+					Game.enemies[i].update();
+				}
+			}
+			
+			//******************** Check for collisions **************************	
+			
+			//Player collision with enemy
+			
+			if (Game.enemies.length) {
+				for (var i=0; i < Game.enemies.length; i++ ) {
+					if (Game.checkCollision(Game.player1, Game.enemies[i])) {
+						Game.gameOver();
+					}
+				}
+			}
+			
+			//Enemy projectiles collision with player1
+			if (Game.badProjectiles.length > 0) {
+				for (var i=0; i < Game.badProjectiles.length; i++ ) {
+					if (Game.checkCollision(Game.badProjectiles[i],Game.player1)) {	
+						Game.gameOver();
+					}
+				}
+			}
+			
+			//Player projectiles collision with enemies
+			if (Game.projectiles.length > 0 && Game.enemies.length > 0) {
+				for (var i=0; i < Game.projectiles.length; i++ ) {
+					for (var n=0; n < Game.enemies.length; n++) {
+						if (Game.checkCollision(Game.projectiles[i],Game.enemies[n])) {	
+							Game.enemies[n].getDestroyed(n);
+							Game.projectiles[i].getDestroyed(Game.projectiles,i);
+							break;
+						}
+					}
+				}
+			}
+			
+			//********************	increment any cooldowns before restarting loop.	**********************					
+			Game.incrementCooldowns();
+			
+			if (Game.highscore < Game.score) {
+				Game.highscore = Game.score;
+				document.getElementById("highscore").innerHTML = "High Score: " + Game.highscore;
+			}
+			requestAnimationFrame(Game.gameLoop);
+		}
 	},
 	
 	//******************** 	Code for spawning game objects	**********************
@@ -128,7 +123,7 @@ Game = {
 
 		if (Game.projectiles.length <= Game.maxProjectiles) {
 			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],speed.x,speed.y,Game.sounds[0]);
-			Game.projectileCooldown = 5;
+			Game.projectileCooldown = 15;
 		}
 	},
 	
@@ -142,6 +137,23 @@ Game = {
 			Game.enemies[Game.enemies.length] = new Enemy(50,50,Game.imageObj[2],Game.sounds[3]);
 			Game.enemyTimer = Game.enemyCooldown;
 		}
+	},
+	
+	spawnSpecial : function(obj) {
+		var targetObject = {
+			x : obj.x + 1000, 
+			y : obj.y + 1000
+		}
+		
+		var speed = 0;
+		
+		for (var i=0; i < 16; i++) {
+			speed = Game.getRiseRun(obj,targetObject,15);
+			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],speed.x,speed.y,Game.sounds[0]);
+			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],-speed.x,speed.y,Game.sounds[0]);
+			targetObject.y -= (Game.canvas.height/4);
+		}
+		Game.specialCooldown = 200;
 	},
 	
 	//******	Simple collision check between two objects. Will rework if/when more complex objects are created ******
@@ -176,6 +188,24 @@ Game = {
 			x : run,
 			y : rise
 		};
+	},
+	
+	incrementCooldowns : function() {
+		if (Game.projectileCooldown > 0) {
+			Game.projectileCooldown --;
+		}
+		
+		if (Game.enemyTimer > 0) {
+			Game.enemyTimer--;
+		}
+		
+		if (Game.pauseCooldown > 0) {
+			Game.pauseCooldown--;
+		}
+		
+		if (Game.specialCooldown > 0) {
+			Game.specialCooldown--;
+		}
 	},
 	
 	draw : function (obj) {
@@ -222,7 +252,6 @@ Game = {
 	//increments items to load and starts game loop if 0
 	checkLoading : function(items) {
 		Game.itemsToLoad--;
-		document.getElementById("items").innerHTML = Game.itemsToLoad;
 		if (Game.itemsToLoad <= 0) {
 			Game.createGameObjects();
 		}
@@ -246,6 +275,7 @@ Game = {
 		Game.paused = false;
 		Game.score = 0;
 		Game.player1.img.src = Game.images[0];
+		Game.specialCooldown = 0;
 		Game.gameLoop();
 	},
 	
