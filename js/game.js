@@ -27,6 +27,7 @@ Game = {
 	keys : [],
 	images : [],
 	imageObj : [],
+	sounds : [],
 	paused : false,
 	pauseCooldown : 10,
 	fps : 60,
@@ -72,8 +73,6 @@ Game = {
 				if (Game.enemies.length) {
 					for (var i=0; i < Game.enemies.length; i++ ) {
 						if (Game.checkCollision(Game.player1, Game.enemies[i])) {
-							Game.ctx.fillText("Game Over!",175,175);
-							Game.ctx.fillText("Score: " + Game.score, 175,275);
 							Game.gameOver();
 						}
 					}
@@ -83,8 +82,6 @@ Game = {
 				if (Game.badProjectiles.length > 0) {
 					for (var i=0; i < Game.badProjectiles.length; i++ ) {
 						if (Game.checkCollision(Game.badProjectiles[i],Game.player1)) {	
-							Game.ctx.fillText("Game Over!",175,175);
-							Game.ctx.fillText("Score: " + Game.score, 175,275);
 							Game.gameOver();
 						}
 					}
@@ -122,19 +119,20 @@ Game = {
 	
 	//******************** 	Code for spawning game objects	**********************
 	spawnProjectile : function(obj) {
+		
 		if (Game.projectiles.length <= Game.maxProjectiles) {
-			Game.projectiles[Game.projectiles.length] = new GoodProjectile(obj,50,25,Game.imageObj[1],15,0);
+			Game.projectiles[Game.projectiles.length] = new GoodProjectile(obj,50,25,Game.imageObj[1],15,0,Game.sounds[0]);
 			Game.projectileCooldown = 5;
 		}
 	},
 	
 	spawnBadProjectile : function(obj) {
-		Game.badProjectiles[Game.badProjectiles.length] = new BadProjectile(obj,50,25,Game.imageObj[5],-15,0);
+		Game.badProjectiles[Game.badProjectiles.length] = new BadProjectile(obj,50,25,Game.imageObj[5],-15,0,Game.sounds[1]);
 	},
 	
 	spawnEnemy : function () {
 		if (Game.enemies.length <= Game.maxEnemies) {
-			Game.enemies[Game.enemies.length] = new Enemy(50,50,Game.imageObj[2]);
+			Game.enemies[Game.enemies.length] = new Enemy(50,50,Game.imageObj[2],Game.sounds[3]);
 			Game.enemyTimer = Game.enemyCooldown;
 		}
 	},
@@ -170,11 +168,18 @@ Game = {
 		Game.images[3] = "images/background1.jpg";
 		Game.images[4] = "images/background2.jpg";
 		Game.images[5] = "images/lazerRed.png";
+		Game.images[6] = "images/explosion.png";
 		
 		for (var i=0; i <= Game.images.length; i++) {
 			Game.imageObj[i] = new Image();
 			Game.imageObj[i].src = Game.images[i];
 		}
+		
+		//preload sounds;
+		Game.sounds[0] = new Audio("audio/lazerShot.mp3");
+		Game.sounds[1] = new Audio("audio/lazerShotBad.mp3");
+		Game.sounds[2] = new Audio("audio/death.mp3");
+		Game.sounds[3] = new Audio("audio/hit.mp3");
 		
 		//create initial objects
 		Game.player1 = new Player(1,1,75,50,"dude",Game.imageObj[0]);
@@ -193,6 +198,7 @@ Game = {
 		Game.isGameOver = false;
 		Game.paused = false;
 		Game.score = 0;
+		Game.player1.img.src = Game.images[0];
 		Game.gameLoop();
 	},
 	
@@ -209,6 +215,11 @@ Game = {
 	gameOver : function() {
 		Game.isGameOver = true;
 		Game.paused = true;
+		Game.ctx.fillText("Game Over!",175,175);
+		Game.ctx.fillText("Score: " + Game.score, 175,275);
+		Game.player1.img.src = Game.images[6];
+		Game.player1.update();
+		Game.sounds[2].play();
 	}
 	
 };

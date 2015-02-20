@@ -105,6 +105,7 @@ var Player = function(x, y, width, height, name, img) {
 		this.y = y;
 		this.velX = 0;
 		this.velY = 0;
+		this.img.src = img.src;
 	}
 	
 	this.update = function() {
@@ -157,7 +158,7 @@ var Player = function(x, y, width, height, name, img) {
 	}
 };
 
-var GoodProjectile = function(obj,width,height,img,velX,velY) {
+var GoodProjectile = function(obj,width,height,img,velX,velY,audio) {
 	this.x = obj.x;
 	this.y = obj.y + obj.height / 2;
 	this.width = width;
@@ -167,6 +168,8 @@ var GoodProjectile = function(obj,width,height,img,velX,velY) {
 	this.velY = velY;
 	this.maxXSpeed = -1;
 	this.maxYSpeed = 1;
+	this.audio = new Audio(audio.src);
+	this.audio.play();
 	
 	this.update = function() {
 		if (this.x > Game.canvas.width || this.x < 0) {
@@ -184,7 +187,7 @@ var GoodProjectile = function(obj,width,height,img,velX,velY) {
 	}
 };
 
-var BadProjectile = function(obj,width,height,img,velX,velY) {
+var BadProjectile = function(obj,width,height,img,velX,velY,audio) {
 	this.x = obj.x;
 	this.y = obj.y + obj.height / 2;
 	this.width = width;
@@ -194,6 +197,8 @@ var BadProjectile = function(obj,width,height,img,velX,velY) {
 	this.velY = velY;
 	this.maxXSpeed = -1;
 	this.maxYSpeed = 1;
+	this.audio = new Audio(audio.src);
+	this.audio.play();
 	
 	this.update = function() {
 		if (this.x > Game.canvas.width || this.x < 0) {
@@ -211,7 +216,7 @@ var BadProjectile = function(obj,width,height,img,velX,velY) {
 	}
 };
 
-var Enemy = function(width,height,img) {
+var Enemy = function(width,height,img,audio) {
 	this.width = width;
 	this.height = height;
 	this.img = img;
@@ -222,6 +227,7 @@ var Enemy = function(width,height,img) {
 	this.maxXSpeed = 3;
 	this.maxYSpeed = 3;
 	this.acceleration = 1;
+	this.deathSound = new Audio(audio.src);
 	
 	this.update = function() {
 		if (Math.random() < .5) {
@@ -252,6 +258,7 @@ var Enemy = function(width,height,img) {
 	}
 	
 	this.getDestroyed = function(index) {
+		this.deathSound.play();
 		Game.enemies.splice(index,1);
 		delete(this);
 		Game.score++;
