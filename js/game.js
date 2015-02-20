@@ -180,6 +180,7 @@ Game = {
 		Game.sounds[1] = new Audio("audio/lazerShotBad.mp3");
 		Game.sounds[2] = new Audio("audio/death.mp3");
 		Game.sounds[3] = new Audio("audio/hit.mp3");
+		Game.sounds[4] = new Audio("audio/hahaha.mp3");
 		
 		//create initial objects
 		Game.player1 = new Player(1,1,75,50,"dude",Game.imageObj[0]);
@@ -220,6 +221,7 @@ Game = {
 		Game.player1.img.src = Game.images[6];
 		Game.player1.update();
 		Game.sounds[2].play();
+		Game.sounds[4].play();
 	}
 	
 };
