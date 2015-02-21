@@ -202,7 +202,7 @@ var Projectile = function(obj,width,height,img,velX,velY,audio) {
 asMovable.call(Projectile.prototype);
 
 //Enemy logic. Will probably be seperated out when more enemy types come into play. Soon to add health and other projectile spawning.
-var Enemy = function(width,height,img,audio) {
+var Enemy = function(width,height,img,audio,health) {
 	this.width = width;
 	this.height = height;
 	this.img = img;
@@ -212,20 +212,24 @@ var Enemy = function(width,height,img,audio) {
 	this.velY = 0;
 	this.maxXSpeed = 3;
 	this.maxYSpeed = 3;
-	this.acceleration = 1;
+	this.health = health;
+	this.accelerationX = 1;
+	this.accelerationY = 1;
+	this.shotChance = .005;
 	this.deathSound = new Audio(audio.src);
+	this.points = 1;
 	
 	this.update = function() {
 		if (Math.random() < .5) {
-			this.accelerate(0,this.acceleration);
+			this.accelerate(0,this.accelerationY);
 		} else {
-			this.accelerate(0,-this.acceleration);
+			this.accelerate(0,-this.accelerationY);
 		}
-		this.accelerate(-this.acceleration,0);
+		this.accelerate(-this.accelerationX,0);
 		this.move();
 		this.bounds();
 		
-		if (Math.random() < .005) {
+		if (Math.random() < this.shotChance) {
 			Game.spawnBadProjectile(this,Game.player1,15);
 		}
 		Game.draw(this);
@@ -243,11 +247,14 @@ var Enemy = function(width,height,img,audio) {
 		}
 	}
 	
-	this.getDestroyed = function(index) {
-		this.deathSound.play();
-		Game.enemies.splice(index,1);
-		delete(this);
-		Game.score++;
+	this.getDamaged = function(index,dmg) {
+		this.health -= dmg;
+		if (this.health <= 0) {
+			this.deathSound.play();
+			Game.enemies.splice(index,1);
+			delete(this);
+			Game.score+= this.points;
+		}
 	}
 }
 asMovable.call(Enemy.prototype);

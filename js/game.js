@@ -20,9 +20,9 @@ Game = {
 	maxProjectiles : 30,
 	projectileCooldown : 0,
 	enemies: [],
-	maxEnemies : 10,
-	enemyCooldown : 20,
-	enemyTimer : 20,
+	maxEnemies : 7,
+	enemyCooldown : 40,
+	enemyTimer : 40,
 	score : 0,
 	keys : [],
 	images : [],
@@ -36,21 +36,25 @@ Game = {
 	mousePosition : {x:0,y:0},
 	specialCooldown : 0,
 	highscore: 0,
+	bossCooldown: 400,
 	
 	//********************	Main Game Loop	**********************
 	gameLoop : function() {
 		if (!Game.paused) {
-
-			if (Game.enemyTimer <= 0) {
-				Game.spawnEnemy();
-			}
-
 			Game.ctx.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
 			
 			//********************	Update items on canvas	**********************			
 			Game.background1.update();
 			Game.background2.update()
 			Game.player1.update();		
+			
+			if (Game.enemyTimer <= 0) {
+				Game.spawnEnemy();
+			}
+			
+			if (Game.bossCooldown <= 0) {
+				Game.spawnBoss();
+			}
 			
 			if (Game.projectiles.length > 0) {
 				for (var i=0; i < Game.projectiles.length; i++ ) {
@@ -96,7 +100,7 @@ Game = {
 				for (var i=0; i < Game.projectiles.length; i++ ) {
 					for (var n=0; n < Game.enemies.length; n++) {
 						if (Game.checkCollision(Game.projectiles[i],Game.enemies[n])) {	
-							Game.enemies[n].getDestroyed(n);
+							Game.enemies[n].getDamaged(n,1);
 							Game.projectiles[i].getDestroyed(Game.projectiles,i);
 							break;
 						}
@@ -134,9 +138,21 @@ Game = {
 	
 	spawnEnemy : function () {
 		if (Game.enemies.length <= Game.maxEnemies) {
-			Game.enemies[Game.enemies.length] = new Enemy(50,50,Game.imageObj[2],Game.sounds[3]);
+			Game.enemies[Game.enemies.length] = new Enemy(50,50,Game.imageObj[2],Game.sounds[3],1);
 			Game.enemyTimer = Game.enemyCooldown;
 		}
+	},
+	
+	spawnBoss : function () {
+		Game.enemies[Game.enemies.length] = new Enemy(200,200,Game.imageObj[2],Game.sounds[3],30);
+		Game.enemies[Game.enemies.length-1].velX = 0;
+		Game.enemies[Game.enemies.length-1].maxSpeedx = 6;
+		Game.enemies[Game.enemies.length-1].accelerationX = 0;
+		Game.enemies[Game.enemies.length-1].accelerationY= 3;
+		Game.enemies[Game.enemies.length-1].shotChance = .03;
+		Game.enemies[Game.enemies.length-1].points = 50;
+		Game.sounds[5].play();
+		Game.bossCooldown = 1000;
 	},
 	
 	spawnSpecial : function(obj) {
@@ -206,6 +222,10 @@ Game = {
 		if (Game.specialCooldown > 0) {
 			Game.specialCooldown--;
 		}
+		
+		if (Game.bossCooldown > 0) {
+			Game.bossCooldown--;
+		}
 	},
 	
 	draw : function (obj) {
@@ -234,6 +254,7 @@ Game = {
 		Game.sounds[2] = new Audio("audio/death.mp3");
 		Game.sounds[3] = new Audio("audio/hit.mp3");
 		Game.sounds[4] = new Audio("audio/hahaha.mp3");
+		Game.sounds[5] = new Audio("audio/zipzop.mp3");
 		Game.itemsToLoad += Game.sounds.length;
 		
 		//preload images and add load listeners
@@ -276,6 +297,8 @@ Game = {
 		Game.score = 0;
 		Game.player1.img.src = Game.images[0];
 		Game.specialCooldown = 0;
+		Game.bossCooldown = 400;
+		Game.enemyTimer = 50;
 		Game.gameLoop();
 	},
 	
