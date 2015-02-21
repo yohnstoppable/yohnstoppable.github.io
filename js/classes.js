@@ -162,7 +162,7 @@ var Player = function(x, y, width, height, name, img) {
 asMovable.call(Player.prototype);
 
 //Definiting my projectile items. 
-var Projectile = function(obj,width,height,img,velX,velY,audio) {
+var Projectile = function(obj,width,height,img,velX,velY,audio,rotated) {
 	this.x = obj.x;
 	this.y = obj.y + obj.height / 2;
 	this.width = width;
@@ -174,13 +174,18 @@ var Projectile = function(obj,width,height,img,velX,velY,audio) {
 	this.maxYSpeed = 1;
 	this.audio = new Audio(audio.src);
 	this.audio.play();
+	this.rotated = rotated;
 	
 	this.update = function(gameArray,index) {
 		if (this.bounds(gameArray,index)) {
 			return;
 		} else {
 			this.move();
-			Game.draw(this);
+			if (this.rotated === 0) {
+				Game.draw(this);
+			} else {
+				Game.drawRotated(this);
+			}
 		}
 	}
 	
@@ -238,8 +243,11 @@ var Enemy = function(width,height,img,audio,health) {
 	this.bounds = function() {
 		var check = this.checkBounds();
 		if (check[0] != -1) {
-			Game.enemies.shift();
-			delete(this);
+			this.accelerationX *= -3;
+			this.maxXSpeed = 6;
+			this.maxYSpeed = 6;
+			this.shotChance *= 50;
+			this.x  -= (this.accelerationX*3);
 		}
 		
 		if (check[1] != -1) {

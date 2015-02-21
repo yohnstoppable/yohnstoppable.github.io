@@ -122,18 +122,21 @@ Game = {
 	//******************** 	Code for spawning game objects	**********************
 	spawnProjectile : function(obj, target, speed) {
 		var speed = Game.getRiseRun(obj, target, speed);
+		var angle = (Math.atan2(speed.x, speed.y) + (Math.PI/2)) * -1;
+		document.getElementById("angle").innerHTML = angle;
 		
 		document.getElementById("slope").innerHTML = "rise === " + speed.y + ", run === " + speed.x;
 
 		if (Game.projectiles.length <= Game.maxProjectiles) {
-			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],speed.x,speed.y,Game.sounds[0]);
+			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],speed.x,speed.y,Game.sounds[0],angle);
 			Game.projectileCooldown = 15;
 		}
 	},
 	
 	spawnBadProjectile : function(obj, target, speed) {
 		var speed = Game.getRiseRun(obj, target, speed);
-		Game.badProjectiles[Game.badProjectiles.length] = new Projectile(obj,50,25,Game.imageObj[5],speed.x,speed.y,Game.sounds[1]);
+		var angle = (Math.atan2(speed.x, speed.y) + (Math.PI/2)) * -1;
+		Game.badProjectiles[Game.badProjectiles.length] = new Projectile(obj,50,25,Game.imageObj[5],speed.x,speed.y,Game.sounds[1],angle);
 	},
 	
 	spawnEnemy : function () {
@@ -162,11 +165,13 @@ Game = {
 		}
 		
 		var speed = 0;
+		var angle = 0;
 		
 		for (var i=0; i < 16; i++) {
 			speed = Game.getRiseRun(obj,targetObject,15);
-			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],speed.x,speed.y,Game.sounds[0]);
-			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],-speed.x,speed.y,Game.sounds[0]);
+			var angle = (Math.atan2(speed.x, speed.y) + (Math.PI/2)) * -1;
+			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],speed.x,speed.y,Game.sounds[0],angle);
+			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],-speed.x,speed.y,Game.sounds[0],-angle);
 			targetObject.y -= (Game.canvas.height/4);
 		}
 		Game.specialCooldown = 200;
@@ -321,6 +326,29 @@ Game = {
 		Game.player1.update();
 		Game.sounds[2].play();
 		Game.sounds[4].play();
+	},
+	
+	drawRotated : function(obj) {
+		// save the context's co-ordinate system before 
+		// we screw with it
+		Game.ctx.save(); 
+ 
+		// move the origin to 50, 35   
+		Game.ctx.translate(obj.x, obj.y); 
+ 
+		// now move across and down half the 
+		// width and height of the image (which is 128 x 128)
+		Game.ctx.translate(obj.width/2, obj.height/2); 
+ 
+		// rotate around this point
+		Game.ctx.rotate(obj.rotated); 
+ 
+		// then draw the image back and up
+		Game.ctx.drawImage(obj.img, -(obj.width/2), -(obj.height/2),obj.width,obj.height);
+ 
+		// and restore the co-ordinate system to its default
+		// top left origin with no rotation
+		Game.ctx.restore();
 	}
 	
 };
