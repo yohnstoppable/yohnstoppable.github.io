@@ -196,9 +196,24 @@ Game = {
 	//calculates the speed of x and y according to the speed and how far to the side and up/down a target is
 	getRiseRun : function(obj,target,speed) {
 		var projectileSpeed = speed;
+		var offsetX = 0;
+		var offsetX2 = 0;
+		var offsetY = 0;
+		var offsetY2 = 0;
+		if (typeof(target.width) != "undefined") {
+			var offsetX = target.width;
+		}
 		
-		var rise = target.y - obj.y - obj.height;
-		var run = target.x - obj.x;
+		if (typeof(target.height) != "undefined") {
+			var offsetY = target.height;
+		}
+		
+		if (typeof(obj.height) != "undefined") {
+			var offsetY2 = obj.height;
+		}
+		
+		var rise = target.y - obj.y + (offsetY/2) - (offsetY2/2);
+		var run = target.x - obj.x + (offsetX/2);
 		
 		var hyp = Math.sqrt(Math.pow(run,2) + Math.pow(rise,2));
 		
