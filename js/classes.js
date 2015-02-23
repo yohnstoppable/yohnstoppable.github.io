@@ -201,7 +201,6 @@ var Player = function(x, y, width, height, name, img) {
 				} else if (Game.touchesInAction[i].x > Game.canvas.width * (1/2)) {
 					Game.spawnProjectile(this,Game.touchesInAction[i],15);
 				}
-				document.getElementById("touch").innerHTML = Game.touchesInAction[i].x + "," + Game.touchesInAction[i].y + " - " + Game.touchesInAction.length;
 			}
 		}
 	}
