@@ -164,7 +164,6 @@ Game = {
 		}
 		
 		var speed = 0;
-		var angle = 0;
 		
 		for (var i=0; i < 16; i++) {
 			speed = Game.getRiseRun(obj,targetObject,20);
@@ -411,6 +410,11 @@ Game.canvas.addEventListener("touchend", touchEndHandler, false);
 
 function touchHandler(e) {
 	e.preventDefault();
+	if (e.type === "touchstart") {
+		if (Game.isGameOver) {
+			Game.restart();
+		}
+	}
     var touches = e.changedTouches;
 
     for(var j = 0; j < touches.length; j++) {
