@@ -273,10 +273,13 @@ Game = {
 	
 	//preloads images and sounds before game starts
 	preload : function() {
-		//Game.canvas.width = document.body.clientWidth;
-		//Game.canvas.height = document.body.clientHeight;
-		Game.canvas.height = window.innerHeight;
-		Game.canvas.width = window.innerWidth;
+		if (window.innerHeight > window.innerWidth) {
+			Game.canvas.height = window.innerWidth;
+			Game.canvas.width = window.innerHeight;
+		} else {
+			Game.canvas.height = window.innerHeight;
+			Game.canvas.width = window.innerWidth;
+		}
 		Game.ctx.font = "100px Georgia";
 		Game.ctx.fillStyle = "white";
 		Game.ctx.fillText("Loading",175,175);
