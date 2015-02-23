@@ -193,10 +193,10 @@ var Player = function(x, y, width, height, name, img) {
 		if (Game.touchesInAction.length != 0) {
 			for (var i=0; i < Game.touchesInAction.length; i++) {
 				if (Game.touchesInAction[i].x < Game.canvas.width/8) {
-					if (touchesInAction[i].y - this.acceleration - this.height > this.y) {
-						player1.accelerate(0,this.acceleration);
-					} else if (touchesInAction[i] +12 < this.y) {
-						player1.accelerate(0,-this.acceleration);
+					if (Game.touchesInAction[i].y - this.acceleration - this.height > this.y) {
+						this.accelerate(0,this.acceleration);
+					} else if (Game.touchesInAction[i] +12 < this.y) {
+						this.accelerate(0,-this.acceleration);
 					}
 				} else if (Game.touchesInAction[i].x > Game.canvas.width * (7/8)) {
 					Game.spawnProjectile(this,Game.touchesInAction[i],15);
