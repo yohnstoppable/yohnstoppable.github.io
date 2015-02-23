@@ -125,9 +125,8 @@ Game = {
 	//******************** 	Code for spawning game objects	**********************
 	
 	spawnProjectile : function(obj, target, speed) {
-		var speed = Game.getRiseRun(obj, target, speed);
-
-		if (Game.projectiles.length <= Game.maxProjectiles) {
+		if (Game.projectileCooldown <= 0 && Game.projectiles.length <= Game.maxProjectiles) {
+			var speed = Game.getRiseRun(obj, target, speed);
 			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],speed.x,speed.y,Game.sounds[0]);
 			Game.projectileCooldown = 15;
 		}

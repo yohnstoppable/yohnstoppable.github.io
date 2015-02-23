@@ -181,7 +181,7 @@ var Player = function(x, y, width, height, name, img) {
 			this.slowFriction(1,this.friction);
 		}
 		//check for space bar to shoot
-		if (Game.keys[32] && Game.projectileCooldown <= 0) {
+		if (Game.keys[32]) {
 			Game.spawnProjectile(this,Game.mousePosition,15);
 		}		
 		if (Game.keys[81] && Game.specialCooldown <= 0) { 
@@ -195,10 +195,10 @@ var Player = function(x, y, width, height, name, img) {
 				if (Game.touchesInAction[i].x < Game.canvas.width/8) {
 					if (Game.touchesInAction[i].y - this.acceleration - this.height > this.y) {
 						this.accelerate(0,this.acceleration);
-					} else if (Game.touchesInAction[i] +12 < this.y) {
+					} else if (Game.touchesInAction[i].x +12 < this.y) {
 						this.accelerate(0,-this.acceleration);
 					}
-				} else if (Game.touchesInAction[i].x > Game.canvas.width * (7/8)) {
+				} else if (Game.touchesInAction[i].x > Game.canvas.width * (1/2)) {
 					Game.spawnProjectile(this,Game.touchesInAction[i],15);
 				}
 				document.getElementById("touch").innerHTML = Game.touchesInAction[i].x + "," + Game.touchesInAction[i].y + " - " + Game.touchesInAction.length;
