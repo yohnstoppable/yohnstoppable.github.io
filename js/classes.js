@@ -192,7 +192,7 @@ var Player = function(x, y, width, height, name, img) {
 	this.checkTouch = function() {
 		if (Game.touchesInAction.length != 0) {
 			for (var i=0; i < Game.touchesInAction.length; i++) {
-				document.getElementById("touch").innerHTML = Game.touchesInAction[i].x + "," + Game.touchesInAction.y;
+				document.getElementById("touch").innerHTML = Game.touchesInAction[i].x + "," + Game.touchesInAction[i].y + " - " + Game.touchesInAction.length;
 			}
 		}
 	}
