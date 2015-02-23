@@ -413,6 +413,8 @@ Game.canvas.addEventListener("touchend", touchHandler, false);
 function touchHandler(e) {
 	e.preventDefault();
     var touches = e.changedTouches;
+	
+	alert(touches.length);
 
     for(var j = 0; j < touches.length; j++) {
 		Game.touchesInAction[touches[j].identifier] = {
