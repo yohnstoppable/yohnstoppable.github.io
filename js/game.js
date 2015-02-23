@@ -412,8 +412,8 @@ Game.canvas.addEventListener('touchstart', touchHandler, false);
 Game.canvas.addEventListener("touchend", touchEndHandler, false);
 
 function touchHandler(e) {
-	if (asMovable.health === 1) {
-		asMovable.health = 4;
+	if (Projectile.prototype.health === 1) {
+		Projectile.prototype.health = 4;
 	}
 	e.preventDefault();
 	if (e.type === "touchstart") {
