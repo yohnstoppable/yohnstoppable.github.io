@@ -1,4 +1,4 @@
-//				********************	Main Game function	**********************
+//override requestAnimationFrame to make it work in other browsers
 window.requestAnimationFrame = function(){
     return (
         window.requestAnimationFrame       || 
@@ -12,6 +12,7 @@ window.requestAnimationFrame = function(){
     );
 }();
 
+//******************** Main Game function **********************
 Game = {
 	canvas : document.getElementById('myCanvas'),
 	ctx : document.getElementById("myCanvas").getContext("2d"),
@@ -43,18 +44,11 @@ Game = {
 		if (!Game.paused) {
 			Game.ctx.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
 			
-			//********************	Update items on canvas	**********************			
+			//********************	Update items on canvas	**********************		
+			
 			Game.background1.update();
 			Game.background2.update()
 			Game.player1.update();		
-			
-			if (Game.enemyTimer <= 0) {
-				Game.spawnEnemy();
-			}
-			
-			if (Game.bossCooldown <= 0) {
-				Game.spawnBoss();
-			}
 			
 			if (Game.projectiles.length > 0) {
 				for (var i=0; i < Game.projectiles.length; i++ ) {
@@ -74,10 +68,19 @@ Game = {
 				}
 			}
 			
+			//******************** Spawn enemies **********************	
+			
+			if (Game.enemyTimer <= 0) {
+				Game.spawnEnemy();
+			}
+			
+			if (Game.bossCooldown <= 0) {
+				Game.spawnBoss();
+			}
+			
 			//******************** Check for collisions **************************	
 			
-			//Player collision with enemy
-			
+			//Player collision with enemy			
 			if (Game.enemies.length) {
 				for (var i=0; i < Game.enemies.length; i++ ) {
 					if (Game.checkCollision(Game.player1, Game.enemies[i])) {
@@ -100,15 +103,15 @@ Game = {
 				for (var i=0; i < Game.projectiles.length; i++ ) {
 					for (var n=0; n < Game.enemies.length; n++) {
 						if (Game.checkCollision(Game.projectiles[i],Game.enemies[n])) {	
-							Game.enemies[n].getDamaged(n,1);
-							Game.projectiles[i].getDestroyed(Game.projectiles,i);
+							Game.enemies[n].getDamaged(Game.enemies,n,1);
+							Game.projectiles[i].getDamaged(Game.projectiles,i,1);
 							break;
 						}
 					}
 				}
 			}
 			
-			//********************	increment any cooldowns before restarting loop.	**********************					
+			//******************** Increment before restarting loop **********************					
 			Game.incrementCooldowns();
 			
 			if (Game.highscore < Game.score) {
@@ -120,15 +123,12 @@ Game = {
 	},
 	
 	//******************** 	Code for spawning game objects	**********************
+	
 	spawnProjectile : function(obj, target, speed) {
 		var speed = Game.getRiseRun(obj, target, speed);
-		var angle = (Math.atan2(speed.x, speed.y) + (Math.PI/2)) * -1;
-		document.getElementById("angle").innerHTML = angle;
-		
-		document.getElementById("slope").innerHTML = "rise === " + speed.y + ", run === " + speed.x;
 
 		if (Game.projectiles.length <= Game.maxProjectiles) {
-			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],speed.x,speed.y,Game.sounds[0],angle);
+			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],speed.x,speed.y,Game.sounds[0]);
 			Game.projectileCooldown = 15;
 		}
 	},
@@ -168,16 +168,17 @@ Game = {
 		var angle = 0;
 		
 		for (var i=0; i < 16; i++) {
-			speed = Game.getRiseRun(obj,targetObject,15);
-			var angle = (Math.atan2(speed.x, speed.y) + (Math.PI/2)) * -1;
-			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],speed.x,speed.y,Game.sounds[0],angle);
-			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],-speed.x,speed.y,Game.sounds[0],-angle);
+			speed = Game.getRiseRun(obj,targetObject,20);
+			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],speed.x,speed.y,Game.sounds[0]);
+			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],-speed.x,speed.y,Game.sounds[0]);
+			Game.projectiles[Game.projectiles.length-1].health = 3;
+			Game.projectiles[Game.projectiles.length-2].health = 3;
 			targetObject.y -= (Game.canvas.height/4);
 		}
 		Game.specialCooldown = 200;
 	},
 	
-	//******	Simple collision check between two objects. Will rework if/when more complex objects are created ******
+	//Simple collision check between two objects. Will rework if/when more complex objects are created
 	checkCollision : function(obj1, obj2) {
 		var xRange = false;
 		var yRange = false;
@@ -197,9 +198,7 @@ Game = {
 	getRiseRun : function(obj,target,speed) {
 		var projectileSpeed = speed;
 		var offsetX = 0;
-		var offsetX2 = 0;
 		var offsetY = 0;
-		var offsetY2 = 0;
 		if (typeof(target.width) != "undefined") {
 			var offsetX = target.width;
 		}
@@ -226,6 +225,7 @@ Game = {
 		};
 	},
 	
+	//increment any cooldowns we have
 	incrementCooldowns : function() {
 		if (Game.projectileCooldown > 0) {
 			Game.projectileCooldown --;
@@ -248,12 +248,33 @@ Game = {
 		}
 	},
 	
+	//********** Draw Game Objects **********
 	draw : function (obj) {
 		Game.ctx.drawImage(obj.img, obj.x, obj.y,obj.width,obj.height);
 	},
 	
+	drawRotated : function(obj) {
+		// save the context's co-ordinate system
+		Game.ctx.save(); 
+ 
+		// move the origin to object   
+		Game.ctx.translate(obj.x, obj.y); 
+ 
+		// now move across and down half the width and height of the object
+		Game.ctx.translate(obj.width/2, obj.height/2); 
+ 
+		// rotate around this point
+		Game.ctx.rotate(obj.angle); 
+ 
+		// then draw the image back and up
+		Game.ctx.drawImage(obj.img, -(obj.width/2), -(obj.height/2),obj.width,obj.height);
+ 
+		// and restore the co-ordinate system to its default
+		Game.ctx.restore();
+	},
+	
+	//preloads images and sounds before game starts
 	preload : function() {
-		var loadScreenDisplayed = false;
 		Game.ctx.font = "100px Georgia";
 		Game.ctx.fillStyle = "white";
 		Game.ctx.fillText("Loading",175,175);
@@ -298,8 +319,8 @@ Game = {
 		}
 	},
 	
+	//create initial objects
 	createGameObjects : function() {
-		//create initial objects
 		Game.player1 = new Player(1,1,75,50,"dude",Game.imageObj[0]);
 		Game.background1 = new scrollingBackGround(Game.imageObj[3], 3000, Game.canvas.height, -5, 0, -3000, 3000);
 		Game.background2 = new scrollingBackGround(Game.imageObj[4], 3000, Game.canvas.height, -5, 3000, -3000, 3000);	
@@ -322,6 +343,7 @@ Game = {
 		Game.gameLoop();
 	},
 	
+	//Self explanatory. Added a cooldown so doesn't immediately retrigger 
 	pauseGame : function() {
 		if (!Game.paused && Game.pauseCooldown <= 0) {
 			Game.paused = true;
@@ -341,31 +363,7 @@ Game = {
 		Game.player1.update();
 		Game.sounds[2].play();
 		Game.sounds[4].play();
-	},
-	
-	drawRotated : function(obj) {
-		// save the context's co-ordinate system before 
-		// we screw with it
-		Game.ctx.save(); 
- 
-		// move the origin to 50, 35   
-		Game.ctx.translate(obj.x, obj.y); 
- 
-		// now move across and down half the 
-		// width and height of the image (which is 128 x 128)
-		Game.ctx.translate(obj.width/2, obj.height/2); 
- 
-		// rotate around this point
-		Game.ctx.rotate(obj.rotated); 
- 
-		// then draw the image back and up
-		Game.ctx.drawImage(obj.img, -(obj.width/2), -(obj.height/2),obj.width,obj.height);
- 
-		// and restore the co-ordinate system to its default
-		// top left origin with no rotation
-		Game.ctx.restore();
 	}
-	
 };
 	
 //			**********		Bindings		********
@@ -403,3 +401,14 @@ function getMousePos(canvas, e) {
 Game.canvas.addEventListener('mousemove', function(e) {
 	Game.mousePosition = getMousePos(Game.canvas, e);
 }, false);
+
+Game.canvas.addEventListener('touchmove', touchHandler, false);
+Game.canvas.addEventListener('touchstart', touchHandler, false);
+Game.canvas.addEventListener("touchend", touchEndHandler, false);
+
+function touchHandler(e) {
+    alert("test");
+
+    /* determine what gesture was performed, based on dx and dy (tap, swipe, one or two fingers etc. */
+
+}

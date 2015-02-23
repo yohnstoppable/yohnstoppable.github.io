@@ -1,10 +1,20 @@
-
 //********************     main function used for creating my movable mixins    **********************
 //Movement isn't just static, it uses velocity which is gained from acceleration, along with friction to slow it down.
 //This makes movement more fluid. 
 var asMovable = function() {
+	this.velX = 0;
+	this.velY = 0;
+	this.acceleration = 0;
+	this.hasGravity = false;
+	this.gravity = .6;
+	this.angle = 0;
+	this.health = 1;
+	this.points = 0;
 
 	this.move = function() {
+		if (this.hasGravity) {
+			this.velY += this.gravity;
+		}
 		this.x += this.velX;
 		this.y += this.velY;
 	}
@@ -33,12 +43,11 @@ var asMovable = function() {
 		}
 	}
 	
-	this.applyGravity = function (gravity) {
-		this.velY += gravity;
-	}
-	
 	this.position = function() {
-		return [this.x,this.y];
+		return {
+			x: this.x,
+			y: this.y
+		};
 	}
 	
 	this.accelerate = function(x, y) {
@@ -82,6 +91,28 @@ var asMovable = function() {
 		}	
 		return returnArray;
 	}
+	
+	this.draw = function(rotate) {
+		this.angle = (Math.atan2(this.velY, this.velX));
+		rotate = typeof rotate !== 'undefined' ? rotate : false;
+		if (this.angle != 0 && rotate) {
+			Game.drawRotated(this);
+		} else {
+			Game.draw(this);
+		}
+	}
+	
+	this.getDamaged = function(array,index,dmg) {
+		this.health -= dmg;
+		if (this.health <= 0) {
+			if (typeof this.deathSound !== 'undefined') {
+				this.deathSound.play();
+			}
+			array.splice(index,1);
+			delete(this);
+			Game.score += this.points;
+		}
+	}
 }; 
 
 //Player object. Gets combined with movable and also contains it's own functionality. check keys might be moved in the future. 
@@ -91,8 +122,6 @@ var Player = function(x, y, width, height, name, img) {
 	this.width = width;
 	this.height = height;
     this.name = name;
-	this.velX = 0;
-	this.velY = 0;
 	this.maxXSpeed = 8;
 	this.maxYSpeed = 12;
 	this.friction = .8;
@@ -111,7 +140,7 @@ var Player = function(x, y, width, height, name, img) {
 		this.checkKeys();
 		this.move();
 		this.bounds();		
-		Game.draw(this);
+		this.draw();
 	}
 	
 	this.bounds = function () {
@@ -162,7 +191,7 @@ var Player = function(x, y, width, height, name, img) {
 asMovable.call(Player.prototype);
 
 //Definiting my projectile items. 
-var Projectile = function(obj,width,height,img,velX,velY,audio,rotated) {
+var Projectile = function(obj,width,height,img,velX,velY,audio) {
 	this.x = obj.x;
 	this.y = obj.y + obj.height / 2;
 	this.width = width;
@@ -174,30 +203,20 @@ var Projectile = function(obj,width,height,img,velX,velY,audio,rotated) {
 	this.maxYSpeed = 1;
 	this.audio = new Audio(audio.src);
 	this.audio.play();
-	this.rotated = rotated;
 	
 	this.update = function(gameArray,index) {
 		if (this.bounds(gameArray,index)) {
 			return;
 		} else {
 			this.move();
-			if (this.rotated === 0) {
-				Game.draw(this);
-			} else {
-				Game.drawRotated(this);
-			}
+			this.draw(true);
 		}
-	}
-	
-	this.getDestroyed = function(gameArray,index) {
-		gameArray.splice(index,1);
-		delete(this);
 	}
 	
 	this.bounds = function(gameArray,index) {
 		var check = this.checkBounds();
-		if (check[0] != -1) {
-			this.getDestroyed(gameArray,index);
+		if (check[0] != -1 || check[1] != -1) {
+			this.getDamaged(gameArray,index,this.health);
 			return true;
 		} else {
 			return false;
@@ -206,7 +225,7 @@ var Projectile = function(obj,width,height,img,velX,velY,audio,rotated) {
 };
 asMovable.call(Projectile.prototype);
 
-//Enemy logic. Will probably be seperated out when more enemy types come into play. Soon to add health and other projectile spawning.
+//Enemy logic. Will probably be seperated out when more enemy types come into play. 
 var Enemy = function(width,height,img,audio,health) {
 	this.width = width;
 	this.height = height;
@@ -237,7 +256,7 @@ var Enemy = function(width,height,img,audio,health) {
 		if (Math.random() < this.shotChance) {
 			Game.spawnBadProjectile(this,Game.player1,15);
 		}
-		Game.draw(this);
+		this.draw();
 	}
 	
 	this.bounds = function() {
@@ -252,16 +271,6 @@ var Enemy = function(width,height,img,audio,health) {
 		
 		if (check[1] != -1) {
 			this.y = check[1];
-		}
-	}
-	
-	this.getDamaged = function(index,dmg) {
-		this.health -= dmg;
-		if (this.health <= 0) {
-			this.deathSound.play();
-			Game.enemies.splice(index,1);
-			delete(this);
-			Game.score+= this.points;
 		}
 	}
 }
@@ -284,7 +293,7 @@ var scrollingBackGround = function(img, width, height, speed, originalX, resetXA
 		if (this.x <= this.resetXAt) {
 			this.x = this.resetXTo;
 		}
-		Game.draw(this);
+		this.draw();
 	}
 }
 asMovable.call(scrollingBackGround.prototype);
