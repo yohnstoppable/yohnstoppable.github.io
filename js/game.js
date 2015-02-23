@@ -415,7 +415,7 @@ function touchHandler(e) {
     var touches = e.changedTouches;
 
     for(var j = 0; j < touches.length; j++) {
-		Game.touchesInAction[ "$" + touches[j].identifier ] = {
+		Game.touchesInAction[touches[j].identifier] = {
             identifier : touches[j].identifier,
             x : touches[j].pageX,
             y : touches[j].pageY
