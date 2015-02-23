@@ -408,13 +408,11 @@ Game.canvas.addEventListener('mousemove', function(e) {
 
 Game.canvas.addEventListener('touchmove', touchHandler, false);
 Game.canvas.addEventListener('touchstart', touchHandler, false);
-Game.canvas.addEventListener("touchend", touchHandler, false);
+Game.canvas.addEventListener("touchend", touchEndHandler, false);
 
 function touchHandler(e) {
 	e.preventDefault();
     var touches = e.changedTouches;
-	
-	alert(touches.length);
 
     for(var j = 0; j < touches.length; j++) {
 		Game.touchesInAction[touches[j].identifier] = {
@@ -422,5 +420,13 @@ function touchHandler(e) {
             x : touches[j].pageX,
             y : touches[j].pageY
          };
+    }
+}
+function touchEndHandler(e) {
+	e.preventDefault();
+    var touches = e.changedTouches;
+
+    for(var j = 0; j < touches.length; j++) {
+		Game.touchesInAction.splice(touches[j].identifier,1);
     }
 }
