@@ -35,6 +35,7 @@ Game = {
 	isGameOver : false,
 	itemsToLoad : 0,
 	mousePosition : {x:0,y:0},
+	touchesInAction : [],
 	specialCooldown : 0,
 	highscore: 0,
 	bossCooldown: 400,
@@ -116,7 +117,6 @@ Game = {
 			
 			if (Game.highscore < Game.score) {
 				Game.highscore = Game.score;
-				document.getElementById("highscore").innerHTML = "High Score: " + Game.highscore;
 			}
 			requestAnimationFrame(Game.gameLoop);
 		}
@@ -160,8 +160,8 @@ Game = {
 	
 	spawnSpecial : function(obj) {
 		var targetObject = {
-			x : obj.x + 1000, 
-			y : obj.y + 1000
+			x : obj.x + Game.canvas.width, 
+			y : obj.y + Game.canvas.height
 		}
 		
 		var speed = 0;
@@ -173,7 +173,7 @@ Game = {
 			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],-speed.x,speed.y,Game.sounds[0]);
 			Game.projectiles[Game.projectiles.length-1].health = 3;
 			Game.projectiles[Game.projectiles.length-2].health = 3;
-			targetObject.y -= (Game.canvas.height/4);
+			targetObject.y -= (Game.canvas.height/8);
 		}
 		Game.specialCooldown = 200;
 	},
@@ -275,6 +275,10 @@ Game = {
 	
 	//preloads images and sounds before game starts
 	preload : function() {
+		//Game.canvas.width = document.body.clientWidth;
+		//Game.canvas.height = document.body.clientHeight;
+		Game.canvas.height = window.innerHeight;
+		Game.canvas.width = window.innerWidth;
 		Game.ctx.font = "100px Georgia";
 		Game.ctx.fillStyle = "white";
 		Game.ctx.fillText("Loading",175,175);
@@ -404,11 +408,17 @@ Game.canvas.addEventListener('mousemove', function(e) {
 
 Game.canvas.addEventListener('touchmove', touchHandler, false);
 Game.canvas.addEventListener('touchstart', touchHandler, false);
-Game.canvas.addEventListener("touchend", touchEndHandler, false);
+Game.canvas.addEventListener("touchend", touchHandler, false);
 
 function touchHandler(e) {
-    alert("test");
+	e.preventDefault();
+    var touches = e.changedTouches;
 
-    /* determine what gesture was performed, based on dx and dy (tap, swipe, one or two fingers etc. */
-
+    for(var j = 0; j < touches.length; j++) {
+		Game.touchesInAction[ "$" + touches[j].identifier ] = {
+            identifier : touches[j].identifier,
+            x : touches[j].pageX,
+            y : touches[j].pageY
+         };
+    }
 }
