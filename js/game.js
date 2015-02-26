@@ -306,8 +306,9 @@ Game = {
 		//preload images and add load listeners
 		for (var i=0; i < Game.images.length; i++) {
 			Game.imageObj[i] = new Image();
-			Game.imageObj[i].src = Game.images[i];
 			Game.imageObj[i].addEventListener('load', Game.checkLoading(), false);
+			Game.imageObj[i].src = Game.images[i];
+			
 		}
 		
 		//add load listeners to sounds
