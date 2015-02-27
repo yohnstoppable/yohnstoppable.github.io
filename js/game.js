@@ -127,7 +127,7 @@ Game = {
 	spawnProjectile : function(obj, target, speed) {
 		if (Game.projectileCooldown <= 0 && Game.projectiles.length <= Game.maxProjectiles) {
 			var speed = Game.getRiseRun(obj, target, speed);
-			Game.projectiles[Game.projectiles.length] = new Projectile(obj,50,25,Game.imageObj[1],speed.x,speed.y,Game.sounds[0]);
+			Game.projectiles[Game.projectiles.length] = new Projectile(obj,25,25,Game.imageObj[1],speed.x,speed.y,Game.sounds[0]);
 			Game.projectileCooldown = 15;
 		}
 	},
@@ -151,7 +151,7 @@ Game = {
 		Game.enemies[Game.enemies.length-1].maxSpeedx = 6;
 		Game.enemies[Game.enemies.length-1].accelerationX = 0;
 		Game.enemies[Game.enemies.length-1].accelerationY= 3;
-		Game.enemies[Game.enemies.length-1].shotChance = .03;
+		Game.enemies[Game.enemies.length-1].shotChance = .09;
 		Game.enemies[Game.enemies.length-1].points = 50;
 		Game.sounds[5].play();
 		Game.bossCooldown = 1000;
@@ -285,12 +285,12 @@ Game = {
 		Game.ctx.fillText("Loading",175,175);
 		
 		//set images sources
-		Game.images[0] = "images/ship.png";
-		Game.images[1] = "images/lazerBlue.png";
-		Game.images[2] = "images/enemy.jpg";
+		Game.images[0] = "images/paperAirplane.png";
+		Game.images[1] = "images/paperBall.png";
+		Game.images[2] = "images/shreddar2.png";
 		Game.images[3] = "images/background1.jpg";
 		Game.images[4] = "images/background2.jpg";
-		Game.images[5] = "images/lazerRed.png";
+		Game.images[5] = "images/paperBall.png";
 		Game.images[6] = "images/explosion.png";	
 		Game.itemsToLoad += Game.images.length;
 		

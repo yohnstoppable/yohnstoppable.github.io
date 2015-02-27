@@ -71,20 +71,22 @@ var asMovable = function() {
 		}
 	}
 	
-	this.checkBounds = function() {	
+	this.checkBounds = function(leewayX,leewayY) {	
+		leewayX = typeof leewayX !== 'undefined' ? leewayX : 0;
+		leewayY = typeof leewayY !== 'undefined' ? leewayY : 0;
 		var returnArray = [];
 		
-		if (this.x < 0) {
+		if (this.x+leewayX < 0) {
 			returnArray[0] =  0;
-		} else if (this.x > (Game.canvas.width - this.width)) {
+		} else if (this.x - leewayX > (Game.canvas.width - this.width)) {
 			returnArray[0] = (Game.canvas.width - this.width);
 		} else {
 			returnArray[0] = -1;
 		}
 	
-		if (this.y < 0) {
+		if (this.y + leewayY < 0) {
 			returnArray[1] = 0;
-		} else if (this.y > Game.canvas.height - this.height) {
+		} else if (this.y - leewayY > Game.canvas.height - this.height) {
 			returnArray[1] = (Game.canvas.height - this.height);
 		} else {
 			returnArray[1] = -1;
@@ -182,10 +184,10 @@ var Player = function(x, y, width, height, name, img) {
 		}
 		//check for space bar to shoot
 		if (Game.keys[32]) {
-			Game.spawnProjectile(this,Game.mousePosition,15);
+			Game.spawnProjectile(this,Game.mousePosition,10);
 		}		
 		if (Game.keys[81] && Game.specialCooldown <= 0) { 
-			Game.spawnSpecial(this,Game.mousePosition,15);
+			Game.spawnSpecial(this,Game.mousePosition,10);
 		}
 	}
 	
@@ -199,7 +201,7 @@ var Player = function(x, y, width, height, name, img) {
 						this.accelerate(0,-this.acceleration);
 					}
 				} else if (Game.touchesInAction[i].x > Game.canvas.width * (1/2)) {
-					Game.spawnProjectile(this,Game.touchesInAction[i],15);
+					Game.spawnProjectile(this,Game.touchesInAction[i],10);
 				}
 			}
 		}
@@ -209,7 +211,7 @@ asMovable.call(Player.prototype);
 
 //Definiting my projectile items. 
 var Projectile = function(obj,width,height,img,velX,velY,audio) {
-	this.x = obj.x;
+	this.x = obj.x + obj.width/2;
 	this.y = obj.y + obj.height / 2;
 	this.width = width;
 	this.height = height;
@@ -231,7 +233,7 @@ var Projectile = function(obj,width,height,img,velX,velY,audio) {
 	}
 	
 	this.bounds = function(gameArray,index) {
-		var check = this.checkBounds();
+		var check = this.checkBounds(this.width,this.height);
 		if (check[0] != -1 || check[1] != -1) {
 			this.getDamaged(gameArray,index,this.health);
 			return true;
@@ -256,7 +258,7 @@ var Enemy = function(width,height,img,audio,health) {
 	this.health = health;
 	this.accelerationX = 1;
 	this.accelerationY = 1;
-	this.shotChance = .005;
+	this.shotChance = .015;
 	this.deathSound = new Audio(audio.src);
 	this.points = 1;
 	
@@ -271,7 +273,7 @@ var Enemy = function(width,height,img,audio,health) {
 		this.bounds();
 		
 		if (Math.random() < this.shotChance) {
-			Game.spawnBadProjectile(this,Game.player1,15);
+			Game.spawnBadProjectile(this,Game.player1,8);
 		}
 		this.draw();
 	}
