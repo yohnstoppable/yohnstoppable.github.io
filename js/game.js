@@ -153,7 +153,8 @@ Game = {
 		Game.enemies[Game.enemies.length-1].accelerationY= 3;
 		Game.enemies[Game.enemies.length-1].shotChance = .09;
 		Game.enemies[Game.enemies.length-1].points = 50;
-		Game.sounds[5].play();
+		createjs.Sound.play(Game.sounds[5]);
+		//Game.sounds[5].play();
 		Game.bossCooldown = 1000;
 	},
 	
@@ -295,13 +296,23 @@ Game = {
 		Game.itemsToLoad += Game.images.length;
 		
 		//preload sounds;
-		Game.sounds[0] = new Audio("audio/lazerShot.mp3");
+		/*Game.sounds[0] = new Audio("audio/lazerShot.mp3");
 		Game.sounds[1] = new Audio("audio/lazerShotBad.mp3");
 		Game.sounds[2] = new Audio("audio/death.mp3");
 		Game.sounds[3] = new Audio("audio/hit.mp3");
 		Game.sounds[4] = new Audio("audio/hahaha.mp3");
-		Game.sounds[5] = new Audio("audio/zipzop.mp3");
-		Game.itemsToLoad += Game.sounds.length;
+		Game.sounds[5] = new Audio("audio/zipzop.mp3");*/
+		Game.sounds[0] = "audio/lazerShot.mp3";
+		Game.sounds[1] = "audio/lazerShotBad.mp3";
+		Game.sounds[2] = "audio/death.mp3";
+		Game.sounds[3] = "audio/hit.mp3";
+		Game.sounds[4] = "audio/hahaha.mp3";
+		Game.sounds[5] = "audio/zipzop.mp3";
+		//Game.itemsToLoad += Game.sounds.length;
+		
+		for (var i=0; i< Game.sounds.length; i++) {
+			createjs.Sound.registerSound(Game.sounds[i]);
+		}
 		
 		//preload images and add load listeners
 		for (var i=0; i < Game.images.length; i++) {
@@ -309,11 +320,6 @@ Game = {
 			Game.imageObj[i].addEventListener('load', Game.checkLoading(), false);
 			Game.imageObj[i].src = Game.images[i];
 			
-		}
-		
-		//add load listeners to sounds
-		for (var i=0; i < Game.sounds.length; i++) {
-			Game.sounds[i].addEventListener('load', Game.checkLoading(), false);
 		}
 	},
 	
@@ -367,8 +373,10 @@ Game = {
 		Game.ctx.fillText("Score: " + Game.score, 175,275);
 		Game.player1.img.src = Game.images[6];
 		Game.player1.update();
-		Game.sounds[2].play();
-		Game.sounds[4].play();
+		createjs.Sound.play(Game.sounds[2]);
+		createjs.Sound.play(Game.sounds[4]);
+		//Game.sounds[2].play();
+		//Game.sounds[4].play();
 	}
 };
 	

@@ -108,7 +108,8 @@ var asMovable = function() {
 		this.health -= dmg;
 		if (this.health <= 0) {
 			if (typeof this.deathSound !== 'undefined') {
-				this.deathSound.play();
+				//this.deathSound.play();
+				createjs.Sound.play(this.deathSound);
 			}
 			array.splice(index,1);
 			delete(this);
@@ -220,8 +221,10 @@ var Projectile = function(obj,width,height,img,velX,velY,audio) {
 	this.velY = velY;
 	this.maxXSpeed = -1;
 	this.maxYSpeed = 1;
-	this.audio = new Audio(audio.src);
-	this.audio.play();
+	this.audio = audio;
+	createjs.Sound.play(this.audio);
+	//this.audio = new Audio(audio.src);
+	//this.audio.play();
 	
 	this.update = function(gameArray,index) {
 		if (this.bounds(gameArray,index)) {
@@ -259,7 +262,8 @@ var Enemy = function(width,height,img,audio,health) {
 	this.accelerationX = 1;
 	this.accelerationY = 1;
 	this.shotChance = .015;
-	this.deathSound = new Audio(audio.src);
+	this.deathSound = audio;
+	//this.deathSound = new Audio(audio.src);
 	this.points = 1;
 	
 	this.update = function() {
