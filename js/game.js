@@ -196,7 +196,6 @@ Game = {
 	//create initial objects
 	createGameObjects : function() {
 		Game.player1 = new Player(1,1,75,50,"dude",Game.imageObj[0]);
-		Game.player1.equip(new spread());
 		Game.background1 = new scrollingBackGround(Game.imageObj[3], 3000, Game.canvas.height, -5, 0, -3000, 3000);
 		Game.background2 = new scrollingBackGround(Game.imageObj[4], 3000, Game.canvas.height, -5, 3000, -3000, 3000);	
 		Game.gameLoop();
