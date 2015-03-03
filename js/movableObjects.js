@@ -96,6 +96,9 @@ var asMovable = function() {
 	
 	this.draw = function(rotate) {
 		this.angle = (Math.atan2(this.velY, this.velX));
+		if (this.velX < 0) {
+			this.angle -= (Math.PI);
+		}
 		rotate = typeof rotate !== 'undefined' ? rotate : false;
 		if (this.angle != 0 && rotate) {
 			Common.drawRotated(this);
@@ -118,7 +121,7 @@ var asMovable = function() {
 }; 
 
 //Player object. Gets combined with movable and also contains it's own functionality. check keys might be moved in the future. 
-var Player = function(x, y, width, height, name, img) {
+var Player = function(x, y, width, height, name, imgLeft,imgRight) {
     this.x = x;
     this.y = y;
 	this.width = width;
@@ -128,7 +131,9 @@ var Player = function(x, y, width, height, name, img) {
 	this.maxYSpeed = 12;
 	this.friction = .8;
 	this.acceleration = 3;
-	this.img = img;
+	this.imgLeft = imgLeft;
+	this.imgRight = imgRight;
+	this.img = imgRight;
 	this.weapon = new defaultGun();
 	this.special = new blaster();
 	
@@ -137,7 +142,7 @@ var Player = function(x, y, width, height, name, img) {
 		this.y = y;
 		this.velX = 0;
 		this.velY = 0;
-		this.img.src = img.src;
+		this.img = this.imageRight;
 		this.equip(new defaultGun());
 	}
 	
@@ -145,9 +150,10 @@ var Player = function(x, y, width, height, name, img) {
 		this.checkKeys();
 		this.checkTouch();
 		this.updateWeapons();
+		this.direction();
 		this.move();
 		this.bounds();		
-		this.draw();
+		this.draw(true);
 	}
 	
 	this.bounds = function () {
@@ -232,6 +238,14 @@ var Player = function(x, y, width, height, name, img) {
 			this.special.currentCooldown--;
 		}
 	}
+	
+	this.direction = function() {
+		if (this.velX < 0) {
+			this.img = this.imgLeft;
+		}	else {
+			this.img = this.imgRight;
+		}
+	}
 };
 asMovable.call(Player.prototype);
 
@@ -272,10 +286,12 @@ var Projectile = function(obj,weapon) {
 asMovable.call(Projectile.prototype);
 
 //Enemy logic. Will probably be seperated out when more enemy types come into play. 
-var Enemy = function(width,height,img,audio,health) {
+var Enemy = function(width,height,imgLeft,imgRight,audio,health) {
 	this.width = width;
 	this.height = height;
-	this.img = img;
+	this.imgLeft = imgLeft;
+	this.imgRight = imgRight;
+	this.img = imgLeft;
 	this.x = Game.canvas.width - this.width;
 	this.y = Math.random() * (Game.canvas.height - this.height);
 	this.velX = 0;
@@ -315,6 +331,7 @@ var Enemy = function(width,height,img,audio,health) {
 			this.maxYSpeed = 6;
 			this.shotChance *= 100;
 			this.x  -= (this.accelerationX*3);
+			this.img = Game.imageObj[9];
 		}
 		
 		if (check[1] != -1) {

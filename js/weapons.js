@@ -146,3 +146,34 @@ blaster.prototype.shoot = function(obj,target,goodProjectile) {
 	
 	this.currentCooldown = this.cooldown;
 }
+
+var stingGun = function() {
+	this.bulletSpeed = 15;
+	this.speed = {x: 0, y: 0};
+	this.cooldown = 25;
+	this.currentCooldown = 0;
+	this.img = Game.imageObj[11];
+	this.width = 25;
+	this.height = 7;
+	this.spawnSound = Game.sounds[0];
+	this.velX = 0;
+	this.velY = 0;
+	this.health = 1;
+	this.bullets = -1;
+}
+
+stingGun.prototype.shoot = function(obj,target,goodProjectile) {
+	if (this.currentCooldown > 0 ) {
+		return;
+	}
+	
+	projectileArray = Game.getProjectileArray(goodProjectile);
+	
+	this.speed = Common.getRiseRun(obj,target,this.bulletSpeed);
+	projectileArray[projectileArray.length] = new Projectile(obj,this);
+	this.currentCooldown = this.cooldown;
+}
+
+var noGun = function() {}
+
+noGun.prototype.shoot = function(obj,target,goodProctile) {}

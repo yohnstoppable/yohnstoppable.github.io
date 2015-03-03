@@ -3,8 +3,12 @@ Stage = {
 	stageNumber : 1,
 	enemyTimer : 80,
 	defaultEnemyTimer : 80,
+	waspTimer : 150,
+	defaultWaspTimer : 150,
 	bossTimer : 500,
 	defaultBossTimer : 500,
+	waspBossTimer : 1500,
+	defaultWaspBossTimer : 1500,
 	difficulty : 0,
 	defaultDifficulty : 0,
 	difficultyTimer : 150,
@@ -16,6 +20,10 @@ Stage = {
 		}
 		if (Stage.ticker % (Stage.enemyTimer-Stage.difficulty) === 0) {
 			Stage.spawnEnemy(Math.ceil(Math.random()*3 + (Stage.difficulty/10)));
+		}
+		
+		if (Stage.ticker % (Stage.waspTimer-Stage.difficulty) === 0) {
+			Stage.spawnWasp(Math.ceil(Math.random()*6 + (Stage.difficulty/7)));
 		}
 		
 		if (Stage.ticker % (Stage.bossTimer - (Stage.difficulty*3)) === 0) {
@@ -30,19 +38,33 @@ Stage = {
 	spawnEnemy : function (amount) {
 		amount = typeof amount !== 'undefined' ? amount : 1;
 		for (i=0; i<=amount; i++) {
-			Game.enemies[Game.enemies.length] = new Enemy(50,50,Game.imageObj[2],Game.sounds[3],1);
+			Game.enemies[Game.enemies.length] = new Enemy(75,50,Game.imageObj[12],Game.imageObj[13],Game.sounds[3],1);
+		}
+	},
+	
+	spawnWasp : function (amount) {
+		amount = typeof amount !== 'undefined' ? amount : 1;
+		for (i=0; i<=amount; i++) {
+			Game.enemies[Game.enemies.length] = new Enemy(75,50,Game.imageObj[2],Game.imageObj[9],Game.sounds[3],1);
+			Game.enemies[Game.enemies.length-1].equip(new noGun());
+			Game.enemies[Game.enemies.length-1].shotChance = 0;
+			Game.enemies[Game.enemies.length-1].maxXSpeed = 8;
+			Game.enemies[Game.enemies.length-1].maxYSpeed = 8;
+			Game.enemies[Game.enemies.length-1].accelerationX = 2;
+			Game.enemies[Game.enemies.length-1].accelerationY = 3;
 		}
 	},
 	
 	spawnBoss : function () {
-		Game.enemies[Game.enemies.length] = new Enemy(200,200,Game.imageObj[2],Game.sounds[3],30);
+		Game.enemies[Game.enemies.length] = new Enemy(175,150,Game.imageObj[12],Game.imageObj[13],Game.sounds[3],30);
 		Game.enemies[Game.enemies.length-1].velX = 0;
 		Game.enemies[Game.enemies.length-1].maxSpeedx = 6;
 		Game.enemies[Game.enemies.length-1].accelerationX = 0;
 		Game.enemies[Game.enemies.length-1].accelerationY= 3;
 		Game.enemies[Game.enemies.length-1].shotChance = .03;
 		Game.enemies[Game.enemies.length-1].points = 50;
-		createjs.Sound.play(Game.sounds[5]);
+		Game.enemies[Game.enemies.length-1].weapon.width = 50;
+		Game.enemies[Game.enemies.length-1].weapon.height = 15;
 	},
 	
 	spawnPowerUp : function() {

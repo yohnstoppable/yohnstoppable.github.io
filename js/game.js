@@ -155,13 +155,18 @@ Game = {
 		//set images sources
 		Game.images[0] = "images/paperAirplane.png";
 		Game.images[1] = "images/paperBall.png";
-		Game.images[2] = "images/shreddar2.png";
+		Game.images[2] = "images/wasp.png";
 		Game.images[3] = "images/background1.jpg";
 		Game.images[4] = "images/background2.jpg";
 		Game.images[5] = "images/paperBall.png";
 		Game.images[6] = "images/explosion.png";	
 		Game.images[7] = "images/machineGun.png";
 		Game.images[8] = "images/spread.png";		
+		Game.images[9] = "images/wasp2.png";	
+		Game.images[10] = "images/paperAirplane2.png";
+		Game.images[11] = "images/stinger2.png";
+		Game.images[12] = "images/enemyPlane.png";
+		Game.images[13] = "images/enemyPlane2.png";
 		Game.itemsToLoad += Game.images.length;
 
 		Game.sounds[0] = "audio/lazerShot.mp3";
@@ -195,7 +200,7 @@ Game = {
 	
 	//create initial objects
 	createGameObjects : function() {
-		Game.player1 = new Player(1,1,75,50,"dude",Game.imageObj[0]);
+		Game.player1 = new Player(1,1,75,50,"dude",Game.imageObj[10],Game.imageObj[0]);
 		Game.background1 = new scrollingBackGround(Game.imageObj[3], 3000, Game.canvas.height, -5, 0, -3000, 3000);
 		Game.background2 = new scrollingBackGround(Game.imageObj[4], 3000, Game.canvas.height, -5, 3000, -3000, 3000);	
 		Game.gameLoop();
@@ -212,7 +217,7 @@ Game = {
 		Game.isGameOver = false;
 		Game.paused = false;
 		Game.score = 0;
-		Game.player1.img.src = Game.images[0];
+		Game.player1.img = Game.images[0];
 		Game.gameLoop();
 	},
 	
@@ -232,10 +237,9 @@ Game = {
 		Game.paused = true;
 		Game.ctx.fillText("Game Over!",175,175);
 		Game.ctx.fillText("Score: " + Game.score, 175,275);
-		Game.player1.img.src = Game.images[6];
-		Game.player1.update();
+		Game.player1.img = Game.imageObj[6];
+		Game.player1.draw();
 		createjs.Sound.play(Game.sounds[2]);
-		createjs.Sound.play(Game.sounds[4]);
 	}
 };
 	
