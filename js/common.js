@@ -56,7 +56,16 @@ Common = {
 	
 	//********** Draw Game Objects **********
 	draw : function (obj) {
-		Game.ctx.drawImage(obj.img, obj.x, obj.y,obj.width,obj.height);
+		try {
+			Game.ctx.drawImage(obj.img, obj.x, obj.y,obj.width,obj.height);
+		} catch (e) {
+			console.trace();
+			console.log(obj.img.src);
+			console.log(obj.x);
+			console.log(obj.y);
+			console.log(obj.width);
+			console.log(obj.height);
+		}
 	},
 	
 	drawRotated : function(obj) {

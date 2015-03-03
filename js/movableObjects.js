@@ -286,14 +286,14 @@ var Projectile = function(obj,weapon) {
 asMovable.call(Projectile.prototype);
 
 //Enemy logic. Will probably be seperated out when more enemy types come into play. 
-var Enemy = function(width,height,imgLeft,imgRight,audio,health) {
+var Enemy = function(startingX,startingY,width,height,imgLeft,imgRight,audio,health) {
 	this.width = width;
 	this.height = height;
 	this.imgLeft = imgLeft;
 	this.imgRight = imgRight;
 	this.img = imgLeft;
-	this.x = Game.canvas.width - this.width;
-	this.y = Math.random() * (Game.canvas.height - this.height);
+	this.x = startingX;
+	this.y = startingY;
 	this.velX = 0;
 	this.velY = 0;
 	this.maxXSpeed = 4;
@@ -301,7 +301,7 @@ var Enemy = function(width,height,imgLeft,imgRight,audio,health) {
 	this.health = health;
 	this.accelerationX = 1;
 	this.accelerationY = 1;
-	this.shotChance = .001;
+	this.shotChance = .003;
 	this.deathSound = audio;
 	this.points = 1;
 	this.weapon = new defaultGun();
@@ -331,7 +331,7 @@ var Enemy = function(width,height,imgLeft,imgRight,audio,health) {
 			this.maxYSpeed = 6;
 			this.shotChance *= 100;
 			this.x  -= (this.accelerationX*3);
-			this.img = Game.imageObj[9];
+			this.img = this.imgRight;
 		}
 		
 		if (check[1] != -1) {

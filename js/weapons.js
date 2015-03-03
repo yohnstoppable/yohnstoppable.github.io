@@ -10,7 +10,7 @@ var defaultGun = function() {
 	this.spawnSound = Game.sounds[0];
 	this.velX = 0;
 	this.velY = 0;
-	this.health = 2;
+	this.health = 4;
 	this.bullets = -1;
 }
 
@@ -37,7 +37,7 @@ var machineGun = function() {
 	this.spawnSound = Game.sounds[0];
 	this.velX = 0;
 	this.velY = 0;
-	this.health = 1;
+	this.health = 2;
 	this.bullets = 100;
 }
 
@@ -64,7 +64,7 @@ var spread = function() {
 	this.spawnSound = Game.sounds[0];
 	this.velX = 0;
 	this.velY = 0;
-	this.health = 2;
+	this.health = 4;
 	this.bullets = 100;
 	this.offsetY = [-20,-10,0,10,20,10,0,-10];
 	this.offsetIndex = 0;
@@ -123,7 +123,7 @@ var blaster = function() {
 	this.spawnSound = Game.sounds[0];
 	this.velX = 0;
 	this.velY = 0;
-	this.health = 2;		
+	this.health = 4;		
 }
 
 blaster.prototype.shoot = function(obj,target,goodProjectile) {
@@ -174,6 +174,26 @@ stingGun.prototype.shoot = function(obj,target,goodProjectile) {
 	this.currentCooldown = this.cooldown;
 }
 
-var noGun = function() {}
+var swarmGun = function() {
+	this.bulletSpeed = 1;
+	this.speed = {x: 0, y: 0};
+	this.cooldown = 45;
+	this.currentCooldown = 0;
+	this.img = Game.imageObj[1];
+	this.width = 25;
+	this.height = 25;
+	this.spawnSound = Game.sounds[0];
+	this.velX = 0;
+	this.velY = 0;
+	this.health = 2;
+	this.bullets = -1;
+}
 
-noGun.prototype.shoot = function(obj,target,goodProctile) {}
+swarmGun.prototype.shoot = function(obj,target,goodProjectile) {
+	if (this.currentCooldown > 0 ) {
+		return;
+	}
+	
+	Stage.spawnWasp(10,obj.x+obj.width, obj.y+(obj.height/2));
+	this.currentCooldown = this.cooldown;
+}
