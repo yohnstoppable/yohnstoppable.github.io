@@ -98,18 +98,17 @@ var asMovable = function() {
 		this.angle = (Math.atan2(this.velY, this.velX));
 		rotate = typeof rotate !== 'undefined' ? rotate : false;
 		if (this.angle != 0 && rotate) {
-			Game.drawRotated(this);
+			Common.drawRotated(this);
 		} else {
-			Game.draw(this);
+			Common.draw(this);
 		}
 	}
 	
-	this.getDamaged = function(array,index,dmg) {
+	this.damage = function(array,index,dmg) {
 		this.health -= dmg;
 		if (this.health <= 0) {
 			if (typeof this.deathSound !== 'undefined') {
-				//this.deathSound.play();
-				createjs.Sound.play(this.deathSound);
+				createjs.Sound.play(this.deathSound,createjs.Sound.INTERRUPT_ANY);
 			}
 			array.splice(index,1);
 			delete(this);
@@ -130,6 +129,8 @@ var Player = function(x, y, width, height, name, img) {
 	this.friction = .8;
 	this.acceleration = 3;
 	this.img = img;
+	this.weapon = new defaultGun();
+	this.special = new blaster();
 	
 	this.reset = function() {
 		this.x = x;
@@ -137,11 +138,13 @@ var Player = function(x, y, width, height, name, img) {
 		this.velX = 0;
 		this.velY = 0;
 		this.img.src = img.src;
+		this.equip(new defaultGun());
 	}
 	
 	this.update = function() {
 		this.checkKeys();
 		this.checkTouch();
+		this.updateWeapons();
 		this.move();
 		this.bounds();		
 		this.draw();
@@ -185,10 +188,14 @@ var Player = function(x, y, width, height, name, img) {
 		}
 		//check for space bar to shoot
 		if (Game.keys[32]) {
-			Game.spawnProjectile(this,Game.mousePosition,10);
+			this.weapon.shoot(this,Game.mousePosition,true);
+			
+			if (this.weapon.bullets === 0) {
+				this.equip(new defaultGun());
+			}
 		}		
-		if (Game.keys[81] && Game.specialCooldown <= 0) { 
-			Game.spawnSpecial(this,Game.mousePosition,10);
+		if (Game.keys[81]) { 
+			this.special.shoot(this,Game.mousePosition,true);
 		}
 	}
 	
@@ -207,24 +214,41 @@ var Player = function(x, y, width, height, name, img) {
 			}
 		}
 	}
+	
+	this.equip = function(weapon) {
+		this.weapon = weapon;
+	}
+	
+	this.equipSpecial = function(special) {
+		this.special = special;
+	}
+	
+	this.updateWeapons = function() {
+		if (this.weapon.currentCooldown > 0) {
+			this.weapon.currentCooldown--;
+		}
+		
+		if (this.special.currentCooldown > 0) {
+			this.special.currentCooldown--;
+		}
+	}
 };
 asMovable.call(Player.prototype);
 
 //Definiting my projectile items. 
-var Projectile = function(obj,width,height,img,velX,velY,audio) {
+var Projectile = function(obj,weapon) {
 	this.x = obj.x + obj.width/2;
 	this.y = obj.y + obj.height / 2;
-	this.width = width;
-	this.height = height;
-	this.img = img;
-	this.velX = velX;
-	this.velY = velY;
+	this.width = weapon.width;
+	this.height = weapon.height;
+	this.img = weapon.img;
+	this.velX = weapon.speed.x;
+	this.velY = weapon.speed.y;
 	this.maxXSpeed = -1;
 	this.maxYSpeed = 1;
-	this.audio = audio;
-	createjs.Sound.play(this.audio);
-	//this.audio = new Audio(audio.src);
-	//this.audio.play();
+	this.health = weapon.health;
+	this.audio = weapon.spawnSound;
+	createjs.Sound.play(this.audio,createjs.Sound.INTERRUPT_ANY);
 	
 	this.update = function(gameArray,index) {
 		if (this.bounds(gameArray,index)) {
@@ -238,7 +262,7 @@ var Projectile = function(obj,width,height,img,velX,velY,audio) {
 	this.bounds = function(gameArray,index) {
 		var check = this.checkBounds(this.width,this.height);
 		if (check[0] != -1 || check[1] != -1) {
-			this.getDamaged(gameArray,index,this.health);
+			this.damage(gameArray,index,this.health);
 			return true;
 		} else {
 			return false;
@@ -256,15 +280,15 @@ var Enemy = function(width,height,img,audio,health) {
 	this.y = Math.random() * (Game.canvas.height - this.height);
 	this.velX = 0;
 	this.velY = 0;
-	this.maxXSpeed = 3;
+	this.maxXSpeed = 4;
 	this.maxYSpeed = 3;
 	this.health = health;
 	this.accelerationX = 1;
 	this.accelerationY = 1;
-	this.shotChance = .015;
+	this.shotChance = .001;
 	this.deathSound = audio;
-	//this.deathSound = new Audio(audio.src);
 	this.points = 1;
+	this.weapon = new defaultGun();
 	
 	this.update = function() {
 		if (Math.random() < .5) {
@@ -277,8 +301,9 @@ var Enemy = function(width,height,img,audio,health) {
 		this.bounds();
 		
 		if (Math.random() < this.shotChance) {
-			Game.spawnBadProjectile(this,Game.player1,8);
+			this.weapon.shoot(this,Game.player1,false);
 		}
+		this.updateCooldowns();
 		this.draw();
 	}
 	
@@ -288,7 +313,7 @@ var Enemy = function(width,height,img,audio,health) {
 			this.accelerationX *= -3;
 			this.maxXSpeed = 6;
 			this.maxYSpeed = 6;
-			this.shotChance *= 50;
+			this.shotChance *= 100;
 			this.x  -= (this.accelerationX*3);
 		}
 		
@@ -296,8 +321,48 @@ var Enemy = function(width,height,img,audio,health) {
 			this.y = check[1];
 		}
 	}
+	
+	this.equip = function(weapon) {
+		this.weapon = weapon;
+	}
+	
+	this.updateCooldowns = function() {
+		if (this.weapon.currentCooldown > 0) {
+			this.weapon.currentCooldown--;
+		}
+	}
 }
 asMovable.call(Enemy.prototype);
+
+var PowerUp = function(width,height,img,weapon) {
+	this.width = width;
+	this.height = height;
+	this.img = img;
+	this.x = Game.canvas.width - this.width;
+	this.y = Math.random() * (Game.canvas.height - this.height);
+	this.velX = -6;
+	this.velY = 0;
+	this.accelerationX = 1;
+	this.accelerationY = 1;
+	this.weapon = weapon;
+	
+	this.update = function(gameArray,index) {
+		this.move();
+		this.bounds(gameArray,index);
+		this.draw();
+	}
+	
+	this.bounds = function(gameArray,index) {
+		var check = this.checkBounds(this.width,this.height);
+		if (check[0] != -1 || check[1] != -1) {
+			this.damage(gameArray,index,this.health);
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
+asMovable.call(PowerUp.prototype);
 
 //Scrolling background. Gets a starting x and scroll speed. The resetAtX is the point where it is moved back to it's original starting position for infinate scrolling
 //The resetXTo is where it resets. This allows for multiple backgrounds for continuity. 
