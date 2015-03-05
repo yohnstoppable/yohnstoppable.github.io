@@ -2,14 +2,17 @@ Stage = {
 	ticker : 0,
 	bosses : 1,
 	stageNumber : 1,
-	enemyTimer : 70,
+	enemyTimer : 80,
 	bossTimer : 600,
 	difficulty : 0,
 	defaultDifficulty : 0,
-	difficultyTimer : 150,
+	difficultyTimer : 80,
 	powerUpTimer : 600,
 	update : function() {
 		Stage.ticker++;
+		if (Stage.ticker === 5) {
+			Stage.spawnEnemy();
+		}
 		if (Stage.ticker % Stage.difficultyTimer === 0) {
 			Stage.difficulty++;
 		}

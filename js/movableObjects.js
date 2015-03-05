@@ -285,7 +285,7 @@ var Projectile = function(obj,weapon) {
 			return;
 		} else {
 			this.move();
-			this.draw(true);
+			this.draw();
 		}
 	}
 	
