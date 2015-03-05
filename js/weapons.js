@@ -64,7 +64,7 @@ var spread = function() {
 	this.spawnSound = Game.sounds[0];
 	this.velX = 0;
 	this.velY = 0;
-	this.health = 4;
+	this.health = 2;
 	this.bullets = 100;
 	this.offsetY = [-20,-10,0,10,20,10,0,-10];
 	this.offsetIndex = 0;
@@ -123,7 +123,7 @@ var blaster = function() {
 	this.spawnSound = Game.sounds[0];
 	this.velX = 0;
 	this.velY = 0;
-	this.health = 4;		
+	this.health = 3;		
 }
 
 blaster.prototype.shoot = function(obj,target,goodProjectile) {
@@ -177,7 +177,7 @@ stingGun.prototype.shoot = function(obj,target,goodProjectile) {
 var swarmGun = function() {
 	this.bulletSpeed = 1;
 	this.speed = {x: 0, y: 0};
-	this.cooldown = 45;
+	this.cooldown = 100;
 	this.currentCooldown = 0;
 	this.img = Game.imageObj[1];
 	this.width = 25;
@@ -194,6 +194,34 @@ swarmGun.prototype.shoot = function(obj,target,goodProjectile) {
 		return;
 	}
 	
-	Stage.spawnWasp(10,obj.x+obj.width, obj.y+(obj.height/2));
+	Stage.spawnWasp(12,obj.x+obj.width, obj.y+(obj.height/2));
+	this.currentCooldown = this.cooldown;
+}
+
+var bfg = function() {
+	this.bulletSpeed = 10;
+	this.speed = {x: 0, y: 0};
+	this.cooldown = 50;
+	this.currentCooldown = 0;
+	this.img = Game.imageObj[1];
+	this.width = 175;
+	this.height = 175;
+	this.spawnSound = Game.sounds[0];
+	this.velX = 0;
+	this.velY = 0;
+	this.health = 20;
+	this.bullets = -1;
+}
+
+bfg.prototype.shoot = function(obj,target,goodProjectile) {
+	if (this.currentCooldown > 0 ) {
+		return;
+	}
+	
+	projectileArray = Game.getProjectileArray(goodProjectile);
+	
+	this.speed = Common.getRiseRun(obj,target,this.bulletSpeed);
+	this.bullets--;
+	projectileArray[projectileArray.length] = new Projectile(obj,this);
 	this.currentCooldown = this.cooldown;
 }

@@ -10,6 +10,7 @@ var asMovable = function() {
 	this.angle = 0;
 	this.health = 1;
 	this.points = 0;
+	this.drop = false;
 
 	this.move = function() {
 		if (this.hasGravity) {
@@ -109,14 +110,19 @@ var asMovable = function() {
 	
 	this.damage = function(array,index,dmg) {
 		this.health -= dmg;
-		if (this.health <= 0) {
-			if (typeof this.deathSound !== 'undefined') {
-				createjs.Sound.play(this.deathSound,createjs.Sound.INTERRUPT_ANY);
-			}
-			array.splice(index,1);
-			delete(this);
-			Game.score += this.points;
+	}
+	
+	this.kill = function(array, index) {
+		if (typeof this.deathSound !== 'undefined') {
+			createjs.Sound.play(this.deathSound,createjs.Sound.INTERRUPT_ANY);
 		}
+		
+		if (this.drop) {
+			Stage.spawnSpecial(this.x, this.y);
+		}
+		array.splice(index,1);
+		delete(this);
+		Game.score += this.points;
 	}
 }; 
 
@@ -134,7 +140,7 @@ var Player = function(x, y, width, height, name, imgLeft,imgRight) {
 	this.imgLeft = imgLeft;
 	this.imgRight = imgRight;
 	this.img = imgRight;
-	this.weapon = new defaultGun();
+	this.weapon = new spread();
 	this.special = new blaster();
 	
 	this.reset = function() {
@@ -222,7 +228,15 @@ var Player = function(x, y, width, height, name, imgLeft,imgRight) {
 	}
 	
 	this.equip = function(weapon) {
-		this.weapon = weapon;
+		if (weapon === "special") {
+			this.special.cooldown -= 5;
+			this.special.health+= .5;
+			this.special.bulletSpeed += .5;
+			this.special.width++;
+			this.special.height++;
+		} else {
+			this.weapon = weapon;
+		}
 	}
 	
 	this.equipSpecial = function(special) {
@@ -246,6 +260,7 @@ var Player = function(x, y, width, height, name, imgLeft,imgRight) {
 			this.img = this.imgRight;
 		}
 	}
+	
 };
 asMovable.call(Player.prototype);
 
@@ -265,7 +280,8 @@ var Projectile = function(obj,weapon) {
 	createjs.Sound.play(this.audio,createjs.Sound.INTERRUPT_ANY);
 	
 	this.update = function(gameArray,index) {
-		if (this.bounds(gameArray,index)) {
+		if (this.bounds(gameArray,index) || this.health <= 0) {
+			this.kill(gameArray,index);
 			return;
 		} else {
 			this.move();
@@ -276,7 +292,6 @@ var Projectile = function(obj,weapon) {
 	this.bounds = function(gameArray,index) {
 		var check = this.checkBounds(this.width,this.height);
 		if (check[0] != -1 || check[1] != -1) {
-			this.damage(gameArray,index,this.health);
 			return true;
 		} else {
 			return false;
@@ -306,7 +321,10 @@ var Enemy = function(startingX,startingY,width,height,imgLeft,imgRight,audio,hea
 	this.points = 1;
 	this.weapon = new defaultGun();
 	
-	this.update = function() {
+	this.update = function(gameArray,index) {
+		if (this.health <= 0) {
+			this.kill(gameArray,index);
+		}
 		if (Math.random() < .5) {
 			this.accelerate(0,this.accelerationY);
 		} else {
@@ -351,19 +369,23 @@ var Enemy = function(startingX,startingY,width,height,imgLeft,imgRight,audio,hea
 }
 asMovable.call(Enemy.prototype);
 
-var PowerUp = function(width,height,img,weapon) {
+var PowerUp = function(width,height,img,weapon,x,y) {
 	this.width = width;
 	this.height = height;
 	this.img = img;
-	this.x = Game.canvas.width - this.width;
-	this.y = Math.random() * (Game.canvas.height - this.height);
+	this.x = typeof x !== 'undefined' ? x : Game.canvas.width - this.width;
+	this.y = typeof y !== 'undefined' ? y : Math.random() * (Game.canvas.height - this.height);
 	this.velX = -6;
 	this.velY = 0;
 	this.accelerationX = 1;
 	this.accelerationY = 1;
-	this.weapon = weapon;
+	this.weapon = typeof weapon !== 'undefined' ? weapon : "special";
 	
 	this.update = function(gameArray,index) {
+		if (this.bounds()) {
+			this.kill(gameArray,index);
+			return;
+		}
 		this.move();
 		this.bounds(gameArray,index);
 		this.draw();
@@ -372,7 +394,6 @@ var PowerUp = function(width,height,img,weapon) {
 	this.bounds = function(gameArray,index) {
 		var check = this.checkBounds(this.width,this.height);
 		if (check[0] != -1 || check[1] != -1) {
-			this.damage(gameArray,index,this.health);
 			return true;
 		} else {
 			return false;
