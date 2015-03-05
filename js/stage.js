@@ -3,14 +3,17 @@ Stage = {
 	bosses : 1,
 	stageNumber : 1,
 	enemyTimer : 80,
-	waspTimer : 200,
+	waspTimer : 120,
 	bossTimer : 500,
 	difficulty : 0,
 	defaultDifficulty : 0,
-	difficultyTimer : 150,
+	difficultyTimer : 80,
 	powerUpTimer : 600,
 	update : function() {
 		Stage.ticker++;
+		if (Stage.ticker === 5) {
+			Stage.spawnEnemy();
+		}
 		if (Stage.ticker % Stage.difficultyTimer === 0) {
 			Stage.difficulty++;
 		}
@@ -25,6 +28,7 @@ Stage = {
 		if (Stage.ticker % (Stage.bossTimer - (Stage.difficulty*3)) === 0) {
 			if (Stage.bosses % 3 === 0) {
 				Stage.spawnWaspBoss();
+				Stage.spawnWasp(Stage.difficulty);
 			} else {
 				Stage.spawnBoss();
 			}
@@ -50,7 +54,7 @@ Stage = {
 		x = typeof x !== 'undefined' ? x : Game.canvas.width - 75;
 		y = typeof y !== 'undefined' ? y : Math.random() * (Game.canvas.height - 50);
 		for (i=0; i<amount; i++) {
-			Game.enemies[Game.enemies.length] = new Enemy(x,y,75,50,Game.imageObj[2],Game.imageObj[9],Game.sounds[3],1);
+			Game.enemies[Game.enemies.length] = new Enemy(x,y,35,25,Game.imageObj[2],Game.imageObj[9],Game.sounds[3],1);
 			Game.enemies[Game.enemies.length-1].maxXSpeed = 6;
 			Game.enemies[Game.enemies.length-1].maxYSpeed = 6;
 			Game.enemies[Game.enemies.length-1].accelerationX = 1;

@@ -114,7 +114,6 @@ var asMovable = function() {
 				createjs.Sound.play(this.deathSound,createjs.Sound.INTERRUPT_ANY);
 			}
 			array.splice(index,1);
-			delete(this);
 			Game.score += this.points;
 		}
 	}
@@ -269,7 +268,7 @@ var Projectile = function(obj,weapon) {
 			return;
 		} else {
 			this.move();
-			this.draw(true);
+			this.draw();
 		}
 	}
 	

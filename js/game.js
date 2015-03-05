@@ -7,7 +7,7 @@ window.requestAnimationFrame = function(){
         window.oRequestAnimationFrame      || 
         window.msRequestAnimationFrame     || 
         function(/* function */ callback){
-            window.setTimeout(callback, 1000 / 60);
+            window.setTimeout(callback, 1000 / 10);
         }
     );
 }();
@@ -36,6 +36,8 @@ Game = {
 	
 	//********************	Main Game Loop	**********************
 	gameLoop : function() {
+		setTimeout(function() {
+    
 		if (!Game.paused) {
 			Game.ctx.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
 			
@@ -121,7 +123,7 @@ Game = {
 				Game.highscore = Game.score;
 			}
 			requestAnimationFrame(Game.gameLoop);
-		}
+		}}, 1000 / Game.fps);
 	},
 
 	getProjectileArray : function(goodProjectile) {
