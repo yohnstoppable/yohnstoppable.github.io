@@ -33,14 +33,20 @@
 #menu ul{
 	list-style-type: none;
 	margin:auto;
-	width:300px;
+	width:400px;
 	text-align:center;
 }
 
 #menu li {
 	height:50px;
 	width:100px;
-	margin:auto;
+	margin-left:10px;
+	margin-right:10px;
 	float:left;
 	text-align:center;
+	background-color: grey;
+}
+
+#menu li:hover {
+	{ cursor: pointer; cursor: hand; }
 }
