@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="css/animate.css">
+		<link rel="stylesheet" href="css/site.css">
+		<script src="js/jquery-1.11.2.min.js"></script>
+		<script>
+			
+			$(document).ready(function() {
+				ImageHandling.loadImageArray("coats");	
+				$("#menu ul li").each(function(index,value) {
+					$(value).mouseover(function() {
+						ImageHandling.loadImageArray($(this).text());
+					});
+				});
+			});
+			
+			ImageHandling = {
+				imageArray : [],
+				transitionArray : [],
+				currentType: 0,
+				transitioning : false,
+				imageIndexes : {last:-1, current:0, loop:0},
+				
+				loadImageArray : function(type) {
+					if (ImageHandling.imageArray.length !== 0 && ImageHandling.currentType !== type && !ImageHandling.transitioning) {
+						ImageHandling.currentType = type;
+						ImageHandling.transitioning = true;
+						$(ImageHandling.imageArray[ImageHandling.imageIndexes.current]).fadeOut(500);
+						ImageHandling.imageIndexes.current = 0;
+						$("#test").find("img." + type).each(function(index,value){
+							ImageHandling.transitionArray[index] = value;
+						});
+					} else if (ImageHandling.imageArray.length === 0) {
+						ImageHandling.currentType = type;
+						$("#test").find("img").each(function(index,value){
+							$(value).hide();
+						});
+						$("#test").find("img." + type).each(function(index,value){
+							if (index === 0) {
+								$(value).fadeIn(500);
+							}
+							ImageHandling.imageArray[index] = value;
+						});
+					
+						setInterval(function() {
+							ImageHandling.imageSifter();
+						}, 250);
+					} 
+				},
+				
+				imageSifter : function() {
+					ImageHandling.imageIndexes.last = ImageHandling.imageIndexes.current;
+					if (ImageHandling.transitioning) {
+						ImageHandling.imageArray.current = 0;
+						ImageHandling.imageIndexes.last = ImageHandling.imageIndexes.current;
+						$(ImageHandling.transitionArray[0]).fadeIn(500);
+						ImageHandling.imageArray = ImageHandling.transitionArray;
+						ImageHandling.transitioning = false;
+						ImageHandling.imageIndexes.loop = 0;
+					} else if (ImageHandling.imageIndexes.loop === 8) {
+						ImageHandling.imageIndexes.current++;
+						
+						if (ImageHandling.imageIndexes.current === ImageHandling.imageArray.length) {
+							ImageHandling.imageIndexes.current = 0;
+						}
+						
+						$(ImageHandling.imageArray[ImageHandling.imageIndexes.current]).fadeIn(1000);
+						$(ImageHandling.imageArray[ImageHandling.imageIndexes.last]).fadeOut(1000);
+						ImageHandling.imageIndexes.loop = 0;
+					}
+					ImageHandling.imageIndexes.loop++;
+					$("#tester").text(ImageHandling.imageIndexes.current + "," +  ImageHandling.imageIndexes.last + " - " + ImageHandling.currentType + " - " + ImageHandling.transitioning);
+				}
+				
+			}
+		</script>
+	</head>
+	<body>
+		<div id="banner"></div>
+		<div id="tester"></div>
+		<div id="menu">
+			<ul>
+				<li>ties</li>
+				<li>coats</li>
+			</ul>
+		</div>
+		<div id="test">
+			<img src="images/tie1.jpg" class="ties">
+			<img src="images/tie2.jpg" class="ties">
+			<img src="images/tie3.jpg" class="ties">
+			<img src="images/tie4.jpg" class="ties">
+			<img src="images/coat1.jpg" class="coats">
+			<img src="images/coat2.jpg" class="coats">
+			<img src="images/coat3.jpg" class="coats">
+		</div>
+	</body>
+</html>
