@@ -110,6 +110,9 @@ var asMovable = function() {
 	
 	this.damage = function(array,index,dmg) {
 		this.health -= dmg;
+		if (this.health <= 0) {
+			this.kill(array,index);
+		}
 	}
 	
 	this.kill = function(array, index) {
@@ -123,6 +126,10 @@ var asMovable = function() {
 		array.splice(index,1);
 		delete(this);
 		Game.score += this.points;
+	}
+	
+	this.getHealth = function() {
+		return this.health;
 	}
 }; 
 
@@ -275,12 +282,15 @@ var Projectile = function(obj,weapon) {
 	this.velY = weapon.speed.y;
 	this.maxXSpeed = -1;
 	this.maxYSpeed = 1;
-	this.health = weapon.health;
+	this.health = 2;
 	this.audio = weapon.spawnSound;
 	createjs.Sound.play(this.audio,createjs.Sound.INTERRUPT_ANY);
 	
 	this.update = function(gameArray,index) {
-		if (this.bounds(gameArray,index) || this.health <= 0) {
+		if (Math.abs(this.health) > 10) {
+			document.getElementById("projectile").innerHTML = this.health;
+		}
+		if (this.bounds(gameArray,index)) {
 			this.kill(gameArray,index);
 			return;
 		} else {
@@ -322,9 +332,6 @@ var Enemy = function(startingX,startingY,width,height,imgLeft,imgRight,audio,hea
 	this.weapon = new defaultGun();
 	
 	this.update = function(gameArray,index) {
-		if (this.health <= 0) {
-			this.kill(gameArray,index);
-		}
 		if (Math.random() < .5) {
 			this.accelerate(0,this.accelerationY);
 		} else {
@@ -333,6 +340,9 @@ var Enemy = function(startingX,startingY,width,height,imgLeft,imgRight,audio,hea
 		this.accelerate(-this.accelerationX,0);
 		this.move();
 		this.bounds();
+		if (this.height > 100) {
+			document.getElementById("boss").innerHTML = this.health;
+		}
 		
 		if (Math.random() < this.shotChance) {
 			this.weapon.shoot(this,Game.player1,false);

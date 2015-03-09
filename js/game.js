@@ -93,19 +93,18 @@ Game = {
 					}
 				}
 			}
-			
+			var enemyHealth=0;
+			var bulletHealth=0;
 			//Player projectiles collision with enemies
-			var bulletHealth = 0;
-			var enemyHealth = 0;
 			if (Game.projectiles.length > 0 && Game.enemies.length > 0) {
 				for (var i=0; i < Game.projectiles.length; i++ ) {
 					for (var n=0; n < Game.enemies.length; n++) {
 						if (Common.checkCollision(Game.projectiles[i],Game.enemies[n])) {	
-							enemyHealth = Game.enemies[n].health;
-							bulletHealth = Game.projectiles[i].health;
+							enemyHealth = Game.enemies[n].getHealth();
+							bulletHealth = Game.projectiles[i].getHealth();
 							Game.enemies[n].damage(Game.enemies,n,bulletHealth);
 							Game.projectiles[i].damage(Game.projectiles,i,enemyHealth);
-							//break;
+							break;
 						}
 					}
 				}
