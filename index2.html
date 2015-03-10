@@ -7,6 +7,7 @@
 		<script src="js/ImageHandler.js"></script>
 		<script>
 		"use strict";
+			var moved = false;
 			
 			$(document).ready(function() {
 				loadPage();
@@ -28,23 +29,49 @@
 						transitionPage(handler,$(this).text().toLowerCase());
 					});
 				});
-				$("#page img").each(function(index,value) {
+				$("#page").children().each(function(index,value) {
 					$(value).hide();
 				});
-				$("#page p").each(function(index,value) {
-					$(value).hide();
-				});
+				
 				$("#page").hide();
 			}
 			
 				
 			var transitionPage = function(handler,type) {
-				//$(handler.getImageArray()[handler.getCurrent()]).show();
 				window.clearInterval(handler.getHandle());				
-				//$(handler.getImageArray()[handler.getLast()]).fadeOut(100);
-				$("#menu").addClass("animated fadeOutLeft");
+				//$("#menu").addClass("animated fadeOutLeft");
+				if (!moved) {
+					moved = true;
+					moveMenu();
+					setTimeout(function() {
+						showPage(type);
+					},400);
+				} else {
+					$("#page").children().not("."+type).slideUp(300);
+					setTimeout(function() {
+						showPage(type);
+					},610);
+				}
+			}
+			
+			var moveMenu = function() {
+				$('#menu').animate({
+					left: '-=150', width: '-=50'
+				}, 400, 'swing', function() {});
+			}
+			
+			var resetMenu = function() {
+				$('#menu').animate({
+					left: '+=150', width: '+=50'
+				}, 400, 'swing', function() {});
+			}
+			
+			var showPage = function(type) {
 				$("#test").addClass("animated fadeOutUp");
 				
+				$("#page").find("div." + type).each(function(index,value){
+					$(value).show();
+				});
 				$("#page").find("img." + type).each(function(index,value){
 					$(value).show();
 					$(value).addClass("animated fadeInLeft");
@@ -59,6 +86,8 @@
 			var reset = function() {
 				$("#menu").removeClass("fadeOutLeft").addClass("fadeInLeft");
 				$("#test").removeClass("fadeOutUp").addClass("fadeInDown");
+				resetMenu();
+				moved = false;
 				loadPage();
 			}
 		</script>
@@ -85,16 +114,15 @@
 				<img src="images/shoes3.jpg" class="shoes">
 			</div>
 			<div id="page">
-				<input type="button" onclick="javascript:reset()" value="Reset Page">
-				<img src="images/tie1.jpg" class="ties"><p class="ties">Robert Downey Jr is one sexy mother fucker. I always forget that he was the guy in Weird Science who pantsed the two main guys at the start. That was a dick move. Also, Kiss Kiss Bang Bang is an awesome movie</p><p class="clear"></p>
-				<img src="images/tie2.jpg" class="ties"><p class="ties">Gerard Butler is a little nancy boy who has to ask permission to use the restroom. He tried to fight me over using the blue play doh, but I whooped his ass</p><p class="clear"></p>
-				<img src="images/tie3.jpg" class="ties"><p class="ties">I don't even know who this mother fucker is. I bet he has sex with his socks on like a goober</p><p class="clear"></p>
-				<img src="images/coat1.jpg" class="coats"><p class="coats">One of the cashiers at HEB has his hair cut like Macklemore. He looks like a huge doucher, and I always refer to him as Mackleless. Thrift Shops are great places to shop for cheap clothes for halloween costumes.</p><p class="clear"></p>
-				<img src="images/coat2.jpg" class="coats"><p class="coats">This guy is making me question my heterosexuality. I like how he is staring off into nothing, thinking to himself, "how could I let my imaginary friend beat me at chess?"</p><p class="clear"></p>
-				<img src="images/coat3.jpg" class="coats"><p class="coats">Where the hell was this picture even taken? Q-bert called. He wants his house back</p><p class="clear"></p>
-				<img src="images/shoes1.jpg" class="shoes"><p class="shoes">These are converse. They are good shoes for playing basketball or being in junior high. Actually I have Bart Man converse shoes, and they fucking rule. Uncomfortable as fuck, though, because who needs arch support, amiright?</p><p class="clear"></p>
-				<img src="images/shoes2.jpg" class="shoes"><p class="shoes">These are the kind of shoes someone's grandfather, or Rob, would wear</p><p class="clear"></p>
-				<img src="images/shoes3.jpg" class="shoes"><p class="shoes">Something else about converse. </p><p class="clear"></p>
+				<div class="ties"><img src="images/tie1.jpg" class="ties"><p class="ties">Robert Downey Jr is one sexy mother fucker. I always forget that he was the guy in Weird Science who pantsed the two main guys at the start. That was a dick move. Also, Kiss Kiss Bang Bang is an awesome movie<input type="button" onclick="javascript:reset()" value="Reset Page"></p></div>
+				<div class="ties"><img src="images/tie2.jpg" class="ties"><p class="ties">Gerard Butler is a little nancy boy who has to ask permission to use the restroom. He tried to fight me over using the blue play doh, but I whooped his ass</p></div>
+				<div class="ties"><img src="images/tie3.jpg" class="ties"><p class="ties">I don't even know who this mother fucker is. I bet he has sex with his socks on like a goober</p></div>
+				<div class="coats"><img src="images/coat1.jpg" class="coats"><p class="coats">One of the cashiers at HEB has his hair cut like Macklemore. He looks like a huge doucher, and I always refer to him as Mackleless. Thrift Shops are great places to shop for cheap clothes for halloween costumes.<input type="button" onclick="javascript:reset()" value="Reset Page"></p></div>
+				<div class="coats"><img src="images/coat2.jpg" class="coats"><p class="coats">This guy is making me question my heterosexuality. I like how he is staring off into nothing, thinking to himself, "how could I let my imaginary friend beat me at chess?"</p></div>
+				<div class="coats"><img src="images/coat3.jpg" class="coats"><p class="coats">Where the hell was this picture even taken? Q-bert called. He wants his house back</p></div>
+				<div class="shoes"><img src="images/shoes1.jpg" class="shoes"><p class="shoes">These are converse. They are good shoes for playing basketball or being in junior high. Actually I have Bart Man converse shoes, and they fucking rule. Uncomfortable as fuck, though, because who needs arch support, amiright?<input type="button" onclick="javascript:reset()" value="Reset Page"></p></div>
+				<div class="shoes"><img src="images/shoes2.jpg" class="shoes"><p class="shoes">These are the kind of shoes someone's grandfather, or Rob, would wear</p></div>
+				<div class="shoes"><img src="images/shoes3.jpg" class="shoes"><p class="shoes">Something else about converse. </p></div>
 			</div>
 		</div>
 	</body>

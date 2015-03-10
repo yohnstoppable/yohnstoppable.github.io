@@ -68,17 +68,30 @@ ul { padding:0;}
 	position: relative;
 	height: 300px;
 	width: 400px;
-	margin-bottom:30px;
 	float:left;
+	margin-left:45px;
+	margin-top:25px;
+	-vendor-animation-duration: 4s;
 }
 
 #page p {
-	width:800px;
+	width:400px;
 	height: 300px;
-	margin-left:auto;
-	margin-right:auto;
-	margin-bottom:30px;
+	margin-left:45px;
+	margin-top:25px;
 	float:left;
+	-vendor-animation-duration: 4s;
+}
+
+#page div {
+	width: 900px;
+	height:350px;
+	display:block;
+	margin:auto;
+	border-top: 1px solid grey;
+	border-bottom: 1px solid grey;
+	text-align:center;
+	padding:auto;
 }
 
 .clear {
