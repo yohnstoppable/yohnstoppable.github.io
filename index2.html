@@ -10,7 +10,7 @@
 				ImageHandling.loadImageArray("coats");	
 				$("#menu ul li").each(function(index,value) {
 					$(value).mouseover(function() {
-						ImageHandling.loadImageArray($(this).text());
+						ImageHandling.loadImageArray($(this).text().toLowerCase());
 					});
 				});
 			});
@@ -70,35 +70,31 @@
 						ImageHandling.imageIndexes.loop = 0;
 					}
 					ImageHandling.imageIndexes.loop++;
-					$("#tester").text(ImageHandling.imageIndexes.current + "," +  ImageHandling.imageIndexes.last + " - " + ImageHandling.currentType + " - " + ImageHandling.transitioning);
 				}
 				
 			}
 		</script>
 	</head>
 	<body>
-		<div id="banner"></div>
-		<div id="tester"></div>
-		<div id="menu">
-			<ul>
-				<li>ties</li>
-				<li>coats</li>
-				<li>shoes</li>
-			</ul>
-		</div>
-		<div id="test">
-			<img src="images/tie1.jpg" class="ties">
-			<img src="images/tie2.jpg" class="ties">
-			<img src="images/tie3.jpg" class="ties">
-			<img src="images/tie4.jpg" class="ties">
-			<img src="images/coat1.jpg" class="coats">
-			<img src="images/coat2.jpg" class="coats">
-			<img src="images/coat3.jpg" class="coats">
-			<img src="images/shoes1.jpg" class="shoes">
-			<img src="images/shoes2.jpg" class="shoes">
-			<img src="images/shoes3.jpg" class="shoes">
-			<img src="images/shoes4.jpg" class="shoes">
-			<img src="images/shoes5.jpg" class="shoes">
+		<div id="container">
+			<div id="menu">
+				<ul>
+					<li>TIES</li>
+					<li>COATS</li>
+					<li>SHOES</li>
+				</ul>
+			</div>
+			<div id="test">
+				<img src="images/tie1.jpg" class="ties">
+				<img src="images/tie2.jpg" class="ties">
+				<img src="images/tie3.jpg" class="ties">
+				<img src="images/coat1.jpg" class="coats">
+				<img src="images/coat2.jpg" class="coats">
+				<img src="images/coat3.jpg" class="coats">
+				<img src="images/shoes1.jpg" class="shoes">
+				<img src="images/shoes2.jpg" class="shoes">
+				<img src="images/shoes3.jpg" class="shoes">
+			</div>
 		</div>
 	</body>
 </html>

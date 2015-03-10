@@ -1,19 +1,16 @@
 #test {
-  position:relative;
-  height:510px;
-  width:510px;
-  margin:0 auto;
+  height:100%;
+  width:100%;
+  margin: auto;
 }
 
 #test img {
-	position: absolute;
-	height: 500px;
-	width: 425px;
+	position:absolute;
+	margin:auto;
+	height: 100%;
+	width: 100%;
 	border: 1px solid black;
-}
-
-.hidden {
-	opacity:0;
+	z-index:0;
 }
 
 #banner {
@@ -24,29 +21,37 @@
 }
 
 #menu {
-	width:800px;
-	height:50px;
-	margin:auto;
+	width:15%;
+	height:100%;
+	margin-left:10%;
 	text-align:center;
+	vertical-align:middle;
+	position:absolute;
+	width:275px;
+	background-color: rgba(0, 0, 0, 0.2);
+	z-index:1;
+	display:table;
+	padding-left:auto;
+	padding-right:auto;
 }
 
-#menu ul{
-	list-style-type: none;
-	margin:auto;
-	width:400px;
-	text-align:center;
-}
+ul { padding:0;}
 
-#menu li {
-	height:50px;
-	width:100px;
-	margin-left:10px;
-	margin-right:10px;
-	float:left;
+#menu ul li {
+	display:block;
+	font-size: 300%;
+	color:#fefe91;
 	text-align:center;
-	background-color: grey;
+	margin-top:25%;
+	margin-bottom:25%;
+	height:100px;
+	vertical-align:middle;
+	z-index:1;
+	width:100%;
 }
 
 #menu li:hover {
-	{ cursor: pointer; cursor: hand; }
+	cursor: pointer; 
+	cursor: hand;
+	font-size:350%;
 }
