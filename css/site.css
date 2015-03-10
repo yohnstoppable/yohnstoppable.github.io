@@ -1,7 +1,8 @@
 #test {
-  height:100%;
-  width:100%;
-  margin: auto;
+	position:absolute;
+	height:100%;
+	width:100%;
+	margin: auto;
 }
 
 #test img {
@@ -31,8 +32,6 @@
 	background-color: rgba(0, 0, 0, 0.2);
 	z-index:1;
 	display:table;
-	padding-left:auto;
-	padding-right:auto;
 }
 
 ul { padding:0;}
@@ -44,8 +43,8 @@ ul { padding:0;}
 	text-align:center;
 	margin-top:25%;
 	margin-bottom:25%;
-	height:100px;
-	vertical-align:middle;
+	height:75px;
+	line-height:75px;
 	z-index:1;
 	width:100%;
 }
@@ -53,5 +52,35 @@ ul { padding:0;}
 #menu li:hover {
 	cursor: pointer; 
 	cursor: hand;
-	font-size:350%;
+	font-size:325%;
+}
+
+#page {
+	position:absolute;
+	width:100%;
+	margin: auto;
+	text-align:center;
+	display:hidden;
+}
+
+#page img{
+	display: hidden;
+	position: relative;
+	height: 300px;
+	width: 400px;
+	margin-bottom:30px;
+	float:left;
+}
+
+#page p {
+	width:800px;
+	height: 300px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:30px;
+	float:left;
+}
+
+.clear {
+	clear:both;
 }

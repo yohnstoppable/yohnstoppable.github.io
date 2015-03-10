@@ -4,80 +4,69 @@
 		<link rel="stylesheet" href="css/animate.css">
 		<link rel="stylesheet" href="css/site.css">
 		<script src="js/jquery-1.11.2.min.js"></script>
+		<script src="js/ImageHandler.js"></script>
 		<script>
+		"use strict";
 			
 			$(document).ready(function() {
-				ImageHandling.loadImageArray("coats");	
-				$("#menu ul li").each(function(index,value) {
-					$(value).mouseover(function() {
-						ImageHandling.loadImageArray($(this).text().toLowerCase());
-					});
-				});
+				loadPage();
 			});
 			
-			ImageHandling = {
-				imageArray : [],
-				transitionArray : [],
-				currentType: 0,
-				transitioning : false,
-				imageIndexes : {last:-1, current:0, loop:0},
+			var loadPage = function() {
+				var handler = new ImageHandler();
+				handler.loadImages("coats");	
+				$("#menu ul li").each(function(index,value) {
+					$(value).addClass("animated");
+					$(value).mouseover(function() {
+						handler.loadImages($(this).text().toLowerCase());
+						$(this).addClass("pulse");
+					});
+					$(value).mouseout(function() {
+						$(this).removeClass("pulse");
+					});
+					$(value).click(function() {
+						transitionPage(handler,$(this).text().toLowerCase());
+					});
+				});
+				$("#page img").each(function(index,value) {
+					$(value).hide();
+				});
+				$("#page p").each(function(index,value) {
+					$(value).hide();
+				});
+				$("#page").hide();
+			}
+			
 				
-				loadImageArray : function(type) {
-					if (ImageHandling.imageArray.length !== 0 && ImageHandling.currentType !== type && !ImageHandling.transitioning) {
-						ImageHandling.currentType = type;
-						ImageHandling.transitioning = true;
-						$(ImageHandling.imageArray[ImageHandling.imageIndexes.current]).fadeOut(500);
-						ImageHandling.imageIndexes.current = 0;
-						$("#test").find("img." + type).each(function(index,value){
-							ImageHandling.transitionArray[index] = value;
-						});
-					} else if (ImageHandling.imageArray.length === 0) {
-						ImageHandling.currentType = type;
-						$("#test").find("img").each(function(index,value){
-							$(value).hide();
-						});
-						$("#test").find("img." + type).each(function(index,value){
-							if (index === 0) {
-								$(value).fadeIn(500);
-							}
-							ImageHandling.imageArray[index] = value;
-						});
-					
-						setInterval(function() {
-							ImageHandling.imageSifter();
-						}, 250);
-					} 
-				},
+			var transitionPage = function(handler,type) {
+				$(handler.getImageArray()[handler.getCurrent()]).show();
+				window.clearInterval(handler.getHandle());				
+				//$(handler.getImageArray()[handler.getLast()]).fadeOut(100);
+				$("#menu").addClass("animated fadeOutLeft");
+				$("#test").addClass("animated fadeOutUp");
 				
-				imageSifter : function() {
-					ImageHandling.imageIndexes.last = ImageHandling.imageIndexes.current;
-					if (ImageHandling.transitioning) {
-						ImageHandling.imageArray.current = 0;
-						ImageHandling.imageIndexes.last = ImageHandling.imageIndexes.current;
-						$(ImageHandling.transitionArray[0]).fadeIn(500);
-						ImageHandling.imageArray = ImageHandling.transitionArray;
-						ImageHandling.transitioning = false;
-						ImageHandling.imageIndexes.loop = 0;
-					} else if (ImageHandling.imageIndexes.loop === 8) {
-						ImageHandling.imageIndexes.current++;
-						
-						if (ImageHandling.imageIndexes.current === ImageHandling.imageArray.length) {
-							ImageHandling.imageIndexes.current = 0;
-						}
-						
-						$(ImageHandling.imageArray[ImageHandling.imageIndexes.current]).fadeIn(1000);
-						$(ImageHandling.imageArray[ImageHandling.imageIndexes.last]).fadeOut(1000);
-						ImageHandling.imageIndexes.loop = 0;
-					}
-					ImageHandling.imageIndexes.loop++;
-				}
-				
+				$("#page").find("img." + type).each(function(index,value){
+					$(value).show();
+					$(value).addClass("animated fadeInLeft");
+				});
+				$("#page").find("p." + type).each(function(index,value){
+					$(value).show();
+					$(value).addClass("animated fadeInRight");
+				});
+				$("#page").show();
+			}
+			
+			var reset = function() {
+				$("#menu").removeClass("fadeOutLeft").addClass("fadeInLeft");
+				$("#test").removeClass("fadeOutUp").addClass("fadeInDown");
+				loadPage();
 			}
 		</script>
 	</head>
 	<body>
 		<div id="container">
 			<div id="menu">
+				<p></p>
 				<ul>
 					<li>TIES</li>
 					<li>COATS</li>
@@ -94,6 +83,18 @@
 				<img src="images/shoes1.jpg" class="shoes">
 				<img src="images/shoes2.jpg" class="shoes">
 				<img src="images/shoes3.jpg" class="shoes">
+			</div>
+			<div id="page">
+				<input type="button" onclick="javascript:reset()" value="Reset Page">
+				<img src="images/tie1.jpg" class="ties"><p class="ties">Robert Downey Jr is one sexy mother fucker. I always forget that he was the guy in Weird Science who pantsed the two main guys at the start. That was a dick move. Also, Kiss Kiss Bang Bang is an awesome movie</p><p class="clear"></p>
+				<img src="images/tie2.jpg" class="ties"><p class="ties">Gerard Butler is a little nancy boy who has to ask permission to use the restroom. He tried to fight me over using the blue play doh, but I whooped his ass</p><p class="clear"></p>
+				<img src="images/tie3.jpg" class="ties"><p class="ties">I don't even know who this mother fucker is. I bet he has sex with his socks on like a goober</p><p class="clear"></p>
+				<img src="images/coat1.jpg" class="coats"><p class="coats">One of the cashiers at HEB has his hair cut like Macklemore. He looks like a huge doucher, and I always refer to him as Mackleless. Thrift Shops are great places to shop for cheap clothes for halloween costumes.</p><p class="clear"></p>
+				<img src="images/coat2.jpg" class="coats"><p class="coats">This guy is making me question my heterosexuality. I like how he is staring off into nothing, thinking to himself, "how could I let my imaginary friend beat me at chess?"</p><p class="clear"></p>
+				<img src="images/coat3.jpg" class="coats"><p class="coats">Where the hell was this picture even taken? Q-bert called. He wants his house back</p><p class="clear"></p>
+				<img src="images/shoes1.jpg" class="shoes"><p class="shoes">These are converse. They are good shoes for playing basketball or being in junior high. Actually I have Bart Man converse shoes, and they fucking rule. Uncomfortable as fuck, though, because who needs arch support, amiright?</p><p class="clear"></p>
+				<img src="images/shoes2.jpg" class="shoes"><p class="shoes">These are the kind of shoes someone's grandfather, or Rob, would wear</p><p class="clear"></p>
+				<img src="images/shoes3.jpg" class="shoes"><p class="shoes">Something else about converse. </p><p class="clear"></p>
 			</div>
 		</div>
 	</body>
