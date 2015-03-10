@@ -13,11 +13,11 @@ Stage = {
 		if (Stage.ticker % Stage.difficultyTimer === 0) {
 			Stage.difficulty++;
 		}
-		if (Stage.ticker % (Stage.enemyTimer-Stage.difficulty) === 0) {
-			Stage.spawnEnemy(Math.ceil(Math.random()*3 + (Stage.difficulty/12)));
+		if (Stage.ticker % (Stage.enemyTimer-(Stage.difficulty/4)) === 0) {
+			Stage.spawnEnemy(Math.ceil(Math.random()*3 + (Stage.difficulty/14)));
 		}
 		
-		if (Stage.ticker % (Stage.bossTimer - (Stage.difficulty*3)) === 0) {
+		if (Stage.ticker % Stage.bossTimer === 0) {
 			if (Stage.bosses % 3 === 0) {
 				Stage.spawnWaspBoss();
 				Stage.spawnWasp(Stage.difficulty/2);
@@ -27,7 +27,7 @@ Stage = {
 			Stage.bosses++;
 		}
 		
-		if (Stage.ticker % Stage.powerUpTimer === 0) {
+		if (Stage.ticker % (Stage.powerUpTimer + Stage.difficulty) === 0) {
 			Stage.spawnPowerUp();
 		}
 	},
@@ -64,6 +64,7 @@ Stage = {
 		Game.enemies[Game.enemies.length-1].points = 50;
 		Game.enemies[Game.enemies.length-1].weapon.width = 50;
 		Game.enemies[Game.enemies.length-1].weapon.height = 15;
+		Game.enemies[Game.enemies.length-1].drop = true;
 	},
 	
 	spawnWaspBoss : function (x,y) {
@@ -78,15 +79,23 @@ Stage = {
 		Game.enemies[Game.enemies.length-1].points = 100;
 		Game.enemies[Game.enemies.length-1].weapon.width = 50;
 		Game.enemies[Game.enemies.length-1].weapon.height = 15;
+		Game.enemies[Game.enemies.length-1].drop = true;
 		Game.enemies[Game.enemies.length-1].equip(new swarmGun());
 	},
 	
 	spawnPowerUp : function() {
-		if (Math.random() > .25) {
-			Game.powerUps[Game.powerUps.length] = new PowerUp(40,20,Game.imageObj[7], new machineGun());
-		} else {
+		var chance = Math.random();
+		if (chance < .25) {
 			Game.powerUps[Game.powerUps.length] = new PowerUp(40,20,Game.imageObj[8], new spread());
+		} else if (chance <= .5) {
+			Game.powerUps[Game.powerUps.length] = new PowerUp(40,20,Game.imageObj[14], new bfg());
+		} else {
+			Game.powerUps[Game.powerUps.length] = new PowerUp(40,20,Game.imageObj[7], new machineGun());
 		}
+	},
+	
+	spawnSpecial : function(x,y) {
+		Game.powerUps[Game.powerUps.length] = new PowerUp(40,20,Game.imageObj[15],"special",x,y);
 	},
 	
 	reset: function() {

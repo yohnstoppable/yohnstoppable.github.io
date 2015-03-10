@@ -1,0 +1,52 @@
+#test {
+  position:relative;
+  height:510px;
+  width:510px;
+  margin:0 auto;
+}
+
+#test img {
+	position: absolute;
+	height: 500px;
+	width: 425px;
+	border: 1px solid black;
+}
+
+.hidden {
+	opacity:0;
+}
+
+#banner {
+    background:url('../images/banner.jpg');
+	margin:auto;
+    width:800px;
+    height:150px;
+}
+
+#menu {
+	width:800px;
+	height:50px;
+	margin:auto;
+	text-align:center;
+}
+
+#menu ul{
+	list-style-type: none;
+	margin:auto;
+	width:400px;
+	text-align:center;
+}
+
+#menu li {
+	height:50px;
+	width:100px;
+	margin-left:10px;
+	margin-right:10px;
+	float:left;
+	text-align:center;
+	background-color: grey;
+}
+
+#menu li:hover {
+	{ cursor: pointer; cursor: hand; }
+}

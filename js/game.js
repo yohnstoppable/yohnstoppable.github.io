@@ -20,6 +20,8 @@ Game = {
 	badProjectiles : [],
 	powerUps : [],
 	enemies: [],
+	enemyCollisions : [],
+	projectileCollisions : [],
 	score : 0,
 	keys : [],
 	images : [],
@@ -68,7 +70,7 @@ Game = {
 			
 			if (Game.enemies.length > 0) {
 				for (var i=0; i < Game.enemies.length; i++ ) {
-					Game.enemies[i].update();
+					Game.enemies[i].update(Game.enemies,i);
 				}
 			}
 			
@@ -91,14 +93,17 @@ Game = {
 					}
 				}
 			}
-			
+			var enemyHealth=0;
+			var bulletHealth=0;
 			//Player projectiles collision with enemies
 			if (Game.projectiles.length > 0 && Game.enemies.length > 0) {
 				for (var i=0; i < Game.projectiles.length; i++ ) {
 					for (var n=0; n < Game.enemies.length; n++) {
 						if (Common.checkCollision(Game.projectiles[i],Game.enemies[n])) {	
-							Game.enemies[n].damage(Game.enemies,n,1);
-							Game.projectiles[i].damage(Game.projectiles,i,1);
+							enemyHealth = Game.enemies[n].getHealth();
+							bulletHealth = Game.projectiles[i].getHealth();
+							Game.enemies[n].damage(Game.enemies,n,bulletHealth);
+							Game.projectiles[i].damage(Game.projectiles,i,enemyHealth);
 							break;
 						}
 					}
@@ -110,7 +115,7 @@ Game = {
 				for (var i=0; i< Game.powerUps.length; i++) {
 					if (Common.checkCollision(Game.powerUps[i],Game.player1)) {
 						Game.player1.equip(Game.powerUps[i].weapon);
-						Game.powerUps[i].damage(Game.powerUps,i,1);
+						Game.powerUps[i].kill(Game.powerUps,i,1);
 						break;
 					}
 				}
@@ -169,6 +174,8 @@ Game = {
 		Game.images[11] = "images/stinger2.png";
 		Game.images[12] = "images/enemyPlane.png";
 		Game.images[13] = "images/enemyPlane2.png";
+		Game.images[14] = "images/bfg.png";
+		Game.images[15] = "images/special.png";
 		Game.itemsToLoad += Game.images.length;
 
 		Game.sounds[0] = "audio/lazerShot.mp3";
