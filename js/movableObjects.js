@@ -304,6 +304,7 @@ var Enemy = function(startingX,startingY,width,height,imgLeft,imgRight,audio,hea
 	this.deathSound = audio;
 	this.points = 1;
 	this.weapon = new defaultGun();
+	this.health = 2;
 	
 	this.update = function() {
 		if (Math.random() < .5) {

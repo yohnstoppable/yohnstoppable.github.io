@@ -177,11 +177,11 @@ stingGun.prototype.shoot = function(obj,target,goodProjectile) {
 var swarmGun = function() {
 	this.bulletSpeed = 1;
 	this.speed = {x: 0, y: 0};
-	this.cooldown = 85;
+	this.cooldown = 35;
 	this.currentCooldown = 0;
 	this.img = Game.imageObj[1];
-	this.width = 35;
-	this.height = 25;
+	this.width = 45;
+	this.height = 35;
 	this.spawnSound = Game.sounds[0];
 	this.velX = 0;
 	this.velY = 0;
@@ -194,6 +194,6 @@ swarmGun.prototype.shoot = function(obj,target,goodProjectile) {
 		return;
 	}
 	
-	Stage.spawnWasp(10,obj.x+obj.width, obj.y+(obj.height/2));
+	Stage.spawnWasp(Math.ceil(Math.random()*7)+3,obj.x+obj.width, obj.y+(obj.height/2));
 	this.currentCooldown = this.cooldown;
 }
