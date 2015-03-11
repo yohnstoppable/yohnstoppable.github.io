@@ -38,8 +38,8 @@
 							$(this).removeClass("animated pulse");
 						});
 						$(value).click(function() {
-							home = false;
 							transitionPage(handler,$(this).text().toLowerCase());
+							home = false;
 						});
 					} else if ($(value).hasClass("bio")) {
 						$(value).click(function() {
@@ -109,7 +109,7 @@
 			var showPage = function(type) {
 				var thisImgArray = [];
 				$('#test').animate({
-					top: '-=150', opacity: '0'
+					top: '0', opacity: '0'
 				}, 500, 'swing', function() {});
 				
 				$("#page").find("div." + type).each(function(index,value){
@@ -145,8 +145,8 @@
 			var fadePage = function() {
 				$("#page").fadeOut(300);
 				setTimeout(function() {	
-					$("#test").finish().css({ opacity:0}).animate({
-						top: '+=150', opacity: '1'
+					$("#test").finish().css({opacity:0}).animate({
+						top: '150', opacity: '1'
 					}, 500, 'swing', function() {});
 					loadPage();
 				},400);
