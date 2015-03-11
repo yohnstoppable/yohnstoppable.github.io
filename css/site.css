@@ -5,6 +5,11 @@
 	margin: auto;
 }
 
+#container {
+	margin:0px;
+	padding:0px;
+}
+
 #test img {
 	position:absolute;
 	margin:auto;
@@ -12,6 +17,14 @@
 	width: 100%;
 	border: 1px solid black;
 	z-index:0;
+}
+
+body {
+	background-image: url("../images/background.png");
+	background-repeat: repeat;
+	margin:0px;
+	padding:0px;
+	width:1400px;
 }
 
 #banner {
@@ -22,27 +35,58 @@
 }
 
 #menu {
-	width:15%;
+	width:200px;
 	height:100%;
 	margin-left:10%;
 	text-align:center;
 	vertical-align:middle;
 	position:absolute;
 	width:275px;
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(0, 0, 0, 0.4);
+	border-right: 1px dotted grey;
+	border-left: 1px dotted grey;
 	z-index:1;
 	display:table;
 }
 
 ul { padding:0;}
 
+div.headerInfo {
+	width:100%;
+	display:inline;
+	position: relative;
+	margin:0;
+	padding:0;
+	clear;
+}
+
+h1.headerInfo {
+	width:87%;
+	text-align: center;
+	font-size: 250%;
+	color:#E3E38F;
+	text-transform: uppercase;
+	margin:0 0 20px 0;
+	padding:0;
+}
+
+p.headerInfo {
+	width:87%;
+	text-align: center;
+	font-size:150%;
+	color:#FCFCA9;
+	margin:0 0 20px 0;
+	padding:0;
+	clear;
+}
+
 #menu ul li {
 	display:block;
 	font-size: 300%;
 	color:#fefe91;
 	text-align:center;
-	margin-top:25%;
-	margin-bottom:25%;
+	margin-top:10%;
+	margin-bottom:10%;
 	height:75px;
 	line-height:75px;
 	z-index:1;
@@ -56,9 +100,9 @@ ul { padding:0;}
 }
 
 #page {
-	position:absolute;
-	width:100%;
-	margin: auto;
+	position:relative;
+	width:80%;
+	margin-left: 225px;
 	text-align:center;
 	display:hidden;
 }
@@ -66,32 +110,41 @@ ul { padding:0;}
 #page img{
 	display: hidden;
 	position: relative;
-	height: 300px;
-	width: 400px;
+	height: 225px;
+	width: 300px;
 	float:left;
-	margin-left:45px;
-	margin-top:25px;
+	margin:0px;
+	padding:0px;
 	-vendor-animation-duration: 4s;
 }
 
-#page p {
-	width:400px;
-	height: 300px;
-	margin-left:45px;
-	margin-top:25px;
-	float:left;
-	-vendor-animation-duration: 4s;
+#page img:hover {
+	cursor: pointer; 
+	cursor: hand;
 }
 
-#page div {
-	width: 900px;
-	height:350px;
-	display:block;
-	margin:auto;
-	border-top: 1px solid grey;
-	border-bottom: 1px solid grey;
-	text-align:center;
-	padding:auto;
+#page div.type p {
+	width:0px;
+	height: 0px;
+	display:none;
+	margin:0px;
+	padding:0px;
+}
+
+#page div.type {
+	width: 330px;
+	height:300px;
+	display:inline;
+	margin:0px;
+	padding:0px;
+	float:left;
+	
+}
+
+.modalImage {
+	height: 225px;
+	width: 300px;
+	border-radius:25px;
 }
 
 .clear {
