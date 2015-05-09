@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html ng-app="newNative">
+	<head>
+		<link rel="stylesheet" href="css/animate.css">
+		<link rel="stylesheet" href="css/site.css">
+		<link rel="stylesheet" href="css/sweet-alert.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<script src="js/jquery-1.11.2.min.js"></script>
+		<script src="js/ImageHandler.js"></script>
+		<script src="js/sweet-alert.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/angular.min.js"></script>
+		<script src="js/app.js"></script>
+	</head>
+	<div id="container">
+			<div id="menu" ng-controller="menuController as menuCtrl">
+				<ul ng-repeat="menuItem in menuCtrl.menuItems">
+					<li class="home">{{menuItem}}</li>
+				</ul>
+			</div>
+			<div id="test">
+				<img src="images/tie1.jpg" class="ties">
+				<img src="images/tie2.jpg" class="ties">
+				<img src="images/tie3.jpg" class="ties">
+				<img src="images/tie4.jpg" class="ties">
+				<img src="images/tie5.jpg" class="ties">
+				<img src="images/tie6.jpg" class="ties">
+				<img src="images/coat1.jpg" class="coats">
+				<img src="images/coat2.jpg" class="coats">
+				<img src="images/coat3.jpg" class="coats">
+				<img src="images/shoes1.jpg" class="shoes">
+				<img src="images/shoes2.jpg" class="shoes">
+				<img src="images/shoes3.jpg" class="shoes">
+			</div>
+			<div id="page">				
+				<div class="headerInfo"><h1  class="headerInfo">ties</h1><p  class="headerInfo">Click images for details</p></div>
+				<div class="type ties"><img src="images/tie1.jpg" class="ties"><p class="ties">Robert Downey Jr is one sexy mother fucker. I always forget that he was the guy in Weird Science who pantsed the two main guys at the start. That was a dick move. Also, Kiss Kiss Bang Bang is an awesome movie<br><br><b><input type='radio' name='size' value='small'> Small, <input type='radio' name='size' value='medium'> Medium,<input type='radio' name='size' value='large'> Large,<input type='radio' name='size' value='xl'> XL<br><input type="button" value="Add To Cart"></b></p></div>
+				<div class="type ties"><img src="images/tie2.jpg" class="ties"><p class="ties">Gerard Butler is a little nancy boy who has to ask permission to use the restroom. He tried to fight me over using the blue play doh, but I whooped his ass<br><br><b><input type='radio' name='size' value='small'> Small, <input type='radio' name='size' value='medium'> Medium,<input type='radio' name='size' value='large'> Large,<input type='radio' name='size' value='xl'> XL<br><input type="button" value="Add To Cart"></b></p></div>
+				<div class="type ties"><img src="images/tie3.jpg" class="ties"><p class="ties">I don't even know who this mother fucker is. I bet he has sex with his socks on like a goober<br><br><b><input type='radio' name='size' value='small'> Small, <input type='radio' name='size' value='medium'> Medium,<input type='radio' name='size' value='large'> Large,<input type='radio' name='size' value='xl'> XL<br><input type="button" value="Add To Cart"></b></p></div>
+				<div class="type ties"><img src="images/tie4.jpg" class="ties"><p class="ties">I haven't really played any of the hitman games. I heard they were good<br><br><b><input type='radio' name='size' value='small'> Small, <input type='radio' name='size' value='medium'> Medium,<input type='radio' name='size' value='large'> Large,<input type='radio' name='size' value='xl'> XL<br><input type="button" value="Add To Cart"></b></p></div>
+				<div class="type ties"><img src="images/tie5.jpg" class="ties"><p class="ties">Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill! Bill!<br><br><b><input type='radio' name='size' value='small'> Small, <input type='radio' name='size' value='medium'> Medium,<input type='radio' name='size' value='large'> Large,<input type='radio' name='size' value='xl'> XL<br><input type="button" value="Add To Cart"></b></p></div>
+				<div class="type ties"><img src="images/tie6.jpg" class="ties"><p class="ties">This guy doesn't look nearly as good in a tie as Bill Nye<br><br><b><input type='radio' name='size' value='small'> Small, <input type='radio' name='size' value='medium'> Medium,<input type='radio' name='size' value='large'> Large,<input type='radio' name='size' value='xl'> XL<br><input type="button" value="Add To Cart"></b></p></div>
+				<div class="type coats"><img src="images/coat1.jpg" class="coats"><p class="coats">One of the cashiers at HEB has his hair cut like Macklemore. He looks like a huge doucher, and I always refer to him as Mackleless. Thrift Shops are great places to shop for cheap clothes for halloween costumes.<br><br><b><input type='radio' name='size' value='small'> Small, <input type='radio' name='size' value='medium'> Medium,<input type='radio' name='size' value='large'> Large,<input type='radio' name='size' value='xl'> XL<br><input type="button" value="Add To Cart"></b></p></div>
+				<div class="type coats"><img src="images/coat2.jpg" class="coats"><p class="coats">This guy is making me question my heterosexuality. I like how he is staring off into nothing, thinking to himself, "how could I let my imaginary friend beat me at chess?"<br><br><b><input type='radio' name='size' value='small'> Small, <input type='radio' name='size' value='medium'> Medium,<input type='radio' name='size' value='large'> Large,<input type='radio' name='size' value='xl'> XL<br><input type="button" value="Add To Cart"></b></p></div>
+				<div class="type coats"><img src="images/coat3.jpg" class="coats"><p class="coats">Where the hell was this picture even taken? Q-bert called. He wants his house back<br><br><b><input type='radio' name='size' value='small'> Small, <input type='radio' name='size' value='medium'> Medium,<input type='radio' name='size' value='large'> Large,<input type='radio' name='size' value='xl'> XL<br><input type="button" value="Add To Cart"></b></p></div>
+				<div class="type shoes"><img src="images/shoes1.jpg" class="shoes"><p class="shoes">These are converse. They are good shoes for playing basketball or being in junior high. Actually I have Bart Man converse shoes, and they fucking rule. Uncomfortable as fuck, though, because who needs arch support, amiright?<br><br><b><input type='radio' name='size' value='small'> Small, <input type='radio' name='size' value='medium'> Medium,<input type='radio' name='size' value='large'> Large,<input type='radio' name='size' value='xl'> XL<br><input type="button" value="Add To Cart"></b></p></div>
+				<div class="type shoes"><img src="images/shoes2.jpg" class="shoes"><p class="shoes">These are the kind of shoes someone's grandfather, or Rob, would wear<br><br><b><input type='radio' name='size' value='small'> Small, <input type='radio' name='size' value='medium'> Medium,<input type='radio' name='size' value='large'> Large,<input type='radio' name='size' value='xl'> XL<br><input type="button" value="Add To Cart"></b></p></div>
+				<div class="type shoes"><img src="images/shoes3.jpg" class="shoes"><p class="shoes">Something else about converse.<br><br><b><input type='radio' name='size' value='small'> Small, <input type='radio' name='size' value='medium'> Medium,<input type='radio' name='size' value='large'> Large,<input type='radio' name='size' value='xl'> XL<br><input type="button" value="Add To Cart"></b></p></div>
+			</div>
+		</div>
+	</body>
+</HTML>
+	
