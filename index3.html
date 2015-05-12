@@ -29,6 +29,7 @@
 				<li class="home" ng-click ="masterCtrl.clicked(menuItem)">{{menuItem}}</li>
 			</ul>
 		</div>
+		<div class="headerInfo"><h1 class="headerInfo">{{masterCtrl.section}}</h1></div>
 		<div id="page" ng-repeat="result in masterCtrl.results">
 			<div class="type {{result.category_path[0]}}" ng-show="result.category_path[0] === masterCtrl.section">
 				<img ng-src="{{result.MainImage.url_170x135}}" ng-click="masterCtrl.details(result.title,result.MainImage.url_170x135,result.description,result.url)">
