@@ -6,23 +6,34 @@
 		<link rel="stylesheet" href="css/sweet-alert.css">
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<script src="js/jquery-1.11.2.min.js"></script>
-		<script src="js/ImageHandler.js"></script>
 		<script src="js/sweet-alert.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/angular.min.js"></script>
+		<script  type="text/javascript">
+			var results;
+			function getData(data) {
+				if (data.ok) {
+					results = data.results;
+					console.log(results);
+				} else {
+					alert(data.error);
+				}
+			}
+		</script>
 		<script src="js/app.js"></script>
+		<script src="https://openapi.etsy.com/v2/shops/NewNative05/listings/active.js?callback=getData&method=GET&api_key=uf4q3mmiizo915vqna2x8n5r&limit=100&includes=MainImage"></script>
 	</head>
-	<div id="container">
+	<div class="content" ng-controller="master as masterCtrl">
 		<div id="menu" ng-controller="menuController as menuCtrl">
 			<ul ng-repeat="menuItem in menuCtrl.menuItems">
-				<li class="home" onclick="clicked('ties')">{{menuItem}}</li>
+				<li class="home" ng-click ="masterCtrl.clicked(menuItem)">{{menuItem}}</li>
 			</ul>
 		</div>
-		<section ng-controller="imageController as imageCtrl">
-			<div id="page" ng-repeat="item in imageCtrl.items">
-				<div class="type {{item.section}}" ng-show="item.section === section"><img ng-src="{{item.imageUrl}}"><p>{{item.description}}</p></div>
+		<div id="page" ng-repeat="result in masterCtrl.results">
+			<div class="type {{result.category_path[0]}}" ng-show="result.category_path[0] === masterCtrl.section">
+				<img ng-src="{{result.MainImage.url_170x135}}" ng-click="masterCtrl.details(result.title,result.MainImage.url_170x135,result.description,result.url)">
 			</div>
-		</section>
+		</div>
 		</div>
 	</div>
 	</body>

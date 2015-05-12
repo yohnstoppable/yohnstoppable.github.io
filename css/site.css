@@ -1,13 +1,7 @@
-#test {
-	position:absolute;
-	height:100%;
-	width:100%;
-	margin: auto;
-}
+.content { width:100%; margin:0px; padding:0px;}
 
-#container {
-	margin:0px;
-	padding:0px;
+.content p {
+	text-align:left;
 }
 
 #test img {
@@ -20,24 +14,17 @@
 }
 
 body {
-	background-image: url("../images/background.png");
-	background-repeat: repeat;
-	margin:0px;
-	padding:0px;
-	width:1400px;
-}
-
-#banner {
-    background:url('../images/banner.jpg');
-	margin:auto;
-    width:800px;
-    height:150px;
+	background-image: url("../images/darkBackground.jpg");
+	margin: 0;
+    text-align: center;
+	width:100%;
+	height:100%;
 }
 
 #menu {
-	width:200px;
 	height:100%;
-	margin-left:10%;
+	margin-left:-50;
+	padding-left:0;
 	text-align:center;
 	vertical-align:middle;
 	position:absolute;
@@ -71,7 +58,7 @@ h1.headerInfo {
 }
 
 p.headerInfo {
-	width:87%;
+	width:100%;
 	text-align: center;
 	font-size:150%;
 	color:#FCFCA9;
@@ -87,6 +74,8 @@ p.headerInfo {
 	text-align:center;
 	margin-top:10%;
 	margin-bottom:10%;
+	margin-left:0;
+	padding-left:0;
 	height:75px;
 	line-height:75px;
 	z-index:1;
@@ -101,7 +90,7 @@ p.headerInfo {
 
 #page {
 	position:relative;
-	width:80%;
+	width:100%;
 	margin-left: 225px;
 	text-align:center;
 	display:hidden;
@@ -110,8 +99,8 @@ p.headerInfo {
 #page img{
 	display: hidden;
 	position: relative;
-	height: 225px;
-	width: 300px;
+	height: 200px;
+	width: 250px;
 	float:left;
 	margin:0px;
 	padding:0px;
@@ -132,12 +121,13 @@ p.headerInfo {
 }
 
 #page div.type {
-	width: 330px;
-	height:300px;
+	width: 275px;
+	height: 225px;
 	display:inline;
 	margin:0px;
 	padding:0px;
 	float:left;
+	overflow:hidden;
 }
 
 #page div.type:nth-child(4n) {
@@ -147,7 +137,10 @@ p.headerInfo {
 .modalImage {
 	height: 225px;
 	width: 300px;
-	border-radius:25px;
+	text-align:center;
+	margin-left:auto;
+	margin-right:auto;
+	display:block;
 }
 
 .clear {
