@@ -138,7 +138,10 @@ p.headerInfo {
 	margin:0px;
 	padding:0px;
 	float:left;
-	
+}
+
+#page div.type:nth-child(4n) {
+    clear:left;
 }
 
 .modalImage {
