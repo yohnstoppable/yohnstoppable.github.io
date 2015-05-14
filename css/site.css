@@ -1,16 +1,17 @@
-.content { width:100%; margin:0px; padding:0px;}
+.slider { width:612px; height:612px; }
+
+.content { 
+	width:100%; 
+	margin:0px; 
+	padding:0px;
+}
 
 .content p {
 	text-align:left;
 }
 
-#test img {
-	position:absolute;
-	margin:auto;
-	height: 100%;
-	width: 100%;
-	border: 1px solid black;
-	z-index:0;
+.push {
+	position: relative;
 }
 
 body {
@@ -48,7 +49,7 @@ div.headerInfo {
 }
 
 h1.headerInfo {
-	width:87%;
+	width:100%;
 	text-align: center;
 	font-size: 250%;
 	color:#E3E38F;
@@ -88,23 +89,28 @@ p.headerInfo {
 	font-size:325%;
 }
 
-#page {
+.page {
 	position:relative;
-	width:100%;
-	margin-left: 225px;
+	width:50%;
+	height:500px;
 	text-align:center;
 	display:hidden;
+	float:left;
+	padding:0;
+	margin:0;
 }
 
-#page img{
-	display: hidden;
+.page img{
 	position: relative;
-	height: 200px;
-	width: 250px;
-	float:left;
-	margin:0px;
+	height: 70%;
+	width: 70%;
+	margin:0;
+	text-align:center;
 	padding:0px;
-	-vendor-animation-duration: 4s;
+}
+
+.page.type {
+	
 }
 
 #page img:hover {
@@ -121,8 +127,8 @@ p.headerInfo {
 }
 
 #page div.type {
-	width: 275px;
-	height: 225px;
+	width: 100%;
+	height:100%;
 	display:inline;
 	margin:0px;
 	padding:0px;
@@ -130,13 +136,17 @@ p.headerInfo {
 	overflow:hidden;
 }
 
-#page div.type:nth-child(4n) {
+#page div.type:nth-child(3n) {
     clear:left;
 }
 
-.modalImage {
-	height: 225px;
-	width: 300px;
+.testModal {
+	background-image: url("../images/darkBackground.jpg");
+}
+
+.modal.img {
+	height: 325px;
+	width: 400px;
 	text-align:center;
 	margin-left:auto;
 	margin-right:auto;
@@ -146,3 +156,21 @@ p.headerInfo {
 .clear {
 	clear:both;
 }
+.animate-show {
+  opacity: 1;
+}
+
+.animate-show.ng-hide-add.ng-hide-add-active,
+.animate-show.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition: all linear 0.4s;
+  transition: all linear 0.4s;
+}
+
+.animate-show.ng-hide {
+  line-height: 0;
+  opacity: 0;
+}
+
+.check-element {
+}
+

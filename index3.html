@@ -1,14 +1,16 @@
 <!DOCTYPE HTML>
 <html ng-app="newNative">
 	<head>
-		<link rel="stylesheet" href="css/animate.css">
-		<link rel="stylesheet" href="css/site.css">
-		<link rel="stylesheet" href="css/sweet-alert.css">
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<script src="js/jquery-1.11.2.min.js"></script>
-		<script src="js/sweet-alert.js"></script>
-		<script src="js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/site.css">
+		<link href="css/lightbox.css" rel="stylesheet" />
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script src="js/angular.min.js"></script>
+		<script src="js/angular-animate.min.js"></script>	
+		<script src="js/bigSlide.js"></script>
+		<script src="js/core.js"></script>
+		<script src="js/touch.js"></script>
+		<script src="js/transition.js"></script>
+		<script src="js/lightbox.js"></script>
 		<script  type="text/javascript">
 			var results;
 			function getData(data) {
@@ -21,22 +23,33 @@
 			}
 		</script>
 		<script src="js/app.js"></script>
-		<script src="https://openapi.etsy.com/v2/shops/NewNative05/listings/active.js?callback=getData&method=GET&api_key=uf4q3mmiizo915vqna2x8n5r&limit=100&includes=MainImage"></script>
+		<script src="https://openapi.etsy.com/v2/shops/NewNative05/listings/active.js?callback=getData&method=GET&api_key=uf4q3mmiizo915vqna2x8n5r&limit=100&includes=MainImage,Images"></script>
 	</head>
-	<div class="content" ng-controller="master as masterCtrl">
-		<div id="menu" ng-controller="menuController as menuCtrl">
-			<ul ng-repeat="menuItem in menuCtrl.menuItems">
-				<li class="home" ng-click ="masterCtrl.clicked(menuItem)">{{menuItem}}</li>
-			</ul>
-		</div>
-		<div class="headerInfo"><h1 class="headerInfo">{{masterCtrl.section}}</h1></div>
-		<div id="page" ng-repeat="result in masterCtrl.results">
-			<div class="type {{result.category_path[0]}}" ng-show="result.category_path[0] === masterCtrl.section">
-				<img ng-src="{{result.MainImage.url_170x135}}" ng-click="masterCtrl.details(result.title,result.MainImage.url_170x135,result.description,result.url)">
+	<section ng-controller="master as masterCtrl">
+		<a href="#menu" class="menu-link">&#9776;</a>
+			<nav id="menu" class="panel" role="navigation" ng-controller="menuController as menuCtrl">
+				<ul ng-repeat="menuItem in menuCtrl.menuItems">
+					<li class="home" ng-click ="clicked(menuItem)">{{menuItem}}</li>
+				</ul>
+			</nav>
+		<div class="content push">
+			<div class="headerInfo"><h1 class="headerInfo">{{title}}</h1></div>
+			<div class="page" ng-repeat="result in results" ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}" ng-show="result.category_path[0] === section">
+				<div class="type {{result.category_path[0]}} animate-show">
+					<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.description}}">
+						<img ng-src="{{result.MainImage.url_570xN}}" etsyUrl="{{result.url}}">
+					</a>
+					<a ng-repeat="image in result.Images" ng-if="$index > 0" href="{{image.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.description}}"></a>
+				</div>			
 			</div>
 		</div>
-		</div>
-	</div>
+	</section>
+	<script>
+	$( document ).ready(function() {
+        $('.menu-link').bigSlide();
+	});
+		
+	</script>
 	</body>
 </HTML>
 	

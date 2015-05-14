@@ -1,5 +1,5 @@
 (function(){
-	var app = angular.module('newNative', []);
+	var app = angular.module('newNative', ['ngAnimate']);
 		
 	app.controller("menuController",function() {
 		this.menuItems = [];
@@ -16,29 +16,31 @@
 		this.items = items;
 	});
 	
-	app.controller("master", function($http){		
-		this.results = results;
-		console.log(results);
+	app.controller("master", function($scope, $timeout){	
+		$scope.results = results;
 		
-		this.section = "Furniture";
+		$scope.section = "Furniture";
+		$scope.title = "Furniture";
 		
-		this.clicked = function(menuItem) {
-			this.section = menuItem;
+		$scope.clicked = function(menuItem) {
+			if ($scope.section !== menuItem) {
+				$scope.section = "";
+				$scope.menuItem = menuItem;
+				$scope.title = menuItem;
+				
+				$timeout($scope.change,401);
+			}
 		}
 		
-		this.details = function(header,img,description,url) {
-			swal({
-				title: header,
-				text: "<a href=" + url + "><img class='modalImage' src='" + img + "'></a><br><br>" + description.replace(/(?:\r\n|\r|\n)/g, '<br />'),
-				html: true,
-				backgroundColor: "#cccc99",
-				confirmButtonColor: "#70909E",
-				allowOutsideClick:"true"
-			});
+		$scope.change = function() {
+			$scope.section = $scope.menuItem;
+			console.log($scope.section);
+		}
+		
+		$scope.details = function(dees,header,img,description,url) {
 		}
 	});
 
 	var menuItems = ["HOME","TIES","COATS","SHOES","BIO"];	
-	var sections = [];
-	var section = "ties";			
+	var sections = [];		
 })();
