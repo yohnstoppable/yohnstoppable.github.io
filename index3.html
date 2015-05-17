@@ -39,14 +39,14 @@
 			<div class="headerInfo"><h1 class="headerInfo">{{title}}</h1></div>
 				<div ng-repeat="results in resultsByCategory"" class="row" ng-show="results[0].category_path[0] === section">
 					<div class=" {{result.category_path[0]}} animate-show thumbnail col-md-6 column" ng-repeat="result in results">
-						<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.description}}">
+						<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}">
 							<img class="img-responsive" ng-src="{{result.MainImage.url_570xN}}" etsyUrl="{{result.url}}">
 						</a>
 							<h2>{{result.title}}</h2>
 							<h3>{{result.price | currency}}</h3>
 							<p class="leftAlign">{{result.description}}</p>
 							<p><a href = "{{result.url}}" class="btn btn-primary" role="button">View Etsy Listing</a></p>
-						<a ng-repeat="image in result.Images" ng-if="$index > 0" href="{{image.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.description}}"></a>
+						<a ng-repeat="image in result.Images" ng-if="$index > 0" href="{{image.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}"></a>
 					</div>
 				</div>
 		</div>
