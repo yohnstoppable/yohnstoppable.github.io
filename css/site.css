@@ -1,9 +1,19 @@
 .slider { width:612px; height:612px; }
 
-.content { 
+.container { 
 	width:100%; 
 	margin:0px; 
 	padding:0px;
+	border: 2px solid #b4b0aa;
+	border-radius:10px;
+	background-color: #F0F0F0 !important;
+}
+
+.thumbnail {
+	background-color: #F0F0F0 !important;
+	border:0px none !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
 }
 
 .content p {
@@ -16,6 +26,7 @@
 
 body {
 	background-image: url("../images/darkBackground.jpg");
+	background-color: #9e8d83 !important;
 	margin: 0;
     text-align: center;
 	width:100%;
@@ -24,7 +35,7 @@ body {
 
 #menu {
 	height:100%;
-	margin-left:-50;
+	margin-left:-150;
 	padding-left:0;
 	text-align:center;
 	vertical-align:middle;
@@ -52,21 +63,13 @@ h1.headerInfo {
 	width:100%;
 	text-align: center;
 	font-size: 250%;
-	color:#E3E38F;
+	color: 245901;
 	text-transform: uppercase;
 	margin:0 0 20px 0;
 	padding:0;
 }
 
-p.headerInfo {
-	width:100%;
-	text-align: center;
-	font-size:150%;
-	color:#FCFCA9;
-	margin:0 0 20px 0;
-	padding:0;
-	clear;
-}
+
 
 #menu ul li {
 	display:block;
@@ -89,68 +92,17 @@ p.headerInfo {
 	font-size:325%;
 }
 
-.page {
-	position:relative;
-	width:50%;
-	height:500px;
-	text-align:center;
-	display:hidden;
-	float:left;
-	padding:0;
-	margin:0;
+html, body, .container-fluid{
+   height:100%;
 }
 
-.page img{
-	position: relative;
-	height: 70%;
-	width: 70%;
-	margin:0;
-	text-align:center;
-	padding:0px;
+.column {
+	display: table-cell;
 }
 
-.page.type {
-	
-}
-
-#page img:hover {
-	cursor: pointer; 
-	cursor: hand;
-}
-
-#page div.type p {
-	width:0px;
-	height: 0px;
-	display:none;
-	margin:0px;
-	padding:0px;
-}
-
-#page div.type {
-	width: 100%;
-	height:100%;
-	display:inline;
-	margin:0px;
-	padding:0px;
-	float:left;
-	overflow:hidden;
-}
-
-#page div.type:nth-child(3n) {
-    clear:left;
-}
-
-.testModal {
-	background-image: url("../images/darkBackground.jpg");
-}
-
-.modal.img {
-	height: 325px;
-	width: 400px;
-	text-align:center;
-	margin-left:auto;
-	margin-right:auto;
-	display:block;
+.leftAlign {
+	text-align:left;
+	white-space: pre-wrap;
 }
 
 .clear {
@@ -162,8 +114,8 @@ p.headerInfo {
 
 .animate-show.ng-hide-add.ng-hide-add-active,
 .animate-show.ng-hide-remove.ng-hide-remove-active {
-  -webkit-transition: all linear 0.4s;
-  transition: all linear 0.4s;
+  -webkit-transition: all linear 0.7s;
+  transition: all linear 0.7s;
 }
 
 .animate-show.ng-hide {
@@ -174,3 +126,11 @@ p.headerInfo {
 .check-element {
 }
 
+h1,h2,h3 {
+	color: #002704 !important;
+	font-weight: 900% !important;
+}
+p {
+	color:#482f20;
+	font-weight: bold;
+}

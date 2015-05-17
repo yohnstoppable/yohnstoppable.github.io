@@ -2,6 +2,7 @@
 <html ng-app="newNative">
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/site.css">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link href="css/lightbox.css" rel="stylesheet" />
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script src="js/angular.min.js"></script>
@@ -11,6 +12,7 @@
 		<script src="js/touch.js"></script>
 		<script src="js/transition.js"></script>
 		<script src="js/lightbox.js"></script>
+		<script src="js/bootstrap.min.js"></script>
 		<script  type="text/javascript">
 			var results;
 			function getData(data) {
@@ -25,6 +27,7 @@
 		<script src="js/app.js"></script>
 		<script src="https://openapi.etsy.com/v2/shops/NewNative05/listings/active.js?callback=getData&method=GET&api_key=uf4q3mmiizo915vqna2x8n5r&limit=100&includes=MainImage,Images"></script>
 	</head>
+	<body>
 	<section ng-controller="master as masterCtrl">
 		<a href="#menu" class="menu-link">&#9776;</a>
 			<nav id="menu" class="panel" role="navigation" ng-controller="menuController as menuCtrl">
@@ -32,16 +35,20 @@
 					<li class="home" ng-click ="clicked(menuItem)">{{menuItem}}</li>
 				</ul>
 			</nav>
-		<div class="content push">
+		<div class="container">
 			<div class="headerInfo"><h1 class="headerInfo">{{title}}</h1></div>
-			<div class="page" ng-repeat="result in results" ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}" ng-show="result.category_path[0] === section">
-				<div class="type {{result.category_path[0]}} animate-show">
-					<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.description}}">
-						<img ng-src="{{result.MainImage.url_570xN}}" etsyUrl="{{result.url}}">
-					</a>
-					<a ng-repeat="image in result.Images" ng-if="$index > 0" href="{{image.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.description}}"></a>
-				</div>			
-			</div>
+				<div ng-repeat="results in resultsByCategory"" class="row" ng-show="results[0].category_path[0] === section">
+					<div class=" {{result.category_path[0]}} animate-show thumbnail col-md-6 column" ng-repeat="result in results">
+						<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.description}}">
+							<img class="img-responsive" ng-src="{{result.MainImage.url_570xN}}" etsyUrl="{{result.url}}">
+						</a>
+							<h2>{{result.title}}</h2>
+							<h3>{{result.price | currency}}</h3>
+							<p class="leftAlign">{{result.description}}</p>
+							<p><a href = "{{result.url}}" class="btn btn-primary" role="button">View Etsy Listing</a></p>
+						<a ng-repeat="image in result.Images" ng-if="$index > 0" href="{{image.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.description}}"></a>
+					</div>
+				</div>
 		</div>
 	</section>
 	<script>
