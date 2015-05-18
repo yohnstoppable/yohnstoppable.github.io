@@ -1,4 +1,8 @@
 <!DOCTYPE HTML>
+<meta property="og:title" content="New Native" />
+<meta property="og:type" content="website" />       
+<meta property="og:image" content="https://img1.etsystatic.com/057/0/10953940/il_570xN.764390921_d1nj.jpg" />      
+<meta property="og:url" content="yohnstoppable.github.io/index3.html" />
 <html ng-app="newNative">
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/site.css">
@@ -23,6 +27,14 @@
 					alert(data.error);
 				}
 			}
+			
+			function fbShare(url, title, descr, image, winWidth, winHeight) {
+				var winTop = (screen.height / 2) - (winHeight / 2);
+				var winLeft = (screen.width / 2) - (winWidth / 2);
+				window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+			}
+
+			
 		</script>
 		<script src="js/app.js"></script>
 		<script src="https://openapi.etsy.com/v2/shops/NewNative05/listings/active.js?callback=getData&method=GET&api_key=uf4q3mmiizo915vqna2x8n5r&limit=100&includes=MainImage,Images"></script>
@@ -38,14 +50,15 @@
 		<div class="container">
 			<div class="headerInfo"><h1 class="headerInfo">{{title}}</h1></div>
 				<div ng-repeat="results in resultsByCategory"" class="row" ng-show="results[0].category_path[0] === section">
-					<div class=" {{result.category_path[0]}} animate-show thumbnail col-md-6 column" ng-repeat="result in results">
+					<div class=" {{result.category_path[0]}} thumbnail col-md-6" ng-repeat="result in results">
 						<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}">
-							<img class="img-responsive" ng-src="{{result.MainImage.url_570xN}}" etsyUrl="{{result.url}}">
+							<img ng-src="{{result.MainImage.url_570xN}}" etsyUrl="{{result.url}}">
 						</a>
 							<h2>{{result.title}}</h2>
 							<h3>{{result.price | currency}}</h3>
 							<p class="leftAlign">{{result.description}}</p>
-							<p><a href = "{{result.url}}" class="btn btn-primary" role="button">View Etsy Listing</a></p>
+							<p><a href="javascript:fbShare('http://yohnstoppable.github.io/index3.html', 'New Native', 'This is a de', 'http://goo.gl/dS52U', 520, 350)">Share</a></p>
+							<p><a href = "{{result.url}}" class="btn btn-primary" role="button">View Listing</a></p>
 						<a ng-repeat="image in result.Images" ng-if="$index > 0" href="{{image.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}"></a>
 					</div>
 				</div>
