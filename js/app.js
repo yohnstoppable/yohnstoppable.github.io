@@ -17,6 +17,13 @@
 	});
 	
 	app.controller("master", function($scope, $timeout){	
+		$scope.fbShare = function (url, title, descr, image) {
+			$('meta[name=description]').attr('content', descr);
+			$('meta[name=title]').attr('content', title);
+			$('meta[name=image]').attr('content', image);
+			window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url);
+		}
+		
 		var sort = function(myResults) {
 			console.log(myResults);
 			var categories = [];

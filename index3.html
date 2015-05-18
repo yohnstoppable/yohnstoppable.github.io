@@ -2,8 +2,11 @@
 
 <html ng-app="newNative">
 	<head>
-		<meta property="og:type" content="website" />           
-		<meta property="og:url" content="http://yohnstoppable.github.io/index3.html" />
+		<meta name="title" property="og:title" content="New Native" />           
+		<meta name="description" property="og:description" content="We had all been trudging along, working at mundane jobs, doing our 'duty' as citizens of this planet by acting as cogs in the machine when we decided that we had had enough! We quit our jobs and used our previous theatre woodworking experience and began to make custom furniture. We haven't been at it for long, but we have a lot of gumption and if we don't know how to make something you want, then we will figure it out. We will work with you to create your vision." />
+		<meta name="image" property="og:image" content="https://img1.etsystatic.com/057/0/10953940/il_570xN.764390921_d1nj.jpg" />           
+		<meta name="type" property="og:type" content="website" />           
+		<meta name="url" property="og:url" content="http://yohnstoppable.github.io/index3.html" />
 		<link rel="stylesheet" type="text/css" href="css/site.css">
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link href="css/lightbox.css" rel="stylesheet" />
@@ -27,12 +30,7 @@
 				}
 			}
 			
-			function fbShare(url, title, descr, image) {
-				$('head').append( '<meta property="og:description"" content="' + descr + "' />");
-				$('head').append( '<meta property="og:title" content="' + title + "' />");
-				$('head').append( '<meta property="og:image" content="' + image + "' />");
-				window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url);
-			}
+			
 			
 		</script>
 		<script src="js/app.js"></script>
@@ -48,19 +46,19 @@
 			</nav>
 		<div class="container">
 			<div class="headerInfo"><h1 class="headerInfo">{{title}}</h1></div>
-				<div ng-repeat="results in resultsByCategory"" class="row" ng-show="results[0].category_path[0] === section">
-					<div class=" {{result.category_path[0]}} thumbnail col-md-6" ng-repeat="result in results">
-						<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}">
-							<img ng-src="{{result.MainImage.url_570xN}}" etsyUrl="{{result.url}}">
-						</a>
-							<h2>{{result.title}}</h2>
-							<h3>{{result.price | currency}}</h3>
-							<p class="leftAlign">{{result.description}}</p>
-							<p><a onclick="fbShare('http://yohnstoppable.github.io/index3.html', 'result.title', 'result.description')">Share on facebook</a></p>
-							<p><a href = "{{result.url}}" class="btn btn-primary" role="button">View Listing</a></p>
-						<a ng-repeat="image in result.Images" ng-if="$index > 0" href="{{image.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}"></a>
-					</div>
+			<div ng-repeat="results in resultsByCategory"" class="row" ng-show="results[0].category_path[0] === section">
+				<div class=" {{result.category_path[0]}} thumbnail col-md-6" ng-repeat="result in results">
+					<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}">
+						<img ng-src="{{result.MainImage.url_570xN}}" etsyUrl="{{result.url}}">
+					</a>
+						<h2>{{result.title}}</h2>
+						<h3>{{result.price | currency}}</h3>
+						<p class="leftAlign">{{result.description}}</p>
+						<p><a ng-click ="fbShare('http://yohnstoppable.github.io/index3.html',result.title,result.description)">Share on facebook</a></p>
+						<p><a href = "{{result.url}}" class="btn btn-primary" role="button">View Listing</a></p>
+					<a ng-repeat="image in result.Images" ng-if="$index > 0" href="{{image.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}"></a>
 				</div>
+			</div>				
 		</div>
 	</section>
 	<script>
