@@ -1,5 +1,10 @@
 .slider { width:612px; height:612px; }
 
+a {
+	cursor: pointer;
+	cursor: hand;
+}
+
 img {
 	height: 400px !important;
 	width: 500px !important;

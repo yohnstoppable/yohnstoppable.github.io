@@ -29,13 +29,12 @@
 				}
 			}
 			
-			function fbShare(url, title, descr, image, winWidth, winHeight) {
-				$('head').append( '<meta name="description" content="' + descr + "'");
-				var winTop = (screen.height / 2) - (winHeight / 2);
-				var winLeft = (screen.width / 2) - (winWidth / 2);
-				window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+			function fbShare(url, title, descr, image) {
+				$('head').append( '<meta name="description" content="' + descr + "' />");
+				$('head').append( '<meta name="title" content="' + title + "' />");
+				$('head').append( '<meta name="title" content="' + image + "' />");
+				window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url);
 			}
-
 			
 		</script>
 		<script src="js/app.js"></script>
@@ -59,7 +58,7 @@
 							<h2>{{result.title}}</h2>
 							<h3>{{result.price | currency}}</h3>
 							<p class="leftAlign">{{result.description}}</p>
-							<p><a href="javascript:fbShare('http://yohnstoppable.github.io/index3.html', 'result.title', 'result.description', 'http://goo.gl/dS52U', 520, 350)">Share</a></p>
+							<p><a onclick="fbShare('http://yohnstoppable.github.io/index3.html', 'result.title', 'result.description')">Share on facebook</a></p>
 							<p><a href = "{{result.url}}" class="btn btn-primary" role="button">View Listing</a></p>
 						<a ng-repeat="image in result.Images" ng-if="$index > 0" href="{{image.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}"></a>
 					</div>
