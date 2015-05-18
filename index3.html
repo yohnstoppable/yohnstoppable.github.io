@@ -2,14 +2,12 @@
 
 <html ng-app="newNative">
 	<head>
-		<meta property="og:title" content="New Native" />
-		<meta property="og:type" content="website" />       
-		<meta property="og:image" content="https://img1.etsystatic.com/057/0/10953940/il_570xN.764390921_d1nj.jpg" />      
+		<meta property="og:type" content="website" />           
 		<meta property="og:url" content="http://yohnstoppable.github.io/index3.html" />
 		<link rel="stylesheet" type="text/css" href="css/site.css">
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link href="css/lightbox.css" rel="stylesheet" />
-		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 		<script src="js/angular.min.js"></script>
 		<script src="js/angular-animate.min.js"></script>	
 		<script src="js/bigSlide.js"></script>
@@ -30,9 +28,9 @@
 			}
 			
 			function fbShare(url, title, descr, image) {
-				$('head').append( '<meta name="description" content="' + descr + "' />");
-				$('head').append( '<meta name="title" content="' + title + "' />");
-				$('head').append( '<meta name="title" content="' + image + "' />");
+				$('head').append( '<meta property="og:description"" content="' + descr + "' />");
+				$('head').append( '<meta property="og:title" content="' + title + "' />");
+				$('head').append( '<meta property="og:image" content="' + image + "' />");
 				window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url);
 			}
 			
