@@ -16,21 +16,12 @@
 		this.items = items;
 	});
 	
-	app.controller("master", function($scope, $timeout){	
-		$scope.fbShare = function (url, title, descr, image) {
-			$('meta[name=description]').attr('content', descr);
-			$('meta[name=title]').attr('content', title);
-			$('meta[name=image]').attr('content', image);
-			window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url);
-		}
-		
+	app.controller("master", function($scope, $timeout){		
 		var sort = function(myResults) {
-			console.log(myResults);
 			var categories = [];
 			var sorted = [];
 			var returnArray = [];
 			for (var i=0; i< myResults.length; i++) {
-				console.log(categories.indexOf(myResults[i].category_path[0]));
 				if (categories.indexOf(myResults[i].category_path[0]) === -1) {
 					categories.push(myResults[i].category_path[0]);
 				}
@@ -58,28 +49,26 @@
 		$scope.resultsByCategory = sort(results);
 		console.log($scope.resultsByCategory);
 
-		$scope.section = "Furniture";
-		$scope.title = "Furniture";
+		$scope.section = "Home";
+		$scope.title = "Home";
+		$scope.story = about;
 		
 		$scope.clicked = function(menuItem) {
 			if ($scope.section !== menuItem) {
 				$scope.section = "";
-				$scope.menuItem = menuItem;
-				$scope.title = menuItem;
-				
-				$timeout($scope.change,701);
+				$scope.menuItem = menuItem;				
+				$timeout($scope.change,199);
 			}
 		}
 		
 		$scope.change = function() {
+			$scope.title = $scope.menuItem;
 			$scope.section = $scope.menuItem;
-			console.log($scope.section);
 		}
 		
 		$scope.details = function(dees,header,img,description,url) {
 		}
 	});
 
-	var menuItems = ["HOME","TIES","COATS","SHOES","BIO"];	
 	var sections = [];		
 })();

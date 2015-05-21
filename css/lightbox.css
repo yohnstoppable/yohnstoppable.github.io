@@ -4,6 +4,11 @@ body:after {
   display: none;
 }
 
+.img-responsive {
+	height:100% !important;
+	width:100% !important;
+}
+
 .lightboxOverlay {
   position: absolute;
   top: 0;

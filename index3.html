@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<html ng-app="newNative">
+<html ng-app="newNative" lang="en">
 	<head>
 		<meta name="title" property="og:title" content="New Native" />           
 		<meta name="description" property="og:description" content="We had all been trudging along, working at mundane jobs, doing our 'duty' as citizens of this planet by acting as cogs in the machine when we decided that we had had enough! We quit our jobs and used our previous theatre woodworking experience and began to make custom furniture. We haven't been at it for long, but we have a lot of gumption and if we don't know how to make something you want, then we will figure it out. We will work with you to create your vision." />
@@ -13,14 +13,11 @@
 		<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 		<script src="js/angular.min.js"></script>
 		<script src="js/angular-animate.min.js"></script>	
-		<script src="js/bigSlide.js"></script>
-		<script src="js/core.js"></script>
-		<script src="js/touch.js"></script>
-		<script src="js/transition.js"></script>
 		<script src="js/lightbox.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script  type="text/javascript">
 			var results;
+			var about;
 			function getData(data) {
 				if (data.ok) {
 					results = data.results;
@@ -30,43 +27,55 @@
 				}
 			}
 			
-			
-			
+			function getShopData(data) {
+				if (data.ok) {
+					console.log(data.results);
+					about = data.results[0].About.story;
+				} else {
+					console.log(data.error);
+				}
+			}
 		</script>
 		<script src="js/app.js"></script>
+		<script src="https://openapi.etsy.com/v2/shops/NewNative05.js?callback=getShopData&method=GET&api_key=uf4q3mmiizo915vqna2x8n5r&limit=100&includes=About"></script>
 		<script src="https://openapi.etsy.com/v2/shops/NewNative05/listings/active.js?callback=getData&method=GET&api_key=uf4q3mmiizo915vqna2x8n5r&limit=100&includes=MainImage,Images"></script>
 	</head>
 	<body>
 	<section ng-controller="master as masterCtrl">
-		<a href="#menu" class="menu-link">&#9776;</a>
-			<nav id="menu" class="panel" role="navigation" ng-controller="menuController as menuCtrl">
-				<ul ng-repeat="menuItem in menuCtrl.menuItems">
-					<li class="home" ng-click ="clicked(menuItem)">{{menuItem}}</li>
-				</ul>
-			</nav>
 		<div class="container">
-			<div class="headerInfo"><h1 class="headerInfo">{{title}}</h1></div>
-			<div ng-repeat="results in resultsByCategory"" class="row" ng-show="results[0].category_path[0] === section">
-				<div class=" {{result.category_path[0]}} thumbnail col-md-6" ng-repeat="result in results">
-					<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}">
-						<img ng-src="{{result.MainImage.url_570xN}}" etsyUrl="{{result.url}}">
-					</a>
-						<h2>{{result.title}}</h2>
-						<h3>{{result.price | currency}}</h3>
-						<p class="leftAlign">{{result.description}}</p>
-						<p><a ng-click ="fbShare('http://yohnstoppable.github.io/index3.html',result.title,result.description)">Share on facebook</a></p>
-						<p><a href = "{{result.url}}" class="btn btn-primary" role="button">View Listing</a></p>
-					<a ng-repeat="image in result.Images" ng-if="$index > 0" href="{{image.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}"></a>
+			<h1><img src="images/logo.jpg">New Native</h1>
+			<ul class="nav nav-tabs" role="navigation" ng-controller="menuController as menuCtrl">
+				<li ng-repeat="menuItem in menuCtrl.menuItems" ng-class="{active: menuItem === section}">
+					<a ng-click ="clicked(menuItem)">{{menuItem}}</a>
+				</li>
+			</ul>
+			<div class="tab-pane">
+				<div ng-if="section === 'Home'" class="row faded">
+					<div class="col-md-8 col-md-offset-2">
+						<img class=".img-responsive" src="images/hoff.jpg"/>
+						<p class="indent">{{story}}</p>
+					</div>
 				</div>
-			</div>				
+				<div ng-if="section === 'Bio'" class="row faded">
+					<div class="col-md-8 col-md-offset-2">
+						<img class=".img-responsive" src="images/hoff.jpg"/>
+						<p class="indent">{{story}}</p>
+					</div>
+				</div>
+				<div ng-repeat="results in resultsByCategory" class="row faded" ng-if="results[0].category_path[0] === section">
+					<div class=" {{result.category_path[0]}} thumbnail col-md-6" ng-repeat="result in results">
+						<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}">
+							<img ng-src="{{result.MainImage.url_570xN}}" etsyUrl="{{result.url}}">
+						</a>
+							<h2>{{result.title}}</h2>
+							<h3>{{result.price | currency}}</h3>
+							<p class="leftAlign">{{result.description}}</p>
+							<p><a href = "{{result.url}}" class="btn btn-primary" role="button">View Listing</a></p>
+						<a ng-repeat="image in result.Images" ng-if="$index > 0" href="{{image.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}"></a>
+					</div>
+				</div>	
+			</div>
 		</div>
-	</section>
-	<script>
-	$( document ).ready(function() {
-        $('.menu-link').bigSlide();
-	});
-		
-	</script>
 	</body>
 </HTML>
 	
