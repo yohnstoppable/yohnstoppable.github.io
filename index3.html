@@ -64,14 +64,13 @@
 				</div>
 				<div ng-repeat="results in resultsByCategory" class="faded" ng-if="results[0].category_path[0] === section">
 					<div class=" {{result.category_path[0]}} row" ng-repeat="result in results">
-						<div class="col-md-5">
-							
+						<div class="col-md-5 middle">
 							<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}">
-								<img ng-src="{{result.MainImage.url_570xN}}" class="img-responsive">
+								<img ng-src="{{result.MainImage.url_570xN}}" class="img-responsive middle">
 							</a>
 						</div>
 						<div class="col-md-5">
-							<h2>{{result.title}}</h2>
+							<h3>{{result.title}}</h3>
 							<p class="leftAlign">{{result.description}}</p>
 						</div>
 						<div class="col-md-2">

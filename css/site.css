@@ -3,6 +3,11 @@
     display:inline-block !important;
 }
 
+.middle {
+	display: inline-block;
+    vertical-align: middle;
+}
+
 .row {
 	border-bottom: 1px solid green;
 	padding-top: 10px;
