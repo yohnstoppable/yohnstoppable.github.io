@@ -12,6 +12,32 @@
 		this.menuItems.push("Bio");
 	});
 	
+	app.filter('fixText', function() {
+	  return function(input) { 
+		input = input.replace(/&#39;/g, "'");
+		input = input.replace(/&quot;/g, '"');
+		return input;
+	  }
+	});
+	
+	app.filter('commaList', function() {
+		return function(input) { 
+			var myResults = "";
+			for (var i=0; i < myResults.length; i++) {
+				if (myResults[i].materials.length > 0) {
+					myResults[i].materialString = "Materials: " 
+					for (var n=0; n < myResults[i].materials.length; n++) {
+						myResults[i].materialString += myResults[i].materials[n];
+						if (n < myResults[i].materials.length-1) {
+							myResults[i].materialString += ", ";
+						}
+					}
+				}
+			}
+			return myResults;
+		}
+	});
+	
 	app.controller("imageController", function() {
 		this.items = items;
 	});
@@ -57,13 +83,27 @@
 			}
 			return returnArray;
 		}
-
+		
+		var getMainImages = function(myResults) {
+			var splash = [];
+			var temp;
+			for (var i=0; i < myResults.length; i++) {
+				temp = {
+					image: myResults[i].MainImage.url_570xN,
+					title: myResults[i].title
+				}
+				splash.push(temp);
+			}
+			return splash;
+		}
+		
+		$scope.mainSplash = getMainImages(results);		
 		$scope.resultsByCategory = sort(results);
-		console.log($scope.resultsByCategory);
 
 		$scope.section = "Home";
 		$scope.title = "Home";
 		$scope.story = about;
+		$scope.bioImage = results[0].MainImage.url_570xN
 		
 		$scope.clicked = function(menuItem) {
 			if ($scope.section !== menuItem) {
@@ -76,6 +116,9 @@
 		$scope.change = function() {
 			$scope.title = $scope.menuItem;
 			$scope.section = $scope.menuItem;
+			if ($scope.section === "Home") {
+				$timeout(initializeSlider,1);
+			}
 		}
 		
 		$scope.details = function(dees,header,img,description,url) {

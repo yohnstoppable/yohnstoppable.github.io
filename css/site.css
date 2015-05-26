@@ -3,39 +3,83 @@
     display:inline-block !important;
 }
 
+.nav {
+	border-bottom: 1px solid #B17D4D !important;
+}
+
+.nav-pills {
+    border: 1px solid #B17D4D !important;
+}
+
+.nav-tabs, .nav-pills {
+    text-align:center;
+	margin-top: 5px;
+	margin-bottom:0px;
+}
+
+.nav-pills {
+	background-color: #e0f7a5 !important;
+}
+
+.active a {
+	background-color: #e7fcb3 !important;
+	border-left: 1px solid #B17D4D !important;
+	border-right: 1px solid #B17D4D !important;
+	border-top: 1px solid #B17D4D !important;
+}
+
+li a {
+	cursor: pointer;
+	cursor: hand;
+	color:#482f20 !important;	
+	
+}
+
+li a:hover {
+	background-color: #e7fcb3 !important;
+	border-left: 1px solid #B17D4D !important;
+	border-right: 1px solid #B17D4D !important;
+	border-top: 1px solid #B17D4D !important;
+}
+
+#myslider { 
+	height:430px; 
+	width:525px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#myslider img {
+	height:400px; 
+	width:525px;
+}
+
+h3 {
+	text-align:left;
+	font-size: 100%;
+}
+
+h2 {
+	font-size: 125%;
+}
+
 .middle {
 	display: inline-block;
     vertical-align: middle;
 }
 
 .row {
-	border-bottom: 1px solid green;
+	border-bottom: 1px solid #432B1F;
 	padding-top: 10px;
+	margin-left:10px;
 	padding-bottom: 10px;
 }
 
-.nav-tabs, .nav-pills {
-    text-align:center;
-	margin-top: 5px;
-}
-
 .tab-pane {
-	background-color: #F0EBE6;
+	border-right: 1px solid #432B1F;
+	border-left: 1px solid #432B1F;
+	background-color: #e7fcb3;
 	width:100%;
-}
-
-.active a {
-	background-color: #F0EBE6 !important;
-}
-
-li a {
-	cursor: pointer;
-	cursor: hand;
-	color:#482f20 !important;
-}
-
-li a:hover {
-	background-color: #ddd !important;
 }
 
 h1 img {
@@ -43,18 +87,12 @@ h1 img {
 	width: 40px !important;
 }
 
-.container { 
-	width:100%; 
-	background-color: #EBE0D6 !important;
+.box { 
+	width:80%; 
+	margin:auto;
+	background-color: #c4bbb0;
 	border-radius: 10px;
     padding: 10px;
-}
-
-.thumbnail {
-	background-color: #F5F0EB !important;
-	border:0px none !important;
-	border-radius: 0 !important;
-	box-shadow: none !important;
 }
 
 .content p {
@@ -66,9 +104,8 @@ h1 img {
 }
 
 body {
-	background-image: url("../images/1.jpg");
 	background-size: 100% 100%;
-	background-color: #4C331A !important;
+	background-color: #2d1d15 !important;
 	margin: 0;
     text-align: center;
 	width:100%;
@@ -119,6 +156,12 @@ html, body, .container-fluid{
 .indent {
 	text-align:left;
 	text-indent:5%;
+	line-height:1.2em;
+	white-space:pre-wrap;
+}
+
+.topSpace {
+	margin-top:10px;
 }
 
 .faded.ng-leave {
@@ -138,9 +181,13 @@ html, body, .container-fluid{
 
 h1,h2,h3 {
 	color: #482f20 !important;
-	font-weight: 900% !important;
+	font-weight: 500% !important;
 	padding:0px;
 	margin:0px;
+}
+
+.bold {
+	font-weight: 900% !important;
 }
 
 p {
