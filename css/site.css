@@ -1,8 +1,12 @@
-.slider { width:612px; height:612px; }
-
 .nav-tabs > li, .nav-pills > li {
     float:none !important;
     display:inline-block !important;
+}
+
+.row {
+	border-bottom: 1px solid green;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .nav-tabs, .nav-pills {
@@ -11,14 +15,12 @@
 }
 
 .tab-pane {
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
-    padding: 10px;
+	background-color: #F0EBE6;
+	width:100%;
 }
 
-.active {
-	background-color: #F0F0F0 !important;
+.active a {
+	background-color: #F0EBE6 !important;
 }
 
 li a {
@@ -31,11 +33,6 @@ li a:hover {
 	background-color: #ddd !important;
 }
 
-img {
-	height: 400px !important;
-	width: 500px !important;
-}
-
 h1 img {
 	height: 40px !important;
 	width: 40px !important;
@@ -43,13 +40,13 @@ h1 img {
 
 .container { 
 	width:100%; 
-	background-color: #F0F0F0 !important;
+	background-color: #EBE0D6 !important;
 	border-radius: 10px;
     padding: 10px;
 }
 
 .thumbnail {
-	background-color: #F0F0F0 !important;
+	background-color: #F5F0EB !important;
 	border:0px none !important;
 	border-radius: 0 !important;
 	box-shadow: none !important;
@@ -64,8 +61,9 @@ h1 img {
 }
 
 body {
-	background-image: url("../images/darkBackground.jpg");
-	background-color: #9e8d83 !important;
+	background-image: url("../images/1.jpg");
+	background-size: 100% 100%;
+	background-color: #4C331A !important;
 	margin: 0;
     text-align: center;
 	width:100%;

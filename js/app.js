@@ -19,22 +19,35 @@
 	app.controller("master", function($scope, $timeout){		
 		var sort = function(myResults) {
 			var categories = [];
-			var sorted = [];
 			var returnArray = [];
+			var chunkSize = 2;
+			
 			for (var i=0; i< myResults.length; i++) {
 				if (categories.indexOf(myResults[i].category_path[0]) === -1) {
 					categories.push(myResults[i].category_path[0]);
 				}
 			}
-
+			
+			for (var i=0; i < myResults.length-1; i++) {
+				if (myResults[i].listing_id === 231548329) {
+					console.log("blah");
+					var temp = myResults[i];
+					myResults.splice(i,1);
+					myResults.unshift(temp);
+				}
+			}
+			
+			return byCategory(categories,myResults);
+		}
+		
+		var byCategory = function(categories,results) {
+			var returnArray = [];
+			var sorted = [];
+			
 			for (var n=0; n < categories.length; n++) {
-				for (var i=0; i< myResults.length; i++) {
-					if (myResults[i].category_path[0] === categories[n]) {
-						sorted.push(myResults[i]);
-					}
-					if (sorted.length === 2) {
-						returnArray.push(sorted);
-						sorted = [];
+				for (var i=0; i< results.length; i++) {
+					if (results[i].category_path[0] === categories[n]) {
+						sorted.push(results[i]);
 					}
 				}
 				if (sorted.length > 0) {
@@ -42,7 +55,6 @@
 					sorted = [];
 				}
 			}
-			
 			return returnArray;
 		}
 
