@@ -4,11 +4,11 @@
 }
 
 .nav {
-	border-bottom: 1px solid #B17D4D !important;
+	border-bottom: 1px solid #432B1F !important;
 }
 
 .nav-pills {
-    border: 1px solid #B17D4D !important;
+    border: 1px solid #432B1F !important;
 }
 
 .nav-tabs, .nav-pills {
@@ -22,10 +22,10 @@
 }
 
 .active a {
-	background-color: #e7fcb3 !important;
-	border-left: 1px solid #B17D4D !important;
-	border-right: 1px solid #B17D4D !important;
-	border-top: 1px solid #B17D4D !important;
+	background-color: #fcfbe5 !important;
+	border-left: 1px solid #432B1F !important;
+	border-right: 1px solid #432B1F !important;
+	border-top: 1px solid #432B1F !important;
 }
 
 li a {
@@ -36,10 +36,10 @@ li a {
 }
 
 li a:hover {
-	background-color: #e7fcb3 !important;
-	border-left: 1px solid #B17D4D !important;
-	border-right: 1px solid #B17D4D !important;
-	border-top: 1px solid #B17D4D !important;
+	background-color: #fcfbe5 !important;
+	border-left: 1px solid #432B1F !important;
+	border-right: 1px solid #432B1F !important;
+	border-top: 1px solid #432B1F !important;
 }
 
 #myslider { 
@@ -78,7 +78,7 @@ h2 {
 .tab-pane {
 	border-right: 1px solid #432B1F;
 	border-left: 1px solid #432B1F;
-	background-color: #e7fcb3;
+	background-color: #fcfbe5;
 	width:100%;
 }
 
@@ -90,7 +90,7 @@ h1 img {
 .box { 
 	width:80%; 
 	margin:auto;
-	background-color: #c4bbb0;
+	background-color: #f7e2cf;
 	border-radius: 10px;
     padding: 10px;
 }
@@ -104,6 +104,7 @@ h1 img {
 }
 
 body {
+	background-image: url("../images/darkbackground.jpg");
 	background-size: 100% 100%;
 	background-color: #2d1d15 !important;
 	margin: 0;
