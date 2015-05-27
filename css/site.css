@@ -43,15 +43,15 @@ li a:hover {
 }
 
 #myslider { 
-	height:430px; 
-	width:525px;
 	margin-left:auto;
 	margin-right:auto;
+	width:420px;
+	height:320px;
 }
 
 #myslider img {
-	height:400px; 
-	width:525px;
+	width:400px;
+	height:300px;
 }
 
 h3 {
@@ -73,6 +73,7 @@ h2 {
 	padding-top: 10px;
 	margin-left:10px;
 	padding-bottom: 10px;
+	min-height: 250px;
 }
 
 .tab-pane {
@@ -80,6 +81,7 @@ h2 {
 	border-left: 1px solid #432B1F;
 	background-color: #fcfbe5;
 	width:100%;
+	min-width:500px;
 }
 
 h1 img {
@@ -89,8 +91,9 @@ h1 img {
 
 .box { 
 	width:80%; 
+	min-width:520px;
 	margin:auto;
-	background-color: #EFEDE8;
+	background-color: #e8bc9d;
 	border-radius: 10px;
     padding: 10px;
 }
@@ -105,6 +108,7 @@ h1 img {
 
 body {
 	background-image: url("../images/darkBackground.jpg");
+	background-repeat: repeat-y;
 	background-size: 100% 100%;
 	background-color: #2d1d15 !important;
 	margin: 0;
