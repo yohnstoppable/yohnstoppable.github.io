@@ -92,7 +92,7 @@ img {
 }
 
 .box { 
-	width:86%; 
+	width:100%; 
 	min-width:520px;
 	margin:auto;
 	background-color: #7c411c;
