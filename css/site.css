@@ -46,13 +46,13 @@ li a:hover {
 #myslider { 
 	margin-left:auto;
 	margin-right:auto;
-	width:420px;
-	height:320px;
+	width:520px;
+	height:420px;
 }
 
 #myslider img {
-	width:400px;
-	height:300px;
+	width:500px;
+	height:400px;
 }
 
 h3 {
@@ -70,7 +70,7 @@ h3 {
 	padding-top: 10px;
 	margin-left:10px;
 	padding-bottom: 10px;
-	min-height: 250px;
+	min-height: 300px;
 }
 
 .tab-pane {
@@ -78,7 +78,7 @@ h3 {
 	border-left: 1px solid #432B1F;
 	background-color: #fcfbe5;
 	width:100%;
-	min-width:500px;
+	min-width:600px;
 }
 
 h1 img {
