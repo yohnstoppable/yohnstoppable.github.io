@@ -50,6 +50,10 @@ li a:hover {
 	height:420px;
 }
 
+#myslider div {
+	opacity:0;
+}
+
 #myslider img {
 	width:500px;
 	height:400px;
