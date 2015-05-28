@@ -84,20 +84,21 @@
 			return returnArray;
 		}
 		
-		var getMainImages = function(myResults) {
+		var getSplash = function(myResults) {
 			var splash = [];
 			var temp;
 			for (var i=0; i < myResults.length; i++) {
 				temp = {
 					image: myResults[i].MainImage.url_570xN,
-					title: myResults[i].title
+					title: myResults[i].title,
+					url: myResults[i].url
 				}
 				splash.push(temp);
 			}
 			return splash;
 		}
 		
-		$scope.mainSplash = getMainImages(results);		
+		$scope.mainSplash = getSplash(results);		
 		$scope.resultsByCategory = sort(results);
 
 		$scope.section = "Home";
