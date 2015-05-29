@@ -42,7 +42,6 @@
 	</head>
 	<body>
 		<section ng-controller="master as masterCtrl">
-			<div class="box">
 				<h1 class="mainHeader"><img src="images/logo.jpg">New Native</h1>
 				<ul class="nav nav-tabs" role="navigation" ng-controller="menuController as menuCtrl">
 					<li ng-repeat="menuItem in menuCtrl.menuItems" ng-class="{active: menuItem === section}">
@@ -85,7 +84,6 @@
 						</div>
 					</section>	
 				</div>
-			</div>
 		</section>
 		<script src="js/simpleslider.js"></script>
 		<script>

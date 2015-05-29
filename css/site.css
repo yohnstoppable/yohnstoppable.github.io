@@ -5,6 +5,7 @@
 
 .nav {
 	border-bottom: 1px solid #432B1F !important;
+	width:96%;
 }
 
 .nav-pills {
@@ -81,7 +82,9 @@ h3 {
 	border-right: 1px solid #432B1F;
 	border-left: 1px solid #432B1F;
 	background-color: #fcfbe5;
-	width:100%;
+	width:96%;
+	margin-left:5px;
+	margin-right:5px;
 	min-width:600px;
 }
 
@@ -144,8 +147,8 @@ html, body, .container-fluid{
 }
 
 .faded.ng-enter {
-  animation: my_enter_animation .6s linear;
-  -webkit-animation: my_enter_animation .6s linear;
+  animation: my_enter_animation .4s linear;
+  -webkit-animation: my_enter_animation .4s linear;
 }
 
 @-webkit-keyframes my_enter_animation {
@@ -166,8 +169,8 @@ html, body, .container-fluid{
 }
 
 .faded.ng-leave {
-  animation: my_fade_animation 0.2s linear;
-  -webkit-animation: my_fade_animation 0.2s linear;
+  animation: my_fade_animation 0.1s linear;
+  -webkit-animation: my_fade_animation 0.1s linear;
 }
 
 @keyframes my_fade_animation {
@@ -193,14 +196,16 @@ h1,h2,h3 {
 
 h2 {
 	font-size: 225% !important;
-	
 }
 
 .mainHeader {
-	color: #ddb182 !important;
+	color: #dbcbb1 !important;
 	text-shadow: -1px -1px 1px #000, 1px 1px 2px #000;
 	font: 60px 'Charcoal';
-	font-weight:750%;
+	font-weight:800%;
+	text-align:left;
+	margin-left:25px;
+	margin-bottom:-45px;
 }
 
 p {

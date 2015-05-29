@@ -110,7 +110,7 @@
 			if ($scope.section !== menuItem) {
 				$scope.section = "";
 				$scope.menuItem = menuItem;				
-				$timeout($scope.change,199);
+				$timeout($scope.change,99);
 			}
 		}
 		

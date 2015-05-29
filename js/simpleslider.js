@@ -222,8 +222,8 @@
 
     // Get user defined options or its default values
     this.trProp = getdef(options.transitionProperty, 'left');
-    this.trTime = getdef(options.transitionDuration, 0.5);
-    this.delay = getdef(options.transitionDelay, 3) * 1000;
+    this.trTime = getdef(options.transitionDuration, 1.5);
+    this.delay = getdef(options.transitionDelay, 3) * 1250;
     this.unit = getUnit([options.startValue, options.visibleValue, options.endValue], this.trProp);
     this.startVal = parseInt(getdef(options.startValue, -width + this.unit), 10);
     this.visVal = parseInt(getdef(options.visibleValue, '0' + this.unit), 10);
