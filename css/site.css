@@ -33,7 +33,7 @@ li a {
 	cursor: pointer;
 	cursor: hand;
 	color: #ddb182 !important;	
-	font: 20px 'Charcoal';
+	font: 15px 'Charcoal';
 	font-weight:bold;
 }
 
@@ -203,9 +203,6 @@ h2 {
 	text-shadow: -1px -1px 1px #000, 1px 1px 2px #000;
 	font: 40px 'Charcoal';
 	font-weight:800%;
-	text-align:left;
-	margin-left:25px;
-	margin-bottom:-45px;
 }
 
 p {
