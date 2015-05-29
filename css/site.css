@@ -89,8 +89,8 @@ h3 {
 }
 
 h1 img {
-	height: 55px !important;
-	width: 55px !important;
+	height: 40px !important;
+	width: 40px !important;
 	margin-right:15px;
 }
 
@@ -201,7 +201,7 @@ h2 {
 .mainHeader {
 	color: #dbcbb1 !important;
 	text-shadow: -1px -1px 1px #000, 1px 1px 2px #000;
-	font: 60px 'Charcoal';
+	font: 40px 'Charcoal';
 	font-weight:800%;
 	text-align:left;
 	margin-left:25px;
