@@ -42,12 +42,19 @@
 	</head>
 	<body>
 		<section ng-controller="master as masterCtrl">
-				<h1 class="mainHeader"><img src="images/logo.jpg">New Native</h1>
-				<ul class="nav nav-tabs" role="navigation" ng-controller="menuController as menuCtrl">
-					<li ng-repeat="menuItem in menuCtrl.menuItems" ng-class="{active: menuItem === section}">
-						<a ng-click ="clicked(menuItem)">{{menuItem}}</a>
-					</li>
-				</ul>
+			<div class="row headerInfo">
+				<div class="col-md-4">
+					
+					<h1 class="mainHeader"><img src="images/logo.jpg" class="headerImage">New Native</h1>
+				</div>
+				<div class="col-md-8">
+					<ul class="nav nav-tabs" role="navigation" ng-controller="menuController as menuCtrl">
+						<li ng-repeat="menuItem in menuCtrl.menuItems" ng-class="{active: menuItem === section}">
+							<a ng-click ="clicked(menuItem)">{{menuItem}}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 				<div class="tab-pane container-fluid">
 					<div ng-if="section === 'Home'" class="row faded">
 						<div class="col-md-8 col-md-offset-2">
