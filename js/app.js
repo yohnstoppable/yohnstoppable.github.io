@@ -107,6 +107,7 @@
 		$scope.bioImage = results[0].MainImage.url_570xN
 		
 		$scope.clicked = function(menuItem) {
+			console.log("test");
 			if ($scope.section !== menuItem) {
 				$scope.section = "";
 				$scope.menuItem = menuItem;				
@@ -115,14 +116,15 @@
 		}
 		
 		$scope.change = function() {
+			console.log("change");
+			
 			$scope.title = $scope.menuItem;
 			$scope.section = $scope.menuItem;
+			console.log($scope.menuItem);
+			console.log($scope.section);
 			if ($scope.section === "Home") {
 				$timeout(initializeSlider,1);
 			}
-		}
-		
-		$scope.details = function(dees,header,img,description,url) {
 		}
 	});
 
