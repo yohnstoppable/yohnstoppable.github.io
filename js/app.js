@@ -93,7 +93,7 @@
 		return {
 			restrict: "E",
 			templateUrl: "templates/home-panel-template.html",
-			controller: function(sharedProperties,$scope) {
+			controller: function(sharedProperties,$scope,$timeout) {
 				var getSplash = function(myResults) {
 					var splash = [];
 					var temp;
@@ -109,7 +109,7 @@
 				}
 				$scope.mainSplash = getSplash(sharedProperties.getResults());
 				$(window).load(function() {
-					sharedProperties.initializeSlider();
+					$timeout(sharedProperties.initializeSlider,0);
 				});
 			},
 			controllerAs: "homeController"
