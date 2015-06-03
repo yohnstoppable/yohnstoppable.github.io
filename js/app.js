@@ -109,7 +109,7 @@
 				}
 				$scope.mainSplash = getSplash(sharedProperties.getResults());
 				$(window).load(function() {
-					$timeout(sharedProperties.initializeSlider,0);
+					$timeout(sharedProperties.initializeSlider,500);
 				});
 			},
 			controllerAs: "homeController"

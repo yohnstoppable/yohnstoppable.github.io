@@ -89,6 +89,10 @@ div.headerInfo {
 	opacity:0;
 }
 
+#myslider div:nth-child(1) {
+	opacity:1;
+}
+
 #myslider img {
 	width:500px;
 	height:400px;
