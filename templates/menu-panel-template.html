@@ -1,0 +1,5 @@
+<ul class="nav nav-tabs" role="navigation">
+	<li ng-repeat="menuItem in menuCtrl.menuItems" ng-class="{active: menuItem === section()}">
+		<a ng-click ="clicked(menuItem)">{{menuItem}}</a>
+	</li>
+</ul>

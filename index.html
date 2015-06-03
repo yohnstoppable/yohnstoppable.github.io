@@ -1,16 +1,49 @@
-<!DOCTYPE html>
-<html>
-	<head>
+<!DOCTYPE HTML>
+
+<html ng-app="newNative" lang="en">
+	<head>		
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<meta content="utf-8" http-equiv="encoding">
+		
+		<!-- 		css libraries			-->
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/lightbox.css">
+		
+		<!--		javascript libraries	-->
+		<script src="js/jquery-1.11.2.min.js"></script>
+		<script src="js/angular.min.js"></script>
+		<script src="js/angular-animate.min.js"></script>	
+		<script src="js/lightbox.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/simpleslider.js"></script>
+		
+		<!--		local stylesheet		-->
+		<link rel="stylesheet" type="text/css" href="css/site.css">
+		
+		<!--		local javascript		-->
+		<script src="js/site.js"></script>
+		<script src="js/app.js"></script>
+		
+		<!--		etsy json calls			-->
+		<script src="https://openapi.etsy.com/v2/shops/NewNative05.js?callback=Common.getShopData&method=GET&api_key=uf4q3mmiizo915vqna2x8n5r&limit=100&includes=About"></script>
+		<script src="https://openapi.etsy.com/v2/shops/NewNative05/listings/active.js?callback=Common.getData&method=GET&api_key=uf4q3mmiizo915vqna2x8n5r&limit=100&includes=MainImage,Images"></script>
 	</head>
-	<body style="overflow: hidden">
-	<div id="boss"></div>
-	<div id="projectile"></div>
-	<canvas id="myCanvas">
-		<script src="js/soundjs-0.6.0.min.js"></script>
-		<script src="js/common.js"></script>
-		<script src="js/weapons.js"></script>
-		<script src="js/movableObjects.js"></script>
-		<script src="js/stage.js"></script>
-		<script src="js/game.js"></script>		
+	<body>
+		<section ng-controller="master as masterCtrl">
+			<div class="row headerInfo">
+				<div class="col-md-4">
+					<header-panel></header-panel>
+				</div>
+				<div class="col-md-8">
+					<menu-panel></menu-panel>
+				</div>
+			</div>
+			<div class="tab-pane container-fluid">
+				<home-panel></home-panel>
+				<bio-panel></bio-panel>
+				<results-panel></results-panel>
+			</div>
+		</section>
 	</body>
-</html>
+</HTML>
+	

@@ -1,3 +1,4 @@
+/**************** Navigation ****************/
 .nav-tabs > li, .nav-pills > li {
     float:none !important;
     display:inline-block !important;
@@ -50,6 +51,33 @@ li a:hover {
 	border-top: 1px solid #432B1F !important;
 }
 
+/**************** Nav and Header ****************/
+div.headerInfo {
+	width:96%;
+	border-bottom: 1px solid #432B1F !important;
+	margin:0;
+	padding:0;
+	clear;
+}
+
+/**************** Header ****************/
+.mainHeader {
+	color: #dbcbb1 !important;
+	text-shadow: -.5px -.5px 0 #fff, 1.5px 1.5px 1px #000;
+	font: 36px 'Charcoal';
+	margin-bottom: 0px !important;
+	padding-bottom: 0px !important;
+	font-weight:bold;
+}
+
+.headerImage {
+	height: 28px !important;
+	width: 28px !important;
+	margin-right:8px;
+}
+
+/**************** Home Page ****************/
+/*image slider*/
 #myslider { 
 	margin-left:auto;
 	margin-right:auto;
@@ -66,50 +94,24 @@ li a:hover {
 	height:400px;
 }
 
-h3 {
-	text-align:left;
-	font-size: 100%;
-}
-
-.middle {
-	display: inline-block;
-    vertical-align: middle;
-}
-
 .row {
 	border-bottom: 1px solid #432B1F;
 	padding-top: 10px;
+	padding-bottom:10px;
 	margin-left:10px;
-	
-
 }
 
-mainHeader.row{
-	border-bottom: 1px solid #432B1F;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	min-height: 0px !important;
-}
+/**************** Content ****************/
 
 .tab-pane {
 	border-right: 1px solid #432B1F;
 	border-left: 1px solid #432B1F;
 	background-color: #fcfbe5;
 	width:96%;
-	margin-left:5px;
-	margin-right:5px;
+	height:100%;
+	margin:auto;
 	margin-top:0;
 	min-width:600px;
-}
-
-.headerImage {
-	height: 28px !important;
-	width: 28px !important;
-	margin-right:8px;
-}
-
-img {
-	border: 1px solid #000 !important;
 }
 
 body {
@@ -123,12 +125,15 @@ body {
 	height:100%;
 }
 
-div.headerInfo {
-	width:96%;
-	border-bottom: 1px solid #432B1F !important;
-	margin:0;
-	padding:0;
-	clear;
+h1,h2,h3 {
+	color: #10680a !important;
+	margin-top:0px !important;
+	padding-top:0px !important;
+	-webkit-text-stroke: 1px #083f00; 
+}
+
+h2 {
+	font-size: 225% !important;
 }
 
 html, body, .container-fluid{
@@ -139,19 +144,25 @@ html {
     overflow-y: scroll;
 }
 
-.column {
-	display: table-cell;
-}
-
-.leftAlign {
+.indent {
 	text-align:left;
-	white-space: pre-wrap;
+	text-indent:5%;
+	line-height:1.2em;
+	white-space:pre-wrap;
 }
 
-.clear {
-	clear:both;
+.topSpace {
+	margin-top: 10px;
 }
 
+p {
+	color:#3d1400;
+	font-size:125%;
+	font-weight:600;
+}
+
+
+/**************** Animations ****************/
 .faded.ng-enter {
   animation: my_enter_animation .4s linear;
   -webkit-animation: my_enter_animation .4s linear;
@@ -167,13 +178,6 @@ html {
 	to {opacity: 1;}
 }
 
-.indent {
-	text-align:left;
-	text-indent:5%;
-	line-height:1.2em;
-	white-space:pre-wrap;
-}
-
 .faded.ng-leave {
   animation: my_fade_animation 0.1s linear;
   -webkit-animation: my_fade_animation 0.1s linear;
@@ -181,40 +185,10 @@ html {
 
 @keyframes my_fade_animation {
 	from { opacity:1;}
-	to {opacity: 0;}
+	to {opacity: 0; height:100px !important;}
 }
 
 @-webkit-keyframes my_fade_animation {
 	from { opacity:1;}
-	to {opacity: 0;}
-}
-
-h1,h2,h3 {
-	color: #10680a !important;
-	margin-top:0px !important;
-	padding-top:0px !important;
-	-webkit-text-stroke: 1px #083f00; 
-}
-
-.topSpace {
-	margin-top: 10px;
-}
-
-h2 {
-	font-size: 225% !important;
-}
-
-.mainHeader {
-	color: #dbcbb1 !important;
-	text-shadow: -.5px -.5px 0 #fff, 1.5px 1.5px 1px #000;
-	font: 36px 'Charcoal';
-	margin-bottom: 0px !important;
-	padding-bottom: 0px !important;
-	font-weight:bold;
-}
-
-p {
-	color:#3d1400;
-	font-size:125%;
-	font-weight:bold;
+	to {opacity: 0; height:100px !important;}
 }
