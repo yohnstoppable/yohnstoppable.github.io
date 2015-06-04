@@ -1,18 +1,16 @@
-<section ng-repeat="results in resultsByCategory" >
-	<div class=" {{result.category_path[0]}} row faded" ng-if="results[0].category_path[0] === section()" ng-repeat="result in results">
-		<div class="col-md-4">
-			<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}">
-				<img ng-src="{{result.MainImage.url_570xN}}" class="img-responsive"/>
-			</a>
-		</div>
-		<div class="col-md-6">
-			<h2>{{result.title}}</h2>
-			<p class="indent">{{result.description | fixText}}</p>
-		</div>
-		<div class="col-md-2">
-			<h2>{{result.price | currency}}</h2>
-			<p><a href = "{{result.url}}" target="_blank" class="btn btn-primary" role="button">View Listing</a></p>
-			<a ng-repeat="image in result.Images" ng-if="$index > 0" href="{{image.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}"></a>
-		</div>
+<div ng-if="section() === 'Furniture'" class="row faded" ng-repeat = "result in results()">
+	<div class="col-md-4">
+		<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}">
+			<img ng-src="{{result.MainImage.url_570xN}}" class="img-responsive"/>
+		</a>
 	</div>
-</section>
+	<div class="col-md-6">
+		<h2>{{result.title}}</h2>
+		<p class="indent">{{result.description | fixText}}</p>
+	</div>
+	<div class="col-md-2">
+		<h2>{{result.price | currency}}</h2>
+		<p><a href = "{{result.url}}" target="_blank" class="btn btn-primary" role="button">View Listing</a></p>
+		<a ng-repeat="image in result.Images" ng-if="$index > 0" href="{{image.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}"></a>
+	</div>
+</div>

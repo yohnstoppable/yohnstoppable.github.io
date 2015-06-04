@@ -7,6 +7,7 @@
 	//Service to share common items between controllers. 
 	app.service('sharedProperties', function () {
         var results = "";
+		var currentResults = [];
 		var story = "";
 		var section = "Home";
         return {
@@ -23,21 +24,25 @@
 				story = value;
 			},
 			getSection: function () {
+				console.log("get section");
                 return section;
             },
             setSection: function(value) {
                 section = value;
             },
-			initializeSlider: function() {
-				var imgSlider = new SimpleSlider(
-					document.getElementById('myslider'), {
-						autoPlay:true,
-						transitionProperty:'opacity',
-						startValue: 0,
-						visibleValue: 1,
-						endValue: 0
+			setCurrentResults: function(category) {
+				console.log("test");
+				currentResults = [];
+				for (var i=0; i < results.length; i++) {
+					console.log(i);
+					if (results[i].category_path[0] === section) {
+						currentResults.push(results[i]);
 					}
-				);
+				}
+			},
+			getCurrentResults: function() {
+				console.log(currentResults);
+				return currentResults;
 			}
         };
     });
@@ -76,10 +81,7 @@
 						sharedProperties.setSection("");
 						$timeout(function() {
 							sharedProperties.setSection(menuItem);
-							if (sharedProperties.getSection() === "Home") {
-								//even a timeout of 0 will still delay until loaded so the home page slider will initialize properly
-								$timeout(sharedProperties.initializeSlider,0);
-							}
+							sharedProperties.setCurrentResults(menuItem);
 						},100);
 					}
 				}
@@ -107,65 +109,32 @@
 					}
 					return splash;
 				}
+				
+				$scope.initializeSlider = function() {
+					var imgSlider = new SimpleSlider(
+						document.getElementById('myslider'), {
+							autoPlay:true,
+							transitionProperty:'opacity',
+							startValue: 0,
+							visibleValue: 1,
+							endValue: 0
+						}
+					);
+				}
 				$scope.mainSplash = getSplash(sharedProperties.getResults());
-				$(window).load(function() {
-					$timeout(sharedProperties.initializeSlider,500);
-				});
 			},
 			controllerAs: "homeController"
 		}
 	});
 	
 	//results for the content pane
-	app.directive("resultsPanel", function() {
+	app.directive("resultsPanel", function($timeout) {
 		return {
 			restrict: "E",
 			templateUrl: "templates/results-panel-template.html",
-			controller: function($scope, sharedProperties) {
-				//along with byCategory(), separates results into array of arrays (each array is results of different category)
-				var sort = function(myResults) {
-					var categories = [];
-					var returnArray = [];
-					var chunkSize = 2;
-					
-					for (var i=0; i< myResults.length; i++) {
-						if (categories.indexOf(myResults[i].category_path[0]) === -1) {
-							categories.push(myResults[i].category_path[0]);
-						}
-					}
-					
-					//TODO: not hard coding item to go first on list of results
-					for (var i=0; i < myResults.length-1; i++) {
-						if (myResults[i].listing_id === 231548329) {
-							var temp = myResults[i];
-							myResults.splice(i,1);
-							myResults.unshift(temp);
-						}
-					}
-					
-					return byCategory(categories,myResults);
-				}
-				
-				var byCategory = function(categories,results) {
-					var returnArray = [];
-					var sorted = [];
-					
-					for (var n=0; n < categories.length; n++) {
-						for (var i=0; i< results.length; i++) {
-							if (results[i].category_path[0] === categories[n]) {
-								sorted.push(results[i]);
-							}
-						}
-						if (sorted.length > 0) {
-							returnArray.push(sorted);
-							sorted = [];
-						}
-					}
-					return returnArray;
-				}
-				
-				$scope.resultsByCategory = sort(Common.results);
+			controller: function($scope, sharedProperties) {				
 				$scope.section = sharedProperties.getSection;
+				$scope.results = sharedProperties.getCurrentResults;				
 			}, controllerAs: "resultsCtrl"
 		}
 	});
@@ -197,7 +166,7 @@
 	
 	//******************** Controllers ********************//		
 	//Main controller. For now just sets the results and story for the results and bio sections
-	app.controller("master", function($scope, $timeout, sharedProperties){		
+	app.controller("master", function(sharedProperties){		
 		sharedProperties.setResults(Common.results);
 		sharedProperties.setStory(Common.about);
 	});
