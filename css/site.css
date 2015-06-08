@@ -5,10 +5,11 @@
 }
 
 .nav {
-	border-bottom: 1px solid #432B1F !important;
 	width:96%;
 	margin-left:17px;
 	padding-right:0px;
+	margin-bottom:-1px !important;
+	border-bottom: 1px solid #432B1F;
 }
 
 .nav-pills {
@@ -16,11 +17,6 @@
 }
 
 .nav-tabs, .nav-pills {
-    text-align:center;
-    text-align:center;
-    text-align:center;
-    text-align:center;
-    text-align:center;
 	margin-bottom:0px;
 }
 
@@ -29,22 +25,25 @@
 }
 
 .active a {
+	opacity:1 !important;
 	background-color: #fcfbe5 !important;
+}
+
+li a {
+	cursor: pointer;
+	cursor: hand;
+	opacity:.6;
+	font: 15px 'Charcoal';
+	font-weight:bold;
+	background-color: #ccddce;
 	color: #064D3D !important;
 	border-left: 1px solid #432B1F !important;
 	border-right: 1px solid #432B1F !important;
 	border-top: 1px solid #432B1F !important;
 }
 
-li a {
-	cursor: pointer;
-	cursor: hand;
-	color: #ddb182 !important;	
-	font: 15px 'Charcoal';
-	font-weight:bold;
-}
-
 li a:hover {
+	opacity:.8;
 	background-color: #fcfbe5 !important;
 	border-left: 1px solid #432B1F !important;
 	border-right: 1px solid #432B1F !important;
@@ -54,19 +53,24 @@ li a:hover {
 /**************** Nav and Header ****************/
 div.headerInfo {
 	width:96%;
-	border-bottom: 1px solid #432B1F !important;
 	margin:0;
+	margin-left:auto;
+	margin-right:auto;
+	border-bottom: 1px solid #432B1F !important;
 	padding:0;
 	clear;
 }
 
 /**************** Header ****************/
 .mainHeader {
-	color: #dbcbb1 !important;
+	color: #fff !important;
 	text-shadow: -.5px -.5px 0 #fff, 1.5px 1.5px 1px #000;
 	font: 36px 'Charcoal';
-	margin-bottom: 0px !important;
+	margin-bottom: -2px !important;
 	padding-bottom: 0px !important;
+	margin-left: auto;
+	margin-right: auto;
+	width:96%;
 	font-weight:bold;
 }
 
@@ -107,6 +111,9 @@ div.headerInfo {
 /**************** Content ****************/
 
 .tab-pane {
+	background-image: url("../images/background2.jpg");
+	background-attachment: fixed;
+	background-size: 100% 100%;
 	border-right: 1px solid #432B1F;
 	border-left: 1px solid #432B1F;
 	background-color: #fcfbe5;
@@ -118,7 +125,7 @@ div.headerInfo {
 }
 
 body {
-	background-image: url("../images/darkBackground.jpg");
+	background-image: url("../images/background.jpg");
 	background-attachment: fixed;
 	background-size: 100% 100%;
 	background-color: #2d1d15 !important;
@@ -160,27 +167,47 @@ html {
 
 p {
 	color:#3d1400;
-	font-size:125%;
-	font-weight:600;
+	font-size:100%;
+	font-weight:550;
+	line-height:95%;
+}
+
+.resultsImage {
+	max-height:300px !important;
+	max-width:400px !important;
+	margin:auto;
 }
 
 
 /**************** Animations ****************/
  .faded.ng-enter {
-opacity: 0.2;
-transition: all ease 250ms;
+	opacity: 0;
+	transition: 200ms ease-out;
 }
-.faded.ng-enter-stagger {
-transition-delay: 0.1s ;
--webkit-transition-delay: 0.1s ;
-/*
-FROM THE DOCUMENTATION:
-In case the stagger doesn't work then these two values must be set
-to 0 to avoid an accidental CSS inheritance.
-*/
-transition-duration: 0s ;
--webkit-transition-duration: 0s ;
+
+.move.ng-enter {
+	opacity: 0;
+	transition: 200ms ease-out;
+	padding-top:50px;
 }
-.faded.ng-enter-active {
-opacity: 1.0 ;
+
+.move.ng-enter:nth-child(1) {
+	padding-top:10px !important;
+}
+
+.move.ng-enter-stagger {
+	transition-delay: 0.1s ;
+	-webkit-transition-delay: 0.1s ;
+	/*
+	FROM THE DOCUMENTATION:
+	In case the stagger doesn't work then these two values must be set
+	to 0 to avoid an accidental CSS inheritance.
+	*/
+	transition-duration: 0s ;
+	-webkit-transition-duration: 0s ;
+}
+.move.ng-enter-active, .faded.ng-enter-active {
+	opacity: 1.0 ;
+	padding-top:10px;
 } 
+

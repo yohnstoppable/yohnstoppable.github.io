@@ -78,11 +78,8 @@
 				//slightly delays changing the section for a quick fade of the current item.
 				$scope.clicked = function(menuItem) {
 					if (sharedProperties.getSection() !== menuItem) {
-						sharedProperties.setSection("");
-						$timeout(function() {
-							sharedProperties.setSection(menuItem);
-							sharedProperties.setCurrentResults(menuItem);
-						},100);
+						sharedProperties.setSection(menuItem);
+						sharedProperties.setCurrentResults(menuItem);
 					}
 				}
 			},

@@ -1,10 +1,10 @@
-<div ng-if="section() === 'Furniture'" class="row faded" ng-repeat = "result in results()">
-	<div class="col-md-4">
+<div ng-if="results().length > 0" class="row move" ng-repeat = "result in results()">
+	<div class="col-md-3">
 		<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}">
-			<img ng-src="{{result.MainImage.url_570xN}}" class="img-responsive"/>
+			<img ng-src="{{result.MainImage.url_570xN}}" class="img-responsive resultsImage"/>
 		</a>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-7">
 		<h2>{{result.title}}</h2>
 		<p class="indent">{{result.description | fixText}}</p>
 	</div>
