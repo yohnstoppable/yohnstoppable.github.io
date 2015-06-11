@@ -24,24 +24,24 @@
 				story = value;
 			},
 			getSection: function () {
-				console.log("get section");
                 return section;
             },
             setSection: function(value) {
                 section = value;
             },
 			setCurrentResults: function(category) {
-				console.log("test");
 				currentResults = [];
 				for (var i=0; i < results.length; i++) {
-					console.log(i);
 					if (results[i].category_path[0] === section) {
-						currentResults.push(results[i]);
+						if (results[i].listing_id === 231548329) {
+							currentResults.unshift(results[i]);
+						} else {
+							currentResults.push(results[i]);
+						}
 					}
 				}
 			},
 			getCurrentResults: function() {
-				console.log(currentResults);
 				return currentResults;
 			}
         };
@@ -107,16 +107,18 @@
 					return splash;
 				}
 				
-				$scope.initializeSlider = function() {
-					var imgSlider = new SimpleSlider(
-						document.getElementById('myslider'), {
-							autoPlay:true,
-							transitionProperty:'opacity',
-							startValue: 0,
-							visibleValue: 1,
-							endValue: 0
-						}
-					);
+				$scope.initializeSlider = function(run) {
+					if (run) {
+						var imgSlider = new SimpleSlider(
+							document.getElementById('myslider'), {
+								autoPlay:true,
+								transitionProperty:'opacity',
+								startValue: 0,
+								visibleValue: 1,
+								endValue: 0
+							}
+						);
+					}
 				}
 				$scope.mainSplash = getSplash(sharedProperties.getResults());
 			},
