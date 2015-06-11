@@ -1,14 +1,14 @@
 <div ng-if="results().length > 0" class="row faded" ng-repeat = "result in results()">
-	<div class="col-sm-5 col-lg-3">
+	<div class="col-sm-5 col-md-4 col-lg-3">
 		<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}">
 			<img ng-src="{{result.MainImage.url_570xN}}" class="img-responsive resultsImage"/>
 		</a>
 	</div>
-	<div class="col-sm-5 col-lg-7 nopadding">
+	<div class="col-sm-5 col-md-6 col-lg-7">
 		<h3>{{result.title}}</h3>
 		<p class="indent">{{result.description | fixText}}</p>
 	</div>
-	<div class="col-sm-2 col-lg-2">
+	<div class="col-sm-2 col-md-2 col-lg-2">
 		<h3>{{result.price | currency}}</h3>
 		<p><a href = "{{result.url}}" target="_blank" class="btn btn-primary" role="button">View Listing</a></p>
 		<a ng-repeat="image in result.Images" ng-if="$index > 0" href="{{image.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}"></a>

@@ -169,18 +169,13 @@ p {
 	color:#3d1400;
 	font-size:100%;
 	font-weight:550;
-	line-height:85%;
+	line-height:95%;
 }
 
 .resultsImage {
 	max-height:300px !important;
 	max-width:400px !important;
 	margin:auto;
-}
-
-.nopadding {
-   padding: 0 !important;
-   margin: 0 !important;
 }
 
 
