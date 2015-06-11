@@ -169,13 +169,18 @@ p {
 	color:#3d1400;
 	font-size:100%;
 	font-weight:550;
-	line-height:95%;
+	line-height:85%;
 }
 
 .resultsImage {
 	max-height:300px !important;
 	max-width:400px !important;
 	margin:auto;
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
 }
 
 
@@ -187,7 +192,7 @@ p {
 
 .move.ng-enter {
 	opacity: 0;
-	transition: 200ms ease-out;
+	transition: 150ms ease-out;
 	padding-top:50px;
 }
 
@@ -196,8 +201,8 @@ p {
 }
 
 .move.ng-enter-stagger {
-	transition-delay: 0.1s ;
-	-webkit-transition-delay: 0.1s ;
+	transition-delay: 0.05s ;
+	-webkit-transition-delay: 0.05s ;
 	/*
 	FROM THE DOCUMENTATION:
 	In case the stagger doesn't work then these two values must be set
