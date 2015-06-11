@@ -1,15 +1,15 @@
 <div ng-if="results().length > 0" class="row move" ng-repeat = "result in results()">
-	<div class="col-md-3">
+	<div class="col-sm-5 col-lg-4">
 		<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}">
 			<img ng-src="{{result.MainImage.url_570xN}}" class="img-responsive resultsImage"/>
 		</a>
 	</div>
-	<div class="col-md-7">
-		<h2>{{result.title}}</h2>
+	<div class="col-sm-5 col-lg-6 nopadding">
+		<h3>{{result.title}}</h3>
 		<p class="indent">{{result.description | fixText}}</p>
 	</div>
-	<div class="col-md-2">
-		<h2>{{result.price | currency}}</h2>
+	<div class="col-sm-2 col-lg-2">
+		<h3>{{result.price | currency}}</h3>
 		<p><a href = "{{result.url}}" target="_blank" class="btn btn-primary" role="button">View Listing</a></p>
 		<a ng-repeat="image in result.Images" ng-if="$index > 0" href="{{image.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}"></a>
 	</div>
