@@ -1,4 +1,4 @@
-<div ng-if="results().length > 0" class="row move" ng-repeat = "result in results()">
+<div ng-if="results().length > 0" class="row faded" ng-repeat = "result in results()">
 	<div class="col-sm-5 col-lg-4">
 		<a href="{{result.MainImage.url_570xN}}" data-lightbox="{{result.listing_id}}" data-title="{{result.title}}">
 			<img ng-src="{{result.MainImage.url_570xN}}" class="img-responsive resultsImage"/>
